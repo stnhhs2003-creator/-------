@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>翰林英語七上 Unit 1 雙效特訓 (40題)：Hello, I am Leo</title>
+  <meta name="description" content="20 題核心單字 + 20 題文法句型！涵蓋各校段考與歷屆精選">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700;900&family=Orbitron:wght@800;900&family=JetBrains+Mono:wght@700;800&family=Plus+Jakarta+Sans:wght@600;800&display=swap">
+  <style>
+    :root {
+      --bg-theme: #07111e;
+      --bg-card: #0f1f38;
+      --bg-surface: #183259;
+      --color-primary: #38bdf8;
+      --color-accent: #60a5fa;
+      --color-gold: #facc15;
+      --color-danger: #f43f5e;
+      --color-success: #10b981;
+      --color-text: #f8fafc;
+      --color-border: #0284c7;
+      --btn-hover: #0369a1;
+      --font-mono: 'JetBrains Mono', monospace;
+      --font-orbitron: 'Orbitron', monospace;
+      --font-chinese: 'Noto Sans TC', sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+    html, body {
+      width: 100%; height: 100%; overflow: hidden;
+      background: radial-gradient(circle at 50% 30%, #0284c7 0%, #030810 100%);
+      font-family: var(--font-chinese); color: var(--color-text);
+      display: flex; justify-content: center; align-items: center;
+    }
+    #app-container {
+      width: 100vw; height: 100vh; max-width: 1140px; max-height: 820px;
+      background: var(--bg-card); border: 2.5px solid var(--color-primary);
+      border-radius: 20px; box-shadow: 0 0 35px rgba(56, 189, 248, 0.25), inset 0 0 20px rgba(0,0,0,0.8);
+      display: flex; flex-direction: column; overflow: hidden; position: relative;
+    }
+    #hud-bar {
+      height: 72px; background: rgba(10, 14, 23, 0.95);
+      border-bottom: 2px solid var(--color-primary); display: flex;
+      align-items: center; justify-content: space-between; padding: 0 22px; z-index: 10;
+    }
+    .hud-player-info { display: flex; align-items: center; gap: 12px; }
+    .hud-avatar {
+      width: 48px; height: 48px; background: var(--bg-surface);
+      border: 2px solid var(--color-primary); border-radius: 12px; display: flex;
+      align-items: center; justify-content: center; font-size: 24px;
+    }
+    .hud-bars { display: flex; flex-direction: column; gap: 4px; min-width: 150px; }
+    .bar-wrap { display: flex; align-items: center; gap: 6px; font-size: 11px; font-family: var(--font-mono); }
+    .theme-bar { flex: 1; height: 12px; background: #030712; border: 1px solid var(--color-primary); border-radius: 3px; position: relative; overflow: hidden; }
+    .theme-bar-fill { height: 100%; background: linear-gradient(90deg, var(--color-primary), var(--color-accent)); transition: width 0.3s ease; }
+    .hud-center-stage { text-align: center; }
+    .stage-title { font-size: 14px; font-weight: 900; color: var(--color-gold); margin-bottom: 3px; }
+    .stage-progress-pills { display: flex; justify-content: center; gap: 4px; }
+    .progress-dot { width: 10px; height: 8px; background: var(--bg-surface); border: 1px solid var(--color-primary); border-radius: 2px; }
+    .progress-dot.active { background: var(--color-gold); box-shadow: 0 0 8px var(--color-gold); }
+    .progress-dot.cleared { background: var(--color-success); }
+    .hud-stats { display: flex; align-items: center; gap: 12px; }
+    .stat-box { background: var(--bg-surface); border: 1px solid var(--color-primary); border-radius: 8px; padding: 4px 12px; display: flex; align-items: center; gap: 6px; }
+    .stat-label { font-size: 10px; color: #bae6fd; font-family: var(--font-mono); }
+    .stat-value { font-size: 15px; font-weight: 800; font-family: var(--font-mono); color: var(--color-gold); }
+    .btn-theme-icon { background: var(--bg-surface); border: 1px solid var(--color-primary); color: var(--color-primary); border-radius: 8px; padding: 6px 12px; font-size: 12px; font-weight: 700; cursor: pointer; }
+    
+    #main-stage { flex: 1; display: flex; flex-direction: column; padding: 10px 20px; gap: 8px; min-height: 0; }
+    .theme-arena {
+      flex: 1.1; background: linear-gradient(180deg, #020617 0%, var(--bg-card) 100%);
+      border: 1.5px solid var(--color-border); border-radius: 12px; position: relative;
+      overflow: hidden; display: flex; justify-content: space-between; align-items: flex-end; padding: 12px 40px 14px 40px;
+    }
+    .hero-wrapper, .monster-wrapper { display: flex; flex-direction: column; align-items: center; z-index: 2; position: relative; }
+    .hero-avatar-box, .monster-avatar-box {
+      width: 78px; height: 78px; background: var(--bg-surface); border: 2px solid var(--color-primary);
+      border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 40px;
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.25); transition: transform 0.2s ease;
+    }
+    .char-nametag { background: rgba(10, 14, 23, 0.9); border: 1px solid var(--color-primary); border-radius: 6px; padding: 2px 10px; font-size: 11px; font-weight: 700; color: #fff; margin-top: 5px; }
+    .monster-hp-wrap { width: 78px; margin-top: 4px; }
+    .floating-fx { position: absolute; font-size: 18px; font-weight: 900; font-family: var(--font-mono); animation: floatTheme 0.8s ease-out forwards; pointer-events: none; z-index: 20; }
+    
+    .theme-board-container { height: 68px; background: var(--bg-surface); border: 1px solid var(--color-border); border-radius: 10px; padding: 6px 14px; display: flex; flex-direction: column; }
+    .theme-board-header { display: flex; justify-content: space-between; font-size: 11px; font-weight: 700; color: var(--color-primary); margin-bottom: 2px; }
+    .theme-canvas-wrap { flex: 1; position: relative; width: 100%; }
+    #theme-canvas { width: 100%; height: 100%; display: block; }
+    
+    #question-panel { background: var(--bg-surface); border: 1.5px solid var(--color-border); border-radius: 14px; padding: 12px 16px; display: flex; flex-direction: column; gap: 8px; }
+    .question-header { display: flex; align-items: center; justify-content: space-between; }
+    .quest-badge { background: rgba(56, 189, 248, 0.2); color: var(--color-primary); border: 1px solid var(--color-primary); border-radius: 6px; padding: 2px 8px; font-size: 11px; font-weight: 700; }
+    .diff-badge { font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 4px; font-family: var(--font-mono); }
+    .diff-vocab { background: rgba(56, 189, 248, 0.2); color: #7dd3fc; border: 1px solid #38bdf8; }
+    .diff-grammar { background: rgba(245, 158, 11, 0.2); color: #fde047; border: 1px solid #f59e0b; }
+
+    .question-box { background: #0a0e17; border: 1px solid var(--color-border); border-radius: 8px; padding: 10px 16px; text-align: left; }
+    .question-title-text { font-size: 21px; font-weight: 800; line-height: 1.5; color: #fff; font-family: 'Plus Jakarta Sans', var(--font-chinese); }
+    .question-hint-text { margin-top: 6px; font-size: 14.5px; color: var(--color-primary); line-height: 1.4; }
+    .options-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .theme-btn {
+      background: var(--bg-card); color: var(--color-text); border: 1.5px solid var(--color-border); border-radius: 10px;
+      padding: 12px 16px; font-size: 16.5px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 10px;
+      transition: all 0.15s ease; outline: none; text-align: left; font-family: 'Plus Jakarta Sans', var(--font-chinese);
+    }
+    .theme-btn:hover { background: var(--btn-hover); border-color: var(--color-gold); transform: translateY(-1px); }
+    .theme-btn .btn-key { width: 26px; height: 26px; background: #0a0e17; color: var(--color-gold); border: 1px solid var(--color-primary); border-radius: 4px; font-size: 13px; font-family: var(--font-mono); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .theme-btn.btn-correct { background: rgba(16, 185, 129, 0.25) !important; border-color: var(--color-success) !important; color: #86efac !important; }
+    .theme-btn.btn-wrong { background: rgba(244, 63, 94, 0.25) !important; border-color: var(--color-danger) !important; color: #fecdd3 !important; }
+    
+    .modal-backdrop { position: absolute; inset: 0; background: rgba(2, 6, 23, 0.92); display: none; justify-content: center; align-items: center; z-index: 100; backdrop-filter: blur(5px); }
+    .theme-dialog { width: 92%; max-width: 650px; max-height: 90vh; overflow-y: auto; background: var(--bg-card); border: 2px solid var(--color-primary); border-radius: 16px; padding: 22px; display: flex; flex-direction: column; gap: 14px; }
+    .dialog-header { display: flex; align-items: center; gap: 10px; border-bottom: 1px dashed var(--color-primary); padding-bottom: 8px; }
+    .dialog-title { font-size: 17px; font-weight: 800; color: var(--color-gold); }
+    .step-by-step { background: #0a0e17; border: 1px solid var(--color-border); border-radius: 8px; padding: 12px 14px; font-size: 15px; color: #fff; line-height: 1.6; }
+    .dialog-footer { display: flex; justify-content: space-between; align-items: center; }
+    
+    .overlay-screen { position: absolute; inset: 0; background: var(--bg-card); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 80; padding: 24px; text-align: center; }
+    .game-title-main { font-size: 26px; font-weight: 900; color: var(--color-gold); margin-bottom: 4px; }
+    .game-subtitle { font-size: 14px; color: var(--color-primary); font-weight: 700; margin-bottom: 18px; }
+    .instructions-card { background: var(--bg-surface); border: 1.5px solid var(--color-primary); border-radius: 12px; padding: 14px 18px; max-width: 600px; margin-bottom: 20px; font-size: 13.5px; text-align: left; line-height: 1.8; }
+    .instructions-card ul { padding-left: 20px; }
+    .btn-start-theme { background: var(--color-gold); color: #0a0e17; border: none; border-radius: 8px; padding: 12px 36px; font-size: 16px; font-weight: 900; font-family: var(--font-orbitron); cursor: pointer; box-shadow: 0 0 20px rgba(245, 158, 11, 0.4); }
+    
+    .nav-hub-btn { position: absolute; top: 18px; left: 20px; background: rgba(255,255,255,0.08); border: 1px solid var(--color-border); color: #cbd5e1; padding: 6px 14px; border-radius: 999px; text-decoration: none; font-size: 12px; font-weight: 700; z-index: 90; }
+    .nav-hub-btn:hover { background: rgba(255,255,255,0.15); color: #fff; }
+
+    @keyframes floatTheme { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(-30px); opacity: 0; } }
+    @media (max-width: 768px) { #app-container { max-height: 100vh; border: none; border-radius: 0; } .options-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div id="app-container">
+    <a href="index.html" class="nav-hub-btn">⬅️ 翰林英語題庫目錄</a>
+
+    <header id="hud-bar">
+      <div class="hud-player-info">
+        <div class="hud-avatar"><span>👋</span></div>
+        <div class="hud-bars">
+          <div class="bar-wrap">
+            <span style="color:var(--color-gold); font-size:10px;">HP</span>
+            <div class="theme-bar"><div id="player-hp-bar" class="theme-bar-fill" style="width: 100%;"></div></div>
+            <span id="player-hp-text" style="font-size:10px; color:var(--color-gold);">100/100</span>
+          </div>
+          <div class="bar-wrap">
+            <span style="color:var(--color-primary); font-size:10px;">HANLIN BOOK 1 (七上)</span>
+            <span style="font-size:10px; color:#bae6fd;">UNIT 1: BE-VERBS & VOCABULARY (40Q)</span>
+          </div>
+        </div>
+      </div>
+      <div class="hud-center-stage">
+        <div id="stage-title" class="stage-title">關卡載入中...</div>
+        <div id="stage-pills" class="stage-progress-pills"></div>
+      </div>
+      <div class="hud-stats">
+        <div class="stat-box"><span class="stat-label">SCORE</span><span id="score-val" class="stat-value">00000</span></div>
+        <button id="btn-sound-toggle" class="btn-theme-icon">🔊 音效: 開</button>
+      </div>
+    </header>
+
+    <main id="main-stage">
+      <section class="theme-arena">
+        <div class="hero-wrapper">
+          <div class="hero-avatar-box"><span>🛡️</span></div>
+          <div class="char-nametag">特訓勇者</div>
+        </div>
+        <div class="monster-wrapper">
+          <div class="monster-avatar-box"><span id="monster-emoji">👾</span></div>
+          <div id="monster-name" class="char-nametag" style="color:var(--color-accent);">考點守護獸</div>
+          <div class="monster-hp-wrap">
+            <div class="theme-bar" style="height:8px;"><div id="monster-hp-bar" class="theme-bar-fill" style="width: 100%; background:var(--color-danger);"></div></div>
+          </div>
+        </div>
+      </section>
+      <section class="theme-board-container">
+        <div class="theme-board-header">
+          <span>👋 翰林七上 U1 全方位 40 題 ｜ 20 題單字 (基礎➔進階➔段考) ＋ 20 題文法 (be動詞/代名詞/縮寫)</span>
+          <span style="color:var(--color-gold); font-size:10px;">★ 40 題全方位雙修 (20 單字 + 20 文法)</span>
+        </div>
+        <div class="theme-canvas-wrap"><canvas id="theme-canvas"></canvas></div>
+      </section>
+    </main>
+
+    <footer id="question-panel">
+      <div class="question-header">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span id="quest-badge" class="quest-badge">關卡載入中...</span>
+          <span id="diff-badge" class="diff-badge diff-vocab">【單字篇】Level 1</span>
+        </div>
+        <span style="font-size:11px; color:#bae6fd;">快捷鍵：鍵盤 [1] - [4] 鍵作答</span>
+      </div>
+      <div class="question-box">
+        <div id="formula-text" class="question-title-text">題目載入中...</div>
+        <div id="formula-hint" class="question-hint-text">💡 提示：正在載入考點提示...</div>
+      </div>
+      <div id="options-grid" class="options-grid"></div>
+    </footer>
+
+    <div id="modal-explanation" class="modal-backdrop">
+      <div class="theme-dialog">
+        <div class="dialog-header">
+          <span style="font-size:24px;">💡</span>
+          <div id="modal-title" class="dialog-title">題型診斷與觀念盲點剖析</div>
+        </div>
+        <div id="modal-content" style="display:flex; flex-direction:column; gap:10px;"></div>
+        <div class="dialog-footer">
+          <span style="font-size:12px; color:#94a3b8;">段考會考重點一把抓</span>
+          <button id="btn-modal-continue" class="btn-start-theme" style="font-size:13px; padding:6px 20px;">掌握觀念，下一題 ➔</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="screen-title" class="overlay-screen">
+      <div style="font-size:55px; margin-bottom:10px;">👋✨</div>
+      <h1 class="game-title-main">翰林英語七上 Unit 1 雙效特訓 (40題)：Hello, I am Leo</h1>
+      <h2 class="game-subtitle">★ 20 題核心單字 + 20 題文法句型！涵蓋各校段考與歷屆精選 ★</h2>
+      <div class="instructions-card">
+        <strong style="color:var(--color-gold);">【本課 40 題雙效特訓矩陣】：</strong>
+        <ul>
+          <li>📘 <strong>Part A: 20 題核心單字特訓</strong>（基礎詞義 ➔ 進階搭配 ➔ 段考實戰）</li>
+          <li>📜 <strong>Part B: 20 題核心文法特訓</strong>（基礎句型 ➔ 易混考點 ➔ 會考難題）</li>
+          <li>💡 每題皆配備「思考提示」、「完整詳解」與「易錯盲點剖析」</li>
+        </ul>
+      </div>
+      <button id="btn-start-game" class="btn-start-theme">開始 40 題挑戰 (START) ➔</button>
+    </div>
+
+    <div id="screen-victory" class="overlay-screen" style="display:none;">
+      <div style="font-size:60px; margin-bottom:10px;">🏆👑</div>
+      <h1 class="game-title-main" style="color:var(--color-success);">40-QUESTION COMPLETE!</h1>
+      <h2 class="game-subtitle">恭喜你全數攻克本課 20 題單字 + 20 題文法全套題庫！</h2>
+      <div class="instructions-card" style="text-align:center;">
+        <p style="font-size:16px; margin-bottom:8px;">獲得榮譽：<strong style="color:var(--color-gold);">【翰林英語單元特訓大滿貫】</strong></p>
+        <p>最終得分：<strong id="final-victory-score" style="color:var(--color-success); font-size:24px; font-family:var(--font-mono);">00000</strong></p>
+      </div>
+      <div style="display:flex; gap:12px;">
+        <a href="index.html" class="btn-start-theme" style="background:var(--bg-surface); border:1px solid var(--color-primary); color:#fff; text-decoration:none; display:inline-flex; align-items:center;">回題庫總部</a>
+        <button id="btn-restart-victory" class="btn-start-theme">再次特訓 (RETRY)</button>
+      </div>
+    </div>
+
+    <div id="screen-gameover" class="overlay-screen" style="display:none;">
+      <div style="font-size:60px; margin-bottom:10px;">💥⚠️</div>
+      <h1 class="game-title-main" style="color:var(--color-danger);">特訓中斷！</h1>
+      <h2 class="game-subtitle">遇到盲點陷阱，複習詳解與提示後再戰！</h2>
+      <div class="instructions-card" style="text-align:center;">
+        <p>本次得分：<strong id="final-gameover-score" style="color:#fff; font-size:20px; font-family:var(--font-mono);">00000</strong></p>
+      </div>
+      <button id="btn-restart-gameover" class="btn-start-theme" style="background:var(--color-danger); color:#fff;">重新特訓 (RETRY)</button>
+    </div>
+  </div>
+
+  <script>
+    const GAME_BALANCE = { playerMaxHp: 100, damageToPlayer: 10, damageToMonster: 20, scorePerQuestion: 100 };
+
+    class ThemeAudioEngine {
+      constructor() { this.ctx = null; this.muted = false; }
+      init() {
+        if (!this.ctx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          this.ctx = new AudioContext();
+        }
+        if (this.ctx.state === 'suspended') this.ctx.resume();
+      }
+      playTone(freq, type, duration, startTime = 0) {
+        if (this.muted) return;
+        this.init();
+        const now = this.ctx.currentTime + startTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = type; osc.frequency.setValueAtTime(freq, now);
+        gain.gain.setValueAtTime(0.15, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+        osc.connect(gain); gain.connect(this.ctx.destination);
+        osc.start(now); osc.stop(now + duration);
+      }
+      playCorrect() { this.playTone(523.25, 'triangle', 0.08, 0); this.playTone(659.25, 'triangle', 0.1, 0.06); this.playTone(1046.50, 'triangle', 0.2, 0.12); }
+      playWrong() { this.playTone(220, 'sawtooth', 0.15, 0); this.playTone(146.83, 'sawtooth', 0.25, 0.1); }
+      playAttack() { this.playTone(440, 'square', 0.08, 0); this.playTone(880, 'sine', 0.1, 0.04); }
+      playLevelUp() { [440, 554.37, 659.25, 880].forEach((n, i) => this.playTone(n, 'sine', 0.15, i * 0.08)); }
+      playVictory() { [523.25, 659.25, 783.99, 1046.50, 1318.51].forEach((n, i) => this.playTone(n, 'sine', 0.2, i * 0.1)); }
+    }
+    const audio = new ThemeAudioEngine();
+
+    class ThemeVisualizer {
+      constructor(canvas) { this.canvas = canvas; this.ctx = canvas.getContext('2d'); }
+      render(stageIdx = 0) {
+        const ctx = this.ctx;
+        const w = this.canvas.width = this.canvas.parentElement.clientWidth;
+        const h = this.canvas.height = this.canvas.parentElement.clientHeight;
+        ctx.clearRect(0, 0, w, h);
+        const midX = w / 2;
+        ctx.fillStyle = "#38bdf8"; ctx.font = "bold 11px monospace"; ctx.textAlign = "center";
+        const cat = stageIdx < 3 ? "📘 單字篇 (Part A: Vocab)" : "📜 文法篇 (Part B: Grammar)";
+        ctx.fillText("⚡ " + cat + " ｜ 關卡 " + (stageIdx + 1) + "/6", midX, h / 2 - 4);
+        ctx.fillStyle = "#facc15";
+        ctx.fillText("40 題全方位雙修 ｜ 掌握字義搭配與核心文法規則", midX, h / 2 + 12);
+      }
+    }
+
+    const CHAPTERS = [
+      {
+            "level": 1,
+            "category": "單字篇",
+            "title": "Level 1: 基礎字彙與詞義理解 (7 題)",
+            "monsterName": "字彙基礎精靈",
+            "monsterEmoji": "🔤",
+            "questions": [
+                  {
+                        "formula": "Good morning! My ________ is Leo. Nice to meet you.",
+                        "options": [
+                              "name",
+                              "number",
+                              "school",
+                              "friend"
+                        ],
+                        "correct": "name",
+                        "hint": "💡 提示：自我介紹名字時說『My name is...』。",
+                        "explanation": "📝 詳解：My name is Leo (我的名字是 Leo)。\n⚠️ 觀念釐清：name (名字)。"
+                  },
+                  {
+                        "formula": "Ms. Lin is our new English ________. She is very kind.",
+                        "options": [
+                              "teacher",
+                              "student",
+                              "classmate",
+                              "doctor"
+                        ],
+                        "correct": "teacher",
+                        "hint": "💡 提示：教導英文的老師是『teacher』。",
+                        "explanation": "📝 詳解：English teacher (英文老師)。\n⚠️ 觀念釐清：teacher (老師)。"
+                  },
+                  {
+                        "formula": "Leo and Amy are in the same class. They are ________.",
+                        "options": [
+                              "classmates",
+                              "parents",
+                              "brothers",
+                              "teachers"
+                        ],
+                        "correct": "classmates",
+                        "hint": "💡 提示：在同一個班級上課的同學是『classmates』。",
+                        "explanation": "📝 詳解：classmates (同班同學)。\n⚠️ 觀念釐清：classmate = class + mate。"
+                  },
+                  {
+                        "formula": "I study at a junior high ________ in Taipei.",
+                        "options": [
+                              "school",
+                              "park",
+                              "store",
+                              "hospital"
+                        ],
+                        "correct": "school",
+                        "hint": "💡 提示：國中英文為『junior high school』。",
+                        "explanation": "📝 詳解：junior high school (國民中學)。\n⚠️ 觀念釐清：school (學校)。"
+                  },
+                  {
+                        "formula": "A: How are you today?  B: I am ________, thank you.",
+                        "options": [
+                              "fine",
+                              "five",
+                              "old",
+                              "late"
+                        ],
+                        "correct": "fine",
+                        "hint": "💡 提示：回答身體或心情良好用『I am fine.』。",
+                        "explanation": "📝 詳解：fine (安好的/不錯的)。\n⚠️ 觀念釐清：不要和 five (五) 搞混。"
+                  },
+                  {
+                        "formula": "Please open your ________ to page ten.",
+                        "options": [
+                              "book",
+                              "ruler",
+                              "eraser",
+                              "pencil"
+                        ],
+                        "correct": "book",
+                        "hint": "💡 提示：翻到第 10 頁的是『book (課本/書)』。",
+                        "explanation": "📝 詳解：open your book (打開書本)。\n⚠️ 觀念釐清：book (書本)。"
+                  },
+                  {
+                        "formula": "A: Goodbye, Leo!  B: ________ you tomorrow, Amy!",
+                        "options": [
+                              "See",
+                              "Look",
+                              "Watch",
+                              "Listen"
+                        ],
+                        "correct": "See",
+                        "hint": "💡 提示：道別用語『See you tomorrow! (明天見！)』",
+                        "explanation": "📝 詳解：See you... (再見/相見)。\n⚠️ 觀念釐清：See you later / tomorrow。"
+                  }
+            ]
+      },
+      {
+            "level": 2,
+            "category": "單字篇",
+            "title": "Level 2: 進階詞類變化與慣用語 (7 題)",
+            "monsterName": "字彙進階守衛",
+            "monsterEmoji": "📘",
+            "questions": [
+                  {
+                        "formula": "Today is my sister's twelfth birthday. She is twelve years ________.",
+                        "options": [
+                              "old",
+                              "tall",
+                              "long",
+                              "young"
+                        ],
+                        "correct": "old",
+                        "hint": "💡 提示：幾歲大用『... years old』。",
+                        "explanation": "📝 詳解：twelve years old (十二歲)。\n⚠️ 易錯陷阱：不可只寫 twelve years，要加 old。"
+                  },
+                  {
+                        "formula": "A: Welcome to Taiwan!  B: Thank you ________ your warm welcome.",
+                        "options": [
+                              "for",
+                              "with",
+                              "to",
+                              "in"
+                        ],
+                        "correct": "for",
+                        "hint": "💡 提示：為了某事而感謝固定搭配『Thank you for...』！",
+                        "explanation": "📝 詳解：Thank you for + 名詞/V-ing。\n⚠️ 易錯陷阱：感謝的介系詞用 for。"
+                  },
+                  {
+                        "formula": "Leo is a ________ boy. He always says 'please' and 'thank you.'",
+                        "options": [
+                              "polite",
+                              "noisy",
+                              "lazy",
+                              "busy"
+                        ],
+                        "correct": "polite",
+                        "hint": "💡 提示：常說請和謝謝的孩子很有『禮貌 (polite)』。",
+                        "explanation": "📝 詳解：polite (有禮貌的)。\n⚠️ 易錯陷阱：impolite 是沒禮貌的。"
+                  },
+                  {
+                        "formula": "Everyone in our group is ready ________ the new challenge.",
+                        "options": [
+                              "for",
+                              "to",
+                              "at",
+                              "with"
+                        ],
+                        "correct": "for",
+                        "hint": "💡 提示：為某事做好準備片語是『be ready for...』！",
+                        "explanation": "📝 詳解：be ready for + 名詞；be ready to + 原形動詞。\n⚠️ 易錯陷阱：for 接名詞，to 接動詞。"
+                  },
+                  {
+                        "formula": "Let's introduce our new ________ to the principal.",
+                        "options": [
+                              "member",
+                              "number",
+                              "marker",
+                              "mirror"
+                        ],
+                        "correct": "member",
+                        "hint": "💡 提示：團隊中的新成員是『member』。",
+                        "explanation": "📝 詳解：member (成員)。\n⚠️ 易錯陷阱：不要和 number (號碼) 搞混。"
+                  },
+                  {
+                        "formula": "My mother works in a dental clinic. She is a caring ________.",
+                        "options": [
+                              "nurse",
+                              "singer",
+                              "driver",
+                              "farmer"
+                        ],
+                        "correct": "nurse",
+                        "hint": "💡 提示：在診所照護病患的是『nurse (護理師)』。",
+                        "explanation": "📝 詳解：nurse (護理師/護士)。\n⚠️ 易錯陷阱：職業詞彙。"
+                  },
+                  {
+                        "formula": "It is an ________ to meet you here, Mr. President.",
+                        "options": [
+                              "honor",
+                              "hour",
+                              "honest",
+                              "house"
+                        ],
+                        "correct": "honor",
+                        "hint": "💡 提示：很榮幸見到你是『It is an honor to meet you.』",
+                        "explanation": "📝 詳解：honor (榮譽/榮幸，h 不發音，前面用冠詞 an)。\n⚠️ 易錯陷阱：an honor (冠詞 an 搭配)。"
+                  }
+            ]
+      },
+      {
+            "level": 3,
+            "category": "單字篇",
+            "title": "Level 3: 各校段考歷屆單字題 (6 題)",
+            "monsterName": "段考單字大主宰",
+            "monsterEmoji": "👑",
+            "questions": [
+                  {
+                        "formula": "【段考精選】To protect our eyes, we should keep a proper ________ from the television screen.",
+                        "options": [
+                              "distance",
+                              "difference",
+                              "direction",
+                              "dictionary"
+                        ],
+                        "correct": "distance",
+                        "hint": "💡 提示：保持適當的『距離 (distance)』保護眼睛。",
+                        "explanation": "📝 詳解：keep a proper distance (保持適當距離)。\n⚠️ 易錯陷阱：distance (距離)；direction (方向)。"
+                  },
+                  {
+                        "formula": "【段考精選】The teacher gave each student a name ________ to wear on their uniforms on the first day of school.",
+                        "options": [
+                              "tag",
+                              "bag",
+                              "flag",
+                              "rag"
+                        ],
+                        "correct": "tag",
+                        "hint": "💡 提示：別在制服上的名牌是『name tag』。",
+                        "explanation": "📝 詳解：name tag (名牌/胸章)。\n⚠️ 易錯陷阱：tag 意為標籤/名牌。"
+                  },
+                  {
+                        "formula": "【段考精選】Leo is very ________. He always shares his snacks and pencils with his classmates.",
+                        "options": [
+                              "generous",
+                              "jealous",
+                              "greedy",
+                              "curious"
+                        ],
+                        "correct": "generous",
+                        "hint": "💡 提示：樂於分享點心與文具的人很『大方/慷慨 (generous)』。",
+                        "explanation": "📝 詳解：generous (大方的/慷慨的)。\n⚠️ 易錯陷阱：greedy 是貪心的。"
+                  },
+                  {
+                        "formula": "【段考精選】Please write down your personal ________ on this application form.",
+                        "options": [
+                              "information",
+                              "instrument",
+                              "instruction",
+                              "invitation"
+                        ],
+                        "correct": "information",
+                        "hint": "💡 提示：在表格上寫下個人『資訊 (information，不可數名詞)』。",
+                        "explanation": "📝 詳解：personal information (個人資料/資訊)。\n⚠️ 易錯陷阱：information 恆為不可數名詞！"
+                  },
+                  {
+                        "formula": "【段考精選】Making new friends can help us broaden our ________ and learn about different cultures.",
+                        "options": [
+                              "horizons",
+                              "hobbies",
+                              "habits",
+                              "helmets"
+                        ],
+                        "correct": "horizons",
+                        "hint": "💡 提示：拓展我們的『視野/眼界 (broaden our horizons)』！",
+                        "explanation": "📝 詳解：broaden one's horizons (開拓視野)。\n⚠️ 易錯陷阱：經典素養片語。"
+                  },
+                  {
+                        "formula": "【段考精選】Although they are twins, their personalities are completely ________.",
+                        "options": [
+                              "different",
+                              "difficult",
+                              "delicious",
+                              "dangerous"
+                        ],
+                        "correct": "different",
+                        "hint": "💡 提示：雖然是雙胞胎，但個性完全『不同 (different)』。",
+                        "explanation": "📝 詳解：completely different (完全不同)。\n⚠️ 易錯陷阱：be different from (與……不同)。"
+                  }
+            ]
+      },
+      {
+            "level": 4,
+            "category": "文法篇",
+            "title": "Level 4: 基礎文法與句型奠基 (7 題)",
+            "monsterName": "文法初階守衛",
+            "monsterEmoji": "📜",
+            "questions": [
+                  {
+                        "formula": "I ________ a student in Class 701.",
+                        "options": [
+                              "am",
+                              "is",
+                              "are",
+                              "be"
+                        ],
+                        "correct": "am",
+                        "hint": "💡 提示：主詞 I 搭配 be 動詞 am。",
+                        "explanation": "📝 詳解：I am a student.\n⚠️ 觀念釐清：I 搭配 am。"
+                  },
+                  {
+                        "formula": "Leo and Kevin ________ brothers.",
+                        "options": [
+                              "are",
+                              "is",
+                              "am",
+                              "be"
+                        ],
+                        "correct": "are",
+                        "hint": "💡 提示：兩個人為主詞複數，搭配 are。",
+                        "explanation": "📝 詳解：Leo and Kevin are brothers.\n⚠️ 觀念釐清：複數主詞用 are。"
+                  },
+                  {
+                        "formula": "My mother ________ a wonderful doctor.",
+                        "options": [
+                              "is",
+                              "am",
+                              "are",
+                              "be"
+                        ],
+                        "correct": "is",
+                        "hint": "💡 提示：My mother 是單數第三人稱，用 is。",
+                        "explanation": "📝 詳解：She is a doctor.\n⚠️ 觀念釐清：單數用 is。"
+                  },
+                  {
+                        "formula": "A: ________ you from Tainan?  B: Yes, I am.",
+                        "options": [
+                              "Are",
+                              "Is",
+                              "Am",
+                              "Do"
+                        ],
+                        "correct": "Are",
+                        "hint": "💡 提示：主詞 you 搭配 be 動詞 Are 開頭問句。",
+                        "explanation": "📝 詳解：Are you from...?\n⚠️ 觀念釐清：be 動詞問句。"
+                  },
+                  {
+                        "formula": "They ________ not at home right now.",
+                        "options": [
+                              "are",
+                              "is",
+                              "am",
+                              "be"
+                        ],
+                        "correct": "are",
+                        "hint": "💡 提示：They 是複數，用 are not。",
+                        "explanation": "📝 詳解：They are not = They aren't。\n⚠️ 觀念釐清：否定句 not 置於 be 後。"
+                  },
+                  {
+                        "formula": "This ________ my favorite red pen.",
+                        "options": [
+                              "is",
+                              "are",
+                              "am",
+                              "be"
+                        ],
+                        "correct": "is",
+                        "hint": "💡 提示：This 是單數指示代名詞，用 is。",
+                        "explanation": "📝 詳解：This is my pen.\n⚠️ 觀念釐清：This is / These are。"
+                  },
+                  {
+                        "formula": "He ________ twelve years old.",
+                        "options": [
+                              "is",
+                              "are",
+                              "am",
+                              "be"
+                        ],
+                        "correct": "is",
+                        "hint": "💡 提示：He 是單數第三人稱，用 is。",
+                        "explanation": "📝 詳解：He is twelve years old.\n⚠️ 觀念釐清：年齡表達。"
+                  }
+            ]
+      },
+      {
+            "level": 5,
+            "category": "文法篇",
+            "title": "Level 5: 進階時態與易混淆考點 (7 題)",
+            "monsterName": "文法變化魔像",
+            "monsterEmoji": "⚡",
+            "questions": [
+                  {
+                        "formula": "A: Is your father a teacher?  B: Yes, ________.",
+                        "options": [
+                              "he is",
+                              "he's",
+                              "it is",
+                              "they are"
+                        ],
+                        "correct": "he is",
+                        "hint": "💡 提示：肯定簡答句句尾絕對不能縮寫！必須寫 Yes, he is.",
+                        "explanation": "📝 詳解：肯定簡答尾端不可縮寫。\n⚠️ 易錯陷阱：Yes, he's ❌ 是錯誤的！"
+                  },
+                  {
+                        "formula": "A: Are you and Leo classmates?  B: Yes, ________.",
+                        "options": [
+                              "we are",
+                              "you are",
+                              "they are",
+                              "I am"
+                        ],
+                        "correct": "we are",
+                        "hint": "💡 提示：問『你們』回答用『我們 (we are)』！",
+                        "explanation": "📝 詳解：you and Leo ➔ 答句用 we are。\n⚠️ 易錯陷阱：代名詞視角轉換。"
+                  },
+                  {
+                        "formula": "The little cat is cute, and ________ eyes are blue.",
+                        "options": [
+                              "its",
+                              "it's",
+                              "is",
+                              "its'"
+                        ],
+                        "correct": "its",
+                        "hint": "💡 提示：修飾名詞 eyes 用所有格『its (它的)』。it's 是 it is！",
+                        "explanation": "📝 詳解：its 是所有格；it's 是 it is。\n⚠️ 易錯陷阱：會考高頻所有格陷阱！"
+                  },
+                  {
+                        "formula": "________ are good friends and always help each other.",
+                        "options": [
+                              "Leo and I",
+                              "I and Leo",
+                              "Leo and me",
+                              "Me and Leo"
+                        ],
+                        "correct": "Leo and I",
+                        "hint": "💡 提示：英文禮貌原則：第二/三人稱在前面，第一人稱『I』放在最後面！",
+                        "explanation": "📝 詳解：Leo and I (第三人稱 + 第一人稱主格)。\n⚠️ 易錯陷阱：不可說 I and Leo ❌。"
+                  },
+                  {
+                        "formula": "A: Who is that girl over there?  B: ________ is our new classmate, Jenny.",
+                        "options": [
+                              "She",
+                              "He",
+                              "It",
+                              "Her"
+                        ],
+                        "correct": "She",
+                        "hint": "💡 提示：that girl 是女性，主格代名詞用『She』。",
+                        "explanation": "📝 詳解：She is our new classmate.\n⚠️ 易錯陷阱：主格用 She。"
+                  },
+                  {
+                        "formula": "The apples in the basket ________ very sweet.",
+                        "options": [
+                              "are",
+                              "is",
+                              "am",
+                              "be"
+                        ],
+                        "correct": "are",
+                        "hint": "💡 提示：真正主詞是複數名詞『The apples』，動詞用『are』！",
+                        "explanation": "📝 詳解：The apples (主詞複數) ➔ are。\n⚠️ 易錯陷阱：不要被 in the basket (單數) 騙去選 is！"
+                  },
+                  {
+                        "formula": "A: Are these your notebooks?  B: No, ________.",
+                        "options": [
+                              "they aren't",
+                              "these aren't",
+                              "it isn't",
+                              "they don't"
+                        ],
+                        "correct": "they aren't",
+                        "hint": "💡 提示：問 these 答句代名詞一律用『they』代替！",
+                        "explanation": "📝 詳解：these ➔ 答句用 they aren't。\n⚠️ 易錯陷阱：簡答不用 these。"
+                  }
+            ]
+      },
+      {
+            "level": 6,
+            "category": "文法篇",
+            "title": "Level 6: 各校段考與會考難題 (6 題)",
+            "monsterName": "會考文法大魔王",
+            "monsterEmoji": "🔥",
+            "questions": [
+                  {
+                        "formula": "【段考精選】The teacher, along with twenty students, ________ in the computer lab now.",
+                        "options": [
+                              "is",
+                              "are",
+                              "am",
+                              "be"
+                        ],
+                        "correct": "is",
+                        "hint": "💡 提示：主詞是單數『The teacher』，『along with twenty students』是介系詞片語插入語，動詞用『is』！",
+                        "explanation": "📝 詳解：along with 不影響主詞單複數，主詞為 The teacher (單數) ➔ is。\n⚠️ 易錯陷阱：會考主詞動詞一致性頂級考題！"
+                  },
+                  {
+                        "formula": "【段考精選】Neither of the boys in our classroom ________ tall enough to reach the top shelf.",
+                        "options": [
+                              "is",
+                              "are",
+                              "am",
+                              "be"
+                        ],
+                        "correct": "is",
+                        "hint": "💡 提示：『Neither of + 複數名詞』主詞視為『單數』，動詞用『is』！",
+                        "explanation": "📝 詳解：Neither 視為單數 ➔ is。\n⚠️ 易錯陷阱：高階主詞一致性考點。"
+                  },
+                  {
+                        "formula": "【段考精選】Every student and every teacher in this school ________ wearing a uniform today.",
+                        "options": [
+                              "is",
+                              "are",
+                              "am",
+                              "be"
+                        ],
+                        "correct": "is",
+                        "hint": "💡 提示：『Every... and every...』連接的主詞，動詞一律用『單數 (is)』！",
+                        "explanation": "📝 詳解：Every 修飾的主詞恆接單數動詞 is。\n⚠️ 易錯陷阱：即使有 and 連接兩個 every，依然是單數！"
+                  },
+                  {
+                        "formula": "【段考精選】One of my best friends ________ from Canada.",
+                        "options": [
+                              "is",
+                              "are",
+                              "am",
+                              "be"
+                        ],
+                        "correct": "is",
+                        "hint": "💡 提示：主詞是『One (其中一位)』，動詞用單數『is』！",
+                        "explanation": "📝 詳解：One of + 複數名詞 ➔ 主詞是 One (單數) ➔ is。\n⚠️ 易錯陷阱：不要被 friends 誤導選 are！"
+                  },
+                  {
+                        "formula": "【段考精選】A: Are you a new student here?  B: Yes, I am. My name is David. A: ________",
+                        "options": [
+                              "Nice to meet you, David.",
+                              "How old are you?",
+                              "Goodbye, David.",
+                              "Where is your school?"
+                        ],
+                        "correct": "Nice to meet you, David.",
+                        "hint": "💡 提示：新同學自我介紹後，最合適的社交回應是『Nice to meet you. (很高興認識你)』。",
+                        "explanation": "📝 詳解：情境日常交際用語。\n⚠️ 易錯陷阱：語境邏輯與社交禮儀。"
+                  },
+                  {
+                        "formula": "【段考精選】Look at the photo. The tall man with glasses between the two boys ________ our uncle.",
+                        "options": [
+                              "is",
+                              "are",
+                              "am",
+                              "be"
+                        ],
+                        "correct": "is",
+                        "hint": "💡 提示：主詞核心詞是『The tall man (單數)』，動詞用『is』！",
+                        "explanation": "📝 詳解：修飾語 with glasses between the two boys 不改變主詞單數性質 ➔ is。\n⚠️ 易錯陷阱：長修飾語分離主詞與動詞陷阱。"
+                  }
+            ]
+      }
+];
+
+    class GameManager {
+      constructor() {
+        this.currentLevelIndex = 0;
+        this.currentQuestionIndex = 0;
+        this.playerHp = GAME_BALANCE.playerMaxHp;
+        this.monsterHp = 100;
+        this.score = 0;
+        this.isAnswering = false;
+
+        this.elPlayerHp = document.getElementById('player-hp-bar');
+        this.elPlayerHpText = document.getElementById('player-hp-text');
+        this.elScore = document.getElementById('score-val');
+        this.elStageTitle = document.getElementById('stage-title');
+        this.elMonsterName = document.getElementById('monster-name');
+        this.elMonsterEmoji = document.getElementById('monster-emoji');
+        this.elMonsterHp = document.getElementById('monster-hp-bar');
+        this.elFormula = document.getElementById('formula-text');
+        this.elHint = document.getElementById('formula-hint');
+        this.elOptionsGrid = document.getElementById('options-grid');
+        this.elQuestBadge = document.getElementById('quest-badge');
+        this.elDiffBadge = document.getElementById('diff-badge');
+        this.elPillsContainer = document.getElementById('stage-pills');
+
+        this.modalExplanation = document.getElementById('modal-explanation');
+        this.elModalTitle = document.getElementById('modal-title');
+        this.elModalContent = document.getElementById('modal-content');
+        this.btnModalContinue = document.getElementById('btn-modal-continue');
+
+        this.screenTitle = document.getElementById('screen-title');
+        this.screenVictory = document.getElementById('screen-victory');
+        this.screenGameOver = document.getElementById('screen-gameover');
+
+        this.canvas = document.getElementById('theme-canvas');
+        this.visualizer = new ThemeVisualizer(this.canvas);
+
+        this.bindEvents();
+      }
+
+      bindEvents() {
+        document.getElementById('btn-start-game').addEventListener('click', () => {
+          audio.init();
+          this.startGame();
+        });
+
+        document.getElementById('btn-restart-victory').addEventListener('click', () => this.restartGame());
+        document.getElementById('btn-restart-gameover').addEventListener('click', () => this.restartGame());
+
+        this.btnModalContinue.addEventListener('click', () => {
+          this.closeExplanation();
+          this.nextQuestion();
+        });
+
+        window.addEventListener('keydown', (e) => {
+          if (this.isAnswering) return;
+          if (['1', '2', '3', '4'].includes(e.key)) {
+            const idx = parseInt(e.key, 10) - 1;
+            const btns = this.elOptionsGrid.querySelectorAll('.theme-btn');
+            if (btns[idx]) btns[idx].click();
+          }
+        });
+
+        const btnSound = document.getElementById('btn-sound-toggle');
+        if (btnSound) {
+          btnSound.addEventListener('click', () => {
+            audio.muted = !audio.muted;
+            btnSound.textContent = audio.muted ? '🔇 音效: 關' : '🔊 音效: 開';
+          });
+        }
+
+        window.addEventListener('resize', () => this.updateVisual());
+      }
+
+      startGame() {
+        this.screenTitle.style.display = 'none';
+        this.screenVictory.style.display = 'none';
+        this.screenGameOver.style.display = 'none';
+        this.currentLevelIndex = 0;
+        this.currentQuestionIndex = 0;
+        this.playerHp = GAME_BALANCE.playerMaxHp;
+        this.score = 0;
+        this.loadLevel(0);
+      }
+
+      restartGame() { this.startGame(); }
+
+      loadLevel(levelIndex) {
+        this.currentLevelIndex = levelIndex;
+        this.currentQuestionIndex = 0;
+        this.monsterHp = 100;
+        const stage = CHAPTERS[levelIndex];
+
+        this.elStageTitle.textContent = stage.title;
+        this.elMonsterName.textContent = stage.monsterName;
+        this.elMonsterEmoji.textContent = stage.monsterEmoji;
+
+        if (levelIndex < 3) {
+          this.elDiffBadge.className = "diff-badge diff-vocab";
+          this.elDiffBadge.textContent = "📘 【單字篇】" + stage.title.split(':')[0];
+        } else {
+          this.elDiffBadge.className = "diff-badge diff-grammar";
+          this.elDiffBadge.textContent = "📜 【文法篇】" + stage.title.split(':')[0];
+        }
+
+        this.updateHUD();
+        this.renderStagePills();
+        this.loadQuestion();
+        audio.playLevelUp();
+      }
+
+      renderStagePills() {
+        this.elPillsContainer.innerHTML = '';
+        const stage = CHAPTERS[this.currentLevelIndex];
+        for (let i = 0; i < stage.questions.length; i++) {
+          const dot = document.createElement('div');
+          dot.className = 'progress-dot' + (i === this.currentQuestionIndex ? ' active' : '') + (i < this.currentQuestionIndex ? ' cleared' : '');
+          this.elPillsContainer.appendChild(dot);
+        }
+      }
+
+      loadQuestion() {
+        this.isAnswering = false;
+        const stage = CHAPTERS[this.currentLevelIndex];
+        const q = stage.questions[this.currentQuestionIndex];
+
+        this.elQuestBadge.textContent = `第 ${this.currentLevelIndex + 1} 關 - 題 ${this.currentQuestionIndex + 1}/${stage.questions.length}`;
+        this.elFormula.textContent = q.formula;
+        this.elHint.textContent = `${q.hint}`;
+
+        this.elOptionsGrid.innerHTML = '';
+        q.options.forEach((opt, idx) => {
+          const btn = document.createElement('button');
+          btn.className = 'theme-btn';
+          btn.innerHTML = `<span class="btn-key">${idx + 1}</span> <span>${opt}</span>`;
+          btn.setAttribute('aria-label', `選項 ${idx + 1}: ${opt}`);
+          btn.addEventListener('click', () => this.handleAnswer(opt, btn, q));
+          this.elOptionsGrid.appendChild(btn);
+        });
+
+        this.renderStagePills();
+        this.updateVisual();
+      }
+
+      updateVisual() {
+        this.visualizer.render(this.currentLevelIndex);
+      }
+
+      handleAnswer(selectedOption, btnElement, question) {
+        if (this.isAnswering) return;
+        this.isAnswering = true;
+
+        const isCorrect = selectedOption === question.correct;
+
+        if (isCorrect) {
+          btnElement.classList.add('btn-correct');
+          audio.playCorrect();
+          audio.playAttack();
+          this.score += GAME_BALANCE.scorePerQuestion;
+
+          this.monsterHp = Math.max(0, this.monsterHp - GAME_BALANCE.damageToMonster);
+          this.triggerAttackAnim();
+          this.spawnFloatingText(`+${GAME_BALANCE.scorePerQuestion} 命中!`, this.elMonsterEmoji.parentElement, 'color:var(--color-gold);');
+
+          setTimeout(() => this.nextQuestion(), 750);
+        } else {
+          btnElement.classList.add('btn-wrong');
+          audio.playWrong();
+          this.playerHp = Math.max(0, this.playerHp - GAME_BALANCE.damageToPlayer);
+          this.triggerHurtAnim();
+          this.spawnFloatingText(`-${GAME_BALANCE.damageToPlayer} HP`, document.querySelector('.hero-avatar-box'), 'color:var(--color-danger);');
+
+          const btns = this.elOptionsGrid.querySelectorAll('.theme-btn');
+          btns.forEach(b => {
+            if (b.innerText.includes(question.correct)) b.classList.add('btn-correct');
+          });
+
+          setTimeout(() => {
+            if (this.playerHp <= 0) this.gameOver();
+            else this.showExplanation(selectedOption, question);
+          }, 750);
+        }
+        this.updateHUD();
+      }
+
+      triggerAttackAnim() {
+        const hero = document.querySelector('.hero-avatar-box');
+        const monster = document.querySelector('.monster-avatar-box');
+        if (hero) hero.classList.add('anim-attack');
+        if (monster) monster.classList.add('anim-hurt');
+        setTimeout(() => {
+          if (hero) hero.classList.remove('anim-attack');
+          if (monster) monster.classList.remove('anim-hurt');
+        }, 350);
+      }
+
+      triggerHurtAnim() {
+        const hero = document.querySelector('.hero-avatar-box');
+        if (hero) hero.classList.add('anim-hurt');
+        setTimeout(() => {
+          if (hero) hero.classList.remove('anim-hurt');
+        }, 350);
+      }
+
+      spawnFloatingText(text, container, style) {
+        const fx = document.createElement('div');
+        fx.className = 'floating-fx';
+        fx.style.cssText = style;
+        fx.textContent = text;
+        fx.style.left = '20px'; fx.style.top = '10px';
+        container.parentElement.appendChild(fx);
+        setTimeout(() => fx.remove(), 800);
+      }
+
+      showExplanation(selectedOption, question) {
+        this.elModalTitle.textContent = "💡 翰林英語題型診斷：盲點剖析";
+        
+        let explanationHtml = question.explanation.replace(/\n/g, '<br/>');
+        this.elModalContent.innerHTML = `
+          <div class="step-by-step">
+            <strong>📝 題目與標準答案：</strong><br/>
+            題目：<code>${question.formula}</code><br/>
+            正確答案：<strong style="color:var(--color-success); font-size:16px;">${question.correct}</strong><br/><br/>
+            ${explanationHtml}
+          </div>
+        `;
+        this.modalExplanation.style.display = 'flex';
+      }
+
+      closeExplanation() { this.modalExplanation.style.display = 'none'; }
+
+      nextQuestion() {
+        const stage = CHAPTERS[this.currentLevelIndex];
+        this.currentQuestionIndex++;
+        if (this.currentQuestionIndex >= stage.questions.length) {
+          if (this.currentLevelIndex + 1 < CHAPTERS.length) {
+            this.loadLevel(this.currentLevelIndex + 1);
+          } else {
+            this.victory();
+          }
+        } else {
+          this.loadQuestion();
+        }
+      }
+
+      updateHUD() {
+        const hpPct = Math.max(0, (this.playerHp / GAME_BALANCE.playerMaxHp) * 100);
+        this.elPlayerHp.style.width = `${hpPct}%`;
+        this.elPlayerHpText.textContent = `${this.playerHp}/${GAME_BALANCE.playerMaxHp}`;
+
+        const monsterPct = Math.max(0, this.monsterHp);
+        this.elMonsterHp.style.width = `${monsterPct}%`;
+        this.elScore.textContent = this.score.toString().padStart(5, '0');
+      }
+
+      victory() {
+        audio.playVictory();
+        document.getElementById('final-victory-score').textContent = this.score;
+        this.screenVictory.style.display = 'flex';
+      }
+
+      gameOver() {
+        audio.playWrong();
+        document.getElementById('final-gameover-score').textContent = this.score;
+        this.screenGameOver.style.display = 'flex';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      window.game = new GameManager();
+    });
+  </script>
+</body>
+</html>
