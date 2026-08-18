@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>國中翰林版英文 40 題旗艦題庫總部 | 國一至國三段考會考特訓基地</title>
+    <meta name="description" content="國中翰林版英文一至六冊全課次 40 題雙效旗艦特訓題庫（20題核心單字 + 20題核心文法），每題皆含提示、詳解與觀念盲點剖析。">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;600;700;900&family=Orbitron:wght@800;900&family=JetBrains+Mono:wght@700;800&family=Plus+Jakarta+Sans:wght@700;800&display=swap">
+    <style>
+        :root {
+            --bg-base: #060b14;
+            --bg-card: #0e1726;
+            --bg-surface: #17243b;
+            --primary: #38bdf8;
+            --primary-glow: rgba(56, 189, 248, 0.35);
+            --accent: #60a5fa;
+            --gold: #facc15;
+            --success: #10b981;
+            --danger: #f43f5e;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #1e293b;
+            --font-main: 'Plus Jakarta Sans', 'Noto Sans TC', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+            --font-display: 'Orbitron', sans-serif;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background-color: var(--bg-base);
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.15) 0%, transparent 60%),
+                radial-gradient(circle at 100% 100%, rgba(96, 165, 250, 0.08) 0%, transparent 50%);
+            color: var(--text-main);
+            font-family: var(--font-main);
+            min-height: 100vh;
+            padding: 30px 20px 60px;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; }
+        
+        header {
+            text-align: center;
+            margin-bottom: 35px;
+            position: relative;
+        }
+
+        .top-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .btn-portal-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid var(--border);
+            color: #bae6fd;
+            padding: 8px 16px;
+            border-radius: 999px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+            transition: all 0.2s ease;
+        }
+
+        .badge-main {
+            display: inline-block;
+            background: rgba(56, 189, 248, 0.12);
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            padding: 5px 16px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+        }
+
+        h1 {
+            font-size: 34px;
+            font-weight: 900;
+            color: #fff;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+        h1 span { color: var(--gold); }
+
+        p.subtitle {
+            color: var(--text-muted);
+            font-size: 15px;
+            max-width: 760px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin: 25px 0;
+            flex-wrap: wrap;
+        }
+        .stat-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 10px 20px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .stat-item .num {
+            font-size: 20px;
+            font-weight: 900;
+            color: var(--gold);
+            font-family: var(--font-mono);
+        }
+        .stat-item .label {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        /* Controls */
+        .controls-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .search-box {
+            position: relative;
+            width: 100%;
+        }
+        .search-input {
+            width: 100%;
+            background: var(--bg-surface);
+            border: 1.5px solid var(--border);
+            border-radius: 12px;
+            padding: 13px 20px 13px 44px;
+            color: #fff;
+            font-size: 15px;
+            outline: none;
+            transition: all 0.2s ease;
+            font-family: var(--font-main);
+        }
+        .search-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px var(--primary-glow);
+        }
+        .search-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 16px;
+            color: var(--text-muted);
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .filter-btn {
+            background: var(--bg-surface);
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+            padding: 8px 16px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        .filter-btn:hover {
+            color: #fff;
+            border-color: var(--primary);
+        }
+        .filter-btn.active {
+            background: var(--primary);
+            color: #060b14;
+            border-color: var(--primary);
+            font-weight: 800;
+        }
+
+        /* Grid */
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 20px;
+        }
+
+        .unit-card {
+            background: var(--bg-card);
+            border: 1.5px solid var(--border);
+            border-radius: 16px;
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .unit-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.5), 0 0 20px var(--primary-glow);
+        }
+
+        .card-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+        .book-pill {
+            font-size: 11px;
+            font-weight: 800;
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-family: var(--font-mono);
+        }
+        .book-b1 { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid #38bdf8; }
+        .book-b2 { background: rgba(16, 185, 129, 0.15); color: #10b981; border: 1px solid #10b981; }
+        .book-b3 { background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid #f59e0b; }
+        .book-b4 { background: rgba(217, 70, 239, 0.15); color: #d946ef; border: 1px solid #d946ef; }
+        .book-b5 { background: rgba(244, 63, 94, 0.15); color: #f43f5e; border: 1px solid #f43f5e; }
+        .book-b6 { background: rgba(168, 85, 247, 0.15); color: #a855f7; border: 1px solid #a855f7; }
+
+        .unit-badge {
+            font-size: 12px;
+            font-weight: 800;
+            color: var(--gold);
+            font-family: var(--font-mono);
+        }
+
+        .unit-title {
+            font-size: 18px;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+
+        .unit-desc {
+            font-size: 13.5px;
+            color: var(--text-muted);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .levels-preview {
+            background: var(--bg-surface);
+            border-radius: 10px;
+            padding: 10px 14px;
+            margin-bottom: 18px;
+            font-size: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .level-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #cbd5e1;
+        }
+
+        .btn-launch {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: #060b14;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: 800;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.25);
+        }
+        .btn-launch:hover {
+            transform: scale(1.02);
+            box-shadow: 0 6px 20px rgba(56, 189, 248, 0.4);
+        }
+
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 768px) {
+            .modules-grid { grid-template-columns: 1fr; }
+            h1 { font-size: 26px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="top-nav">
+            <div class="btn-portal-badge">⚡ 翰林版英文 40 題旗艦題庫系統</div>
+            <span style="font-size:12px; color:var(--text-muted);">段考 · 歷屆 · 會考雙修基地</span>
+        </div>
+
+        <header>
+            <div class="badge-main">HANLIN ENGLISH 40-QUESTION EXAM BANK</div>
+            <h1>國中翰林版英文 <span>40題雙效特訓</span> 題庫總部</h1>
+            <p class="subtitle">每課包含【20 題核心單字 ＋ 20 題核心文法】，收錄各校段考精選、字彙搭配、常考句型與會考易錯盲點陷阱！</p>
+        </header>
+
+        <div class="stats-bar">
+            <div class="stat-item"><span class="num">40 題/課</span><span class="label">雙效全套題庫</span></div>
+            <div class="stat-item"><span class="num">20 單字</span><span class="label">基礎到段考實戰</span></div>
+            <div class="stat-item"><span class="num">20 文法</span><span class="label">句型到會考盲點</span></div>
+            <div class="stat-item"><span class="num">100%</span><span class="label">全配提示與詳解</span></div>
+        </div>
+
+        <div class="controls-card">
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="searchInput" class="search-input" placeholder="搜尋課次、冊次或核心文法考點（例：be動詞、完成式、比較級、祈使句、U1...）" oninput="handleSearch()">
+            </div>
+            <div class="filter-tabs">
+                <button class="filter-btn active" onclick="filterBook('all', this)">全部課次 (ALL)</button>
+                <button class="filter-btn" onclick="filterBook('B1', this)">七年級上冊 (B1)</button>
+                <button class="filter-btn" onclick="filterBook('B2', this)">七年級下冊 (B2)</button>
+                <button class="filter-btn" onclick="filterBook('B3', this)">八年級上冊 (B3)</button>
+                <button class="filter-btn" onclick="filterBook('B4', this)">八年級下冊 (B4)</button>
+                <button class="filter-btn" onclick="filterBook('B5', this)">九年級上冊 (B5)</button>
+                <button class="filter-btn" onclick="filterBook('B6', this)">九年級下冊 (B6)</button>
+            </div>
+        </div>
+
+        <main id="modulesContainer" class="modules-grid">
+            <!-- Units will be rendered dynamically -->
+        </main>
+    </div>
+
+    <script>
+        const UNITS = [
+            // BOOK 1
+            {
+                book: "B1",
+                bookBadge: "七上 B1",
+                bookClass: "book-b1",
+                unit: "Unit 1 (40題)",
+                title: "Unit 1：Hello, I am Leo",
+                desc: "【20 單字】自我介紹、校園物品 ＋ 【20 文法】be動詞(am/is/are)、人稱代名詞、縮寫規則",
+                url: "hanlin_b1_u1_40q.html",
+                keywords: "be動詞 am is are 人稱代名詞 自我介紹 名字 七上 b1 u1"
+            },
+            {
+                book: "B1",
+                bookBadge: "七上 B1",
+                bookClass: "book-b1",
+                unit: "Unit 2 (40題)",
+                title: "Unit 2：What is that?",
+                desc: "【20 單字】職業、文具、生活物品 ＋ 【20 文法】this/that/these/those、名詞單複數(-s/-es/不規則)",
+                url: "hanlin_b1_u2_40q.html",
+                keywords: "指示代名詞 this that these those 單複數名詞 職業 七上 b1 u2"
+            },
+            {
+                book: "B1",
+                bookBadge: "七上 B1",
+                bookClass: "book-b1",
+                unit: "Unit 3 (40題)",
+                title: "Unit 3：Where is my cat?",
+                desc: "【20 單字】空間家具、生活標誌 ＋ 【20 文法】祈使句(Please/Don't)、場所介系詞(between/in front of)",
+                url: "hanlin_b1_u3_40q.html",
+                keywords: "祈使句 介系詞 in on under between in front of 場所 七上 b1 u3"
+            },
+            {
+                book: "B1",
+                bookBadge: "七上 B1",
+                bookClass: "book-b1",
+                unit: "Unit 4 (40題)",
+                title: "Unit 4：What time is it?",
+                desc: "【20 單字】作息家務、休閒運動 ＋ 【20 文法】現在進行式(be+V-ing)、時間問答(half past/a quarter to)",
+                url: "hanlin_b1_u4_40q.html",
+                keywords: "現在進行式 ing 時間 what time is it half past 七上 b1 u4"
+            },
+            {
+                book: "B1",
+                bookBadge: "七上 B1",
+                bookClass: "book-b1",
+                unit: "Unit 5 (40題)",
+                title: "Unit 5：Can you play baseball?",
+                desc: "【20 單字】運動球類、西洋樂器 ＋ 【20 文法】助動詞 can / can't、能力請求、冠詞 the 搭配",
+                url: "hanlin_b1_u5_40q.html",
+                keywords: "助動詞 can cannot can't 球類 樂器 play the piano 七上 b1 u5"
+            },
+            {
+                book: "B1",
+                bookBadge: "七上 B1",
+                bookClass: "book-b1",
+                unit: "Unit 6 (40題)",
+                title: "Unit 6：Do you have a pet?",
+                desc: "【20 單字】寵物生活、每日作息 ＋ 【20 文法】現在簡單式、第三人稱單數加-s/-es、do/does",
+                url: "hanlin_b1_u6_40q.html",
+                keywords: "現在簡單式 do does 第三人稱單數 s es 習慣 事實 七上 b1 u6"
+            },
+
+            // BOOK 2
+            {
+                book: "B2",
+                bookBadge: "七下 B2",
+                bookClass: "book-b2",
+                unit: "Unit 1 (40題)",
+                title: "Unit 1：How often do you exercise?",
+                desc: "【20 單字】運動健康、飲食習慣 ＋ 【20 文法】頻率副詞(always/usually/never)位置、How often 次數",
+                url: "hanlin_b2_u1_40q.html",
+                keywords: "頻率副詞 always usually often sometimes seldom never how often 七下 b2 u1"
+            },
+            {
+                book: "B2",
+                bookBadge: "七下 B2",
+                bookClass: "book-b2",
+                unit: "Unit 2 (40題)",
+                title: "Unit 2：How much is the milk?",
+                desc: "【20 單字】夜市美食、超市商品 ＋ 【20 文法】數量詞 How much (不可數/價格) vs How many、容器量詞",
+                url: "hanlin_b2_u2_40q.html",
+                keywords: "數量詞 how much how many 不可數名詞 量詞 some any 價格 七下 b2 u2"
+            },
+
+            // BOOK 3
+            {
+                book: "B3",
+                bookBadge: "八上 B3",
+                bookClass: "book-b3",
+                unit: "Unit 1 (40題)",
+                title: "Unit 1：What were you doing?",
+                desc: "【20 單字】突發狀況、天氣災害 ＋ 【20 文法】過去進行式 (was/were + V-ing)、when vs while 連接詞",
+                url: "hanlin_b3_u1_40q.html",
+                keywords: "過去進行式 was were ing when while 連接詞 八上 b3 u1"
+            },
+
+            // BOOK 5
+            {
+                book: "B5",
+                bookBadge: "九上 B5",
+                bookClass: "book-b5",
+                unit: "Unit 1 (40題)",
+                title: "Unit 1：Have you ever been to Japan?",
+                desc: "【20 單字】國際旅遊、世界文化 ＋ 【20 文法】現在完成式 (have/has + p.p.)、for vs since、been to vs gone to",
+                url: "hanlin_b5_u1_40q.html",
+                keywords: "現在完成式 have has pp for since already yet been to gone to 九上 b5 u1"
+            },
+            {
+                book: "B5",
+                bookBadge: "九上 B5",
+                bookClass: "book-b5",
+                unit: "Unit 2 (40題)",
+                title: "Unit 2：The castle was built in 1850",
+                desc: "【20 單字】科技發明、古蹟歷史 ＋ 【20 文法】被動語態 (be + p.p.)、by 動作執行者、不及物動詞無被動",
+                url: "hanlin_b5_u2_40q.html",
+                keywords: "被動語態 is was were will be pp by 不及物動詞 happen 九上 b5 u2"
+            }
+        ];
+
+        let currentFilter = 'all';
+        let searchQuery = '';
+
+        function renderModules() {
+            const container = document.getElementById('modulesContainer');
+            container.innerHTML = '';
+
+            const filtered = UNITS.filter(u => {
+                const matchFilter = currentFilter === 'all' || u.book === currentFilter;
+                const matchSearch = searchQuery === '' || 
+                    u.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                    u.desc.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                    u.keywords.toLowerCase().includes(searchQuery.toLowerCase());
+                return matchFilter && matchSearch;
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div style="font-size: 40px; margin-bottom: 10px;">🔍</div>
+                        <p style="font-size: 16px; font-weight: 700;">查無符合條件的 40 題單元</p>
+                        <p style="font-size: 13px; margin-top: 4px;">請嘗試更換搜尋關鍵字或選擇其他冊次分類</p>
+                    </div>
+                `;
+                return;
+            }
+
+            filtered.forEach(u => {
+                const card = document.createElement('div');
+                card.className = 'unit-card';
+                card.innerHTML = `
+                    <div>
+                        <div class="card-top">
+                            <span class="book-pill ${u.bookClass}">${u.bookBadge}</span>
+                            <span class="unit-badge">${u.unit}</span>
+                        </div>
+                        <h3 class="unit-title">${u.title}</h3>
+                        <p class="unit-desc">${u.desc}</p>
+                        <div class="levels-preview">
+                            <div class="level-row"><span>📘</span> <strong>Part A (單字篇)</strong> · 20 題 (基礎/進階/段考)</div>
+                            <div class="level-row"><span>📜</span> <strong>Part B (文法篇)</strong> · 20 題 (句型/時態/盲點)</div>
+                        </div>
+                    </div>
+                    <a href="${u.url}" class="btn-launch">
+                        <span>⚡ 進入 40 題雙效特訓</span>
+                        <span>➔</span>
+                    </a>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function filterBook(book, btn) {
+            currentFilter = book;
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            renderModules();
+        }
+
+        function handleSearch() {
+            searchQuery = document.getElementById('searchInput').value.trim();
+            renderModules();
+        }
+
+        // Initial render
+        renderModules();
+    </script>
+</body>
+</html>
