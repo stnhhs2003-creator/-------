@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>翰林英語八上 Unit 1 雙效特訓 (40題)：What were you doing?</title>
+  <meta name="description" content="20 題核心單字(生活事件/突發狀況) + 20 題文法(過去進行式/when vs while)">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700;900&family=Orbitron:wght@800;900&family=JetBrains+Mono:wght@700;800&family=Plus+Jakarta+Sans:wght@600;800&display=swap">
+  <style>
+    :root {
+      --bg-theme: #121b28;
+      --bg-card: #1e2c40;
+      --bg-surface: #2d405c;
+      --color-primary: #38bdf8;
+      --color-accent: #7dd3fc;
+      --color-gold: #facc15;
+      --color-danger: #f43f5e;
+      --color-success: #10b981;
+      --color-text: #f8fafc;
+      --color-border: #0284c7;
+      --btn-hover: #0369a1;
+      --font-mono: 'JetBrains Mono', monospace;
+      --font-orbitron: 'Orbitron', monospace;
+      --font-chinese: 'Noto Sans TC', sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+    html, body {
+      width: 100%; height: 100%; overflow: hidden;
+      background: radial-gradient(circle at 50% 30%, #0284c7 0%, #050a12 100%);
+      font-family: var(--font-chinese); color: var(--color-text);
+      display: flex; justify-content: center; align-items: center;
+    }
+    #app-container {
+      width: 100vw; height: 100vh; max-width: 1140px; max-height: 820px;
+      background: var(--bg-card); border: 2.5px solid var(--color-primary);
+      border-radius: 20px; box-shadow: 0 0 35px rgba(56, 189, 248, 0.25), inset 0 0 20px rgba(0,0,0,0.8);
+      display: flex; flex-direction: column; overflow: hidden; position: relative;
+    }
+    #hud-bar {
+      height: 72px; background: rgba(10, 14, 23, 0.95);
+      border-bottom: 2px solid var(--color-primary); display: flex;
+      align-items: center; justify-content: space-between; padding: 0 22px; z-index: 10;
+    }
+    .hud-player-info { display: flex; align-items: center; gap: 12px; }
+    .hud-avatar {
+      width: 48px; height: 48px; background: var(--bg-surface);
+      border: 2px solid var(--color-primary); border-radius: 12px; display: flex;
+      align-items: center; justify-content: center; font-size: 24px;
+    }
+    .hud-bars { display: flex; flex-direction: column; gap: 4px; min-width: 150px; }
+    .bar-wrap { display: flex; align-items: center; gap: 6px; font-size: 11px; font-family: var(--font-mono); }
+    .theme-bar { flex: 1; height: 12px; background: #030712; border: 1px solid var(--color-primary); border-radius: 3px; position: relative; overflow: hidden; }
+    .theme-bar-fill { height: 100%; background: linear-gradient(90deg, var(--color-primary), var(--color-accent)); transition: width 0.3s ease; }
+    .hud-center-stage { text-align: center; }
+    .stage-title { font-size: 14px; font-weight: 900; color: var(--color-gold); margin-bottom: 3px; }
+    .stage-progress-pills { display: flex; justify-content: center; gap: 4px; }
+    .progress-dot { width: 10px; height: 8px; background: var(--bg-surface); border: 1px solid var(--color-primary); border-radius: 2px; }
+    .progress-dot.active { background: var(--color-gold); box-shadow: 0 0 8px var(--color-gold); }
+    .progress-dot.cleared { background: var(--color-success); }
+    .hud-stats { display: flex; align-items: center; gap: 12px; }
+    .stat-box { background: var(--bg-surface); border: 1px solid var(--color-primary); border-radius: 8px; padding: 4px 12px; display: flex; align-items: center; gap: 6px; }
+    .stat-label { font-size: 10px; color: #bae6fd; font-family: var(--font-mono); }
+    .stat-value { font-size: 15px; font-weight: 800; font-family: var(--font-mono); color: var(--color-gold); }
+    .btn-theme-icon { background: var(--bg-surface); border: 1px solid var(--color-primary); color: var(--color-primary); border-radius: 8px; padding: 6px 12px; font-size: 12px; font-weight: 700; cursor: pointer; }
+    
+    #main-stage { flex: 1; display: flex; flex-direction: column; padding: 10px 20px; gap: 8px; min-height: 0; }
+    .theme-arena {
+      flex: 1.1; background: linear-gradient(180deg, #020617 0%, var(--bg-card) 100%);
+      border: 1.5px solid var(--color-border); border-radius: 12px; position: relative;
+      overflow: hidden; display: flex; justify-content: space-between; align-items: flex-end; padding: 12px 40px 14px 40px;
+    }
+    .hero-wrapper, .monster-wrapper { display: flex; flex-direction: column; align-items: center; z-index: 2; position: relative; }
+    .hero-avatar-box, .monster-avatar-box {
+      width: 78px; height: 78px; background: var(--bg-surface); border: 2px solid var(--color-primary);
+      border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 40px;
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.25); transition: transform 0.2s ease;
+    }
+    .char-nametag { background: rgba(10, 14, 23, 0.9); border: 1px solid var(--color-primary); border-radius: 6px; padding: 2px 10px; font-size: 11px; font-weight: 700; color: #fff; margin-top: 5px; }
+    .monster-hp-wrap { width: 78px; margin-top: 4px; }
+    .floating-fx { position: absolute; font-size: 18px; font-weight: 900; font-family: var(--font-mono); animation: floatTheme 0.8s ease-out forwards; pointer-events: none; z-index: 20; }
+    
+    .theme-board-container { height: 68px; background: var(--bg-surface); border: 1px solid var(--color-border); border-radius: 10px; padding: 6px 14px; display: flex; flex-direction: column; }
+    .theme-board-header { display: flex; justify-content: space-between; font-size: 11px; font-weight: 700; color: var(--color-primary); margin-bottom: 2px; }
+    .theme-canvas-wrap { flex: 1; position: relative; width: 100%; }
+    #theme-canvas { width: 100%; height: 100%; display: block; }
+    
+    #question-panel { background: var(--bg-surface); border: 1.5px solid var(--color-border); border-radius: 14px; padding: 12px 16px; display: flex; flex-direction: column; gap: 8px; }
+    .question-header { display: flex; align-items: center; justify-content: space-between; }
+    .quest-badge { background: rgba(56, 189, 248, 0.2); color: var(--color-primary); border: 1px solid var(--color-primary); border-radius: 6px; padding: 2px 8px; font-size: 11px; font-weight: 700; }
+    .diff-badge { font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 4px; font-family: var(--font-mono); }
+    .diff-vocab { background: rgba(56, 189, 248, 0.2); color: #7dd3fc; border: 1px solid #38bdf8; }
+    .diff-grammar { background: rgba(245, 158, 11, 0.2); color: #fde047; border: 1px solid #f59e0b; }
+
+    .question-box { background: #0a0e17; border: 1px solid var(--color-border); border-radius: 8px; padding: 10px 16px; text-align: left; }
+    .question-title-text { font-size: 21px; font-weight: 800; line-height: 1.5; color: #fff; font-family: 'Plus Jakarta Sans', var(--font-chinese); }
+    .question-hint-text { margin-top: 6px; font-size: 14.5px; color: var(--color-primary); line-height: 1.4; }
+    .options-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .theme-btn {
+      background: var(--bg-card); color: var(--color-text); border: 1.5px solid var(--color-border); border-radius: 10px;
+      padding: 12px 16px; font-size: 16.5px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 10px;
+      transition: all 0.15s ease; outline: none; text-align: left; font-family: 'Plus Jakarta Sans', var(--font-chinese);
+    }
+    .theme-btn:hover { background: var(--btn-hover); border-color: var(--color-gold); transform: translateY(-1px); }
+    .theme-btn .btn-key { width: 26px; height: 26px; background: #0a0e17; color: var(--color-gold); border: 1px solid var(--color-primary); border-radius: 4px; font-size: 13px; font-family: var(--font-mono); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .theme-btn.btn-correct { background: rgba(16, 185, 129, 0.25) !important; border-color: var(--color-success) !important; color: #86efac !important; }
+    .theme-btn.btn-wrong { background: rgba(244, 63, 94, 0.25) !important; border-color: var(--color-danger) !important; color: #fecdd3 !important; }
+    
+    .modal-backdrop { position: absolute; inset: 0; background: rgba(2, 6, 23, 0.92); display: none; justify-content: center; align-items: center; z-index: 100; backdrop-filter: blur(5px); }
+    .theme-dialog { width: 92%; max-width: 650px; max-height: 90vh; overflow-y: auto; background: var(--bg-card); border: 2px solid var(--color-primary); border-radius: 16px; padding: 22px; display: flex; flex-direction: column; gap: 14px; }
+    .dialog-header { display: flex; align-items: center; gap: 10px; border-bottom: 1px dashed var(--color-primary); padding-bottom: 8px; }
+    .dialog-title { font-size: 17px; font-weight: 800; color: var(--color-gold); }
+    .step-by-step { background: #0a0e17; border: 1px solid var(--color-border); border-radius: 8px; padding: 12px 14px; font-size: 15px; color: #fff; line-height: 1.6; }
+    .dialog-footer { display: flex; justify-content: space-between; align-items: center; }
+    
+    .overlay-screen { position: absolute; inset: 0; background: var(--bg-card); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 80; padding: 24px; text-align: center; }
+    .game-title-main { font-size: 26px; font-weight: 900; color: var(--color-gold); margin-bottom: 4px; }
+    .game-subtitle { font-size: 14px; color: var(--color-primary); font-weight: 700; margin-bottom: 18px; }
+    .instructions-card { background: var(--bg-surface); border: 1.5px solid var(--color-primary); border-radius: 12px; padding: 14px 18px; max-width: 600px; margin-bottom: 20px; font-size: 13.5px; text-align: left; line-height: 1.8; }
+    .instructions-card ul { padding-left: 20px; }
+    .btn-start-theme { background: var(--color-gold); color: #0a0e17; border: none; border-radius: 8px; padding: 12px 36px; font-size: 16px; font-weight: 900; font-family: var(--font-orbitron); cursor: pointer; box-shadow: 0 0 20px rgba(245, 158, 11, 0.4); }
+    
+    .nav-hub-btn { position: absolute; top: 18px; left: 20px; background: rgba(255,255,255,0.08); border: 1px solid var(--color-border); color: #cbd5e1; padding: 6px 14px; border-radius: 999px; text-decoration: none; font-size: 12px; font-weight: 700; z-index: 90; }
+    .nav-hub-btn:hover { background: rgba(255,255,255,0.15); color: #fff; }
+
+    @keyframes floatTheme { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(-30px); opacity: 0; } }
+    @media (max-width: 768px) { #app-container { max-height: 100vh; border: none; border-radius: 0; } .options-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div id="app-container">
+    <a href="index.html" class="nav-hub-btn">⬅️ 翰林英語題庫目錄</a>
+
+    <header id="hud-bar">
+      <div class="hud-player-info">
+        <div class="hud-avatar"><span>⚡</span></div>
+        <div class="hud-bars">
+          <div class="bar-wrap">
+            <span style="color:var(--color-gold); font-size:10px;">HP</span>
+            <div class="theme-bar"><div id="player-hp-bar" class="theme-bar-fill" style="width: 100%;"></div></div>
+            <span id="player-hp-text" style="font-size:10px; color:var(--color-gold);">100/100</span>
+          </div>
+          <div class="bar-wrap">
+            <span style="color:var(--color-primary); font-size:10px;">HANLIN BOOK 3 (八上)</span>
+            <span style="font-size:10px; color:#bae6fd;">UNIT 1: PAST CONTINUOUS & WHEN/WHILE (40Q)</span>
+          </div>
+        </div>
+      </div>
+      <div class="hud-center-stage">
+        <div id="stage-title" class="stage-title">關卡載入中...</div>
+        <div id="stage-pills" class="stage-progress-pills"></div>
+      </div>
+      <div class="hud-stats">
+        <div class="stat-box"><span class="stat-label">SCORE</span><span id="score-val" class="stat-value">00000</span></div>
+        <button id="btn-sound-toggle" class="btn-theme-icon">🔊 音效: 開</button>
+      </div>
+    </header>
+
+    <main id="main-stage">
+      <section class="theme-arena">
+        <div class="hero-wrapper">
+          <div class="hero-avatar-box"><span>🛡️</span></div>
+          <div class="char-nametag">特訓勇者</div>
+        </div>
+        <div class="monster-wrapper">
+          <div class="monster-avatar-box"><span id="monster-emoji">👾</span></div>
+          <div id="monster-name" class="char-nametag" style="color:var(--color-accent);">考點守護獸</div>
+          <div class="monster-hp-wrap">
+            <div class="theme-bar" style="height:8px;"><div id="monster-hp-bar" class="theme-bar-fill" style="width: 100%; background:var(--color-danger);"></div></div>
+          </div>
+        </div>
+      </section>
+      <section class="theme-board-container">
+        <div class="theme-board-header">
+          <span>⚡ 翰林八上 U1 雙效 40 題 ｜ 20 題單字 (突發狀況/天氣/事件) ＋ 20 題文法 (was/were+Ving/when/while)</span>
+          <span style="color:var(--color-gold); font-size:10px;">★ 40 題全方位雙修 (20 單字 + 20 文法)</span>
+        </div>
+        <div class="theme-canvas-wrap"><canvas id="theme-canvas"></canvas></div>
+      </section>
+    </main>
+
+    <footer id="question-panel">
+      <div class="question-header">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span id="quest-badge" class="quest-badge">關卡載入中...</span>
+          <span id="diff-badge" class="diff-badge diff-vocab">【單字篇】Level 1</span>
+        </div>
+        <span style="font-size:11px; color:#bae6fd;">快捷鍵：鍵盤 [1] - [4] 鍵作答</span>
+      </div>
+      <div class="question-box">
+        <div id="formula-text" class="question-title-text">題目載入中...</div>
+        <div id="formula-hint" class="question-hint-text">💡 提示：正在載入考點提示...</div>
+      </div>
+      <div id="options-grid" class="options-grid"></div>
+    </footer>
+
+    <div id="modal-explanation" class="modal-backdrop">
+      <div class="theme-dialog">
+        <div class="dialog-header">
+          <span style="font-size:24px;">💡</span>
+          <div id="modal-title" class="dialog-title">題型診斷與觀念盲點剖析</div>
+        </div>
+        <div id="modal-content" style="display:flex; flex-direction:column; gap:10px;"></div>
+        <div class="dialog-footer">
+          <span style="font-size:12px; color:#94a3b8;">段考會考重點一把抓</span>
+          <button id="btn-modal-continue" class="btn-start-theme" style="font-size:13px; padding:6px 20px;">掌握觀念，下一題 ➔</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="screen-title" class="overlay-screen">
+      <div style="font-size:55px; margin-bottom:10px;">⚡✨</div>
+      <h1 class="game-title-main">翰林英語八上 Unit 1 雙效特訓 (40題)：What were you doing?</h1>
+      <h2 class="game-subtitle">★ 20 題核心單字(生活事件/突發狀況) + 20 題文法(過去進行式/when vs while) ★</h2>
+      <div class="instructions-card">
+        <strong style="color:var(--color-gold);">【本課 40 題雙效特訓矩陣】：</strong>
+        <ul>
+          <li>📘 <strong>Part A: 20 題核心單字特訓</strong>（基礎詞義 ➔ 進階搭配 ➔ 段考實戰）</li>
+          <li>📜 <strong>Part B: 20 題核心文法特訓</strong>（基礎句型 ➔ 易混考點 ➔ 會考難題）</li>
+          <li>💡 每題皆配備「思考提示」、「完整詳解」與「易錯盲點剖析」</li>
+        </ul>
+      </div>
+      <button id="btn-start-game" class="btn-start-theme">開始 40 題挑戰 (START) ➔</button>
+    </div>
+
+    <div id="screen-victory" class="overlay-screen" style="display:none;">
+      <div style="font-size:60px; margin-bottom:10px;">🏆👑</div>
+      <h1 class="game-title-main" style="color:var(--color-success);">40-QUESTION COMPLETE!</h1>
+      <h2 class="game-subtitle">恭喜你全數攻克本課 20 題單字 + 20 題文法全套題庫！</h2>
+      <div class="instructions-card" style="text-align:center;">
+        <p style="font-size:16px; margin-bottom:8px;">獲得榮譽：<strong style="color:var(--color-gold);">【翰林英語單元特訓大滿貫】</strong></p>
+        <p>最終得分：<strong id="final-victory-score" style="color:var(--color-success); font-size:24px; font-family:var(--font-mono);">00000</strong></p>
+      </div>
+      <div style="display:flex; gap:12px;">
+        <a href="index.html" class="btn-start-theme" style="background:var(--bg-surface); border:1px solid var(--color-primary); color:#fff; text-decoration:none; display:inline-flex; align-items:center;">回題庫總部</a>
+        <button id="btn-restart-victory" class="btn-start-theme">再次特訓 (RETRY)</button>
+      </div>
+    </div>
+
+    <div id="screen-gameover" class="overlay-screen" style="display:none;">
+      <div style="font-size:60px; margin-bottom:10px;">💥⚠️</div>
+      <h1 class="game-title-main" style="color:var(--color-danger);">特訓中斷！</h1>
+      <h2 class="game-subtitle">遇到盲點陷阱，複習詳解與提示後再戰！</h2>
+      <div class="instructions-card" style="text-align:center;">
+        <p>本次得分：<strong id="final-gameover-score" style="color:#fff; font-size:20px; font-family:var(--font-mono);">00000</strong></p>
+      </div>
+      <button id="btn-restart-gameover" class="btn-start-theme" style="background:var(--color-danger); color:#fff;">重新特訓 (RETRY)</button>
+    </div>
+  </div>
+
+  <script>
+    const GAME_BALANCE = { playerMaxHp: 100, damageToPlayer: 10, damageToMonster: 20, scorePerQuestion: 100 };
+
+    class ThemeAudioEngine {
+      constructor() { this.ctx = null; this.muted = false; }
+      init() {
+        if (!this.ctx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          this.ctx = new AudioContext();
+        }
+        if (this.ctx.state === 'suspended') this.ctx.resume();
+      }
+      playTone(freq, type, duration, startTime = 0) {
+        if (this.muted) return;
+        this.init();
+        const now = this.ctx.currentTime + startTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = type; osc.frequency.setValueAtTime(freq, now);
+        gain.gain.setValueAtTime(0.15, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+        osc.connect(gain); gain.connect(this.ctx.destination);
+        osc.start(now); osc.stop(now + duration);
+      }
+      playCorrect() { this.playTone(523.25, 'triangle', 0.08, 0); this.playTone(659.25, 'triangle', 0.1, 0.06); this.playTone(1046.50, 'triangle', 0.2, 0.12); }
+      playWrong() { this.playTone(220, 'sawtooth', 0.15, 0); this.playTone(146.83, 'sawtooth', 0.25, 0.1); }
+      playAttack() { this.playTone(440, 'square', 0.08, 0); this.playTone(880, 'sine', 0.1, 0.04); }
+      playLevelUp() { [440, 554.37, 659.25, 880].forEach((n, i) => this.playTone(n, 'sine', 0.15, i * 0.08)); }
+      playVictory() { [523.25, 659.25, 783.99, 1046.50, 1318.51].forEach((n, i) => this.playTone(n, 'sine', 0.2, i * 0.1)); }
+    }
+    const audio = new ThemeAudioEngine();
+
+    class ThemeVisualizer {
+      constructor(canvas) { this.canvas = canvas; this.ctx = canvas.getContext('2d'); }
+      render(stageIdx = 0) {
+        const ctx = this.ctx;
+        const w = this.canvas.width = this.canvas.parentElement.clientWidth;
+        const h = this.canvas.height = this.canvas.parentElement.clientHeight;
+        ctx.clearRect(0, 0, w, h);
+        const midX = w / 2;
+        ctx.fillStyle = "#38bdf8"; ctx.font = "bold 11px monospace"; ctx.textAlign = "center";
+        const cat = stageIdx < 3 ? "📘 單字篇 (Part A: Vocab)" : "📜 文法篇 (Part B: Grammar)";
+        ctx.fillText("⚡ " + cat + " ｜ 關卡 " + (stageIdx + 1) + "/6", midX, h / 2 - 4);
+        ctx.fillStyle = "#facc15";
+        ctx.fillText("40 題全方位雙修 ｜ 掌握字義搭配與核心文法規則", midX, h / 2 + 12);
+      }
+    }
+
+    const CHAPTERS = [
+      {
+            "level": 1,
+            "category": "單字篇",
+            "title": "Level 1: 基礎字彙與詞義理解 (7 題)",
+            "monsterName": "字彙基礎精靈",
+            "monsterEmoji": "🔤",
+            "questions": [
+                  {
+                        "formula": "A terrible ________ hit southern Taiwan and caused heavy flooding.",
+                        "options": [
+                              "typhoon",
+                              "temple",
+                              "theater",
+                              "tiger"
+                        ],
+                        "correct": "typhoon",
+                        "hint": "💡 提示：帶來強烈風雨的颱風是 typhoon。",
+                        "explanation": "📝 詳解：typhoon (颱風)。"
+                  },
+                  {
+                        "formula": "The building shook violently during the midnight ________.",
+                        "options": [
+                              "earthquake",
+                              "equipment",
+                              "elevator",
+                              "envelope"
+                        ],
+                        "correct": "earthquake",
+                        "hint": "💡 提示：造成建築劇烈搖晃的地震是 earthquake。",
+                        "explanation": "📝 詳解：earthquake (地震)。"
+                  },
+                  {
+                        "formula": "The police officer blew his ________ to stop the speeding car.",
+                        "options": [
+                              "whistle",
+                              "whisper",
+                              "wheel",
+                              "window"
+                        ],
+                        "correct": "whistle",
+                        "hint": "💡 提示：警笛/哨子是 whistle。",
+                        "explanation": "📝 詳解：blow a whistle (吹哨子)。"
+                  },
+                  {
+                        "formula": "Suddenly, all the lights in the house went ________.",
+                        "options": [
+                              "out",
+                              "in",
+                              "up",
+                              "on"
+                        ],
+                        "correct": "out",
+                        "hint": "💡 提示：電燈熄滅片語是 lights go out。",
+                        "explanation": "📝 詳解：go out (熄滅/停電)。"
+                  },
+                  {
+                        "formula": "The ambulance arrived quickly to take the ________ person to the hospital.",
+                        "options": [
+                              "injured",
+                              "interesting",
+                              "important",
+                              "honest"
+                        ],
+                        "correct": "injured",
+                        "hint": "💡 提示：受傷的人是 injured person。",
+                        "explanation": "📝 詳解：injured (受傷的)。"
+                  },
+                  {
+                        "formula": "Heavy rain caused a serious ________ in the low mountain village.",
+                        "options": [
+                              "landslide",
+                              "landscape",
+                              "ladder",
+                              "lamp"
+                        ],
+                        "correct": "landslide",
+                        "hint": "💡 提示：土石流/山崩是 landslide。",
+                        "explanation": "📝 詳解：landslide (山崩/土石流)。"
+                  },
+                  {
+                        "formula": "The fire truck rushed down the street with loud ________.",
+                        "options": [
+                              "sirens",
+                              "singers",
+                              "signals",
+                              "silence"
+                        ],
+                        "correct": "sirens",
+                        "hint": "💡 提示：消防車的警報器是 sirens。",
+                        "explanation": "📝 詳解：siren (警報器)。"
+                  }
+            ]
+      },
+      {
+            "level": 2,
+            "category": "單字篇",
+            "title": "Level 2: 進階詞類變化與慣用語 (7 題)",
+            "monsterName": "字彙進階守衛",
+            "monsterEmoji": "📘",
+            "questions": [
+                  {
+                        "formula": "The power was ________ for three hours after the thunderstorm.",
+                        "options": [
+                              "off",
+                              "out",
+                              "on",
+                              "in"
+                        ],
+                        "correct": "off",
+                        "hint": "💡 提示：電力中斷是 power is off。",
+                        "explanation": "📝 詳解：power off (停電)。"
+                  },
+                  {
+                        "formula": "We heard a loud ________ of thunder outside our window.",
+                        "options": [
+                              "clap",
+                              "clay",
+                              "club",
+                              "clip"
+                        ],
+                        "correct": "clap",
+                        "hint": "💡 提示：一陣雷聲用 a clap of thunder。",
+                        "explanation": "📝 詳解：a clap of thunder (一聲霹靂/雷聲)。"
+                  },
+                  {
+                        "formula": "The sudden black-out caught all of us by ________.",
+                        "options": [
+                              "surprise",
+                              "sugar",
+                              "season",
+                              "signal"
+                        ],
+                        "correct": "surprise",
+                        "hint": "💡 提示：使……措手不及片語是 catch by surprise。",
+                        "explanation": "📝 詳解：catch by surprise (使措手不及)。"
+                  },
+                  {
+                        "formula": "Leo tripped and hurt his right ________ during the race.",
+                        "options": [
+                              "ankle",
+                              "apple",
+                              "uncle",
+                              "angle"
+                        ],
+                        "correct": "ankle",
+                        "hint": "💡 提示：跑步扭傷的腳踝是 ankle。",
+                        "explanation": "📝 詳解：ankle (腳踝)。"
+                  },
+                  {
+                        "formula": "The driver ________ the brakes suddenly to avoid hitting the dog.",
+                        "options": [
+                              "slammed",
+                              "sliced",
+                              "slept",
+                              "slid"
+                        ],
+                        "correct": "slammed",
+                        "hint": "💡 提示：緊急重踩煞車是 slammed the brakes。",
+                        "explanation": "📝 詳解：slam the brakes (急踩煞車)。"
+                  },
+                  {
+                        "formula": "Please keep your cell phone in ________ mode during the meeting.",
+                        "options": [
+                              "silent",
+                              "noisy",
+                              "shiny",
+                              "slow"
+                        ],
+                        "correct": "silent",
+                        "hint": "💡 提示：靜音模式是 silent mode。",
+                        "explanation": "📝 詳解：silent mode (靜音模式)。"
+                  },
+                  {
+                        "formula": "The storm caused major ________ to many houses near the coast.",
+                        "options": [
+                              "damage",
+                              "danger",
+                              "dance",
+                              "dare"
+                        ],
+                        "correct": "damage",
+                        "hint": "💡 提示：造成嚴重損害是 cause major damage。",
+                        "explanation": "📝 詳解：damage (損害/破壞)。"
+                  }
+            ]
+      },
+      {
+            "level": 3,
+            "category": "單字篇",
+            "title": "Level 3: 各校段考歷屆單字題 (6 題)",
+            "monsterName": "段考單字大主宰",
+            "monsterEmoji": "👑",
+            "questions": [
+                  {
+                        "formula": "【段考精選】The rescue team worked around the clock to search for ________.",
+                        "options": [
+                              "survivors",
+                              "surveyors",
+                              "supervisors",
+                              "surgeons"
+                        ],
+                        "correct": "survivors",
+                        "hint": "💡 提示：搜救生還者/倖存者是 search for survivors！",
+                        "explanation": "📝 詳解：survivors (生還者)。"
+                  },
+                  {
+                        "formula": "【段考精選】Natural disasters can cause huge ________ losses to a country.",
+                        "options": [
+                              "economic",
+                              "electric",
+                              "elastic",
+                              "eccentric"
+                        ],
+                        "correct": "economic",
+                        "hint": "💡 提示：巨大經濟損失是 economic losses。",
+                        "explanation": "📝 詳解：economic losses (經濟損失)。"
+                  },
+                  {
+                        "formula": "【段考精選】The government issued an ________ warning before the typhoon made landfall.",
+                        "options": [
+                              "evacuation",
+                              "education",
+                              "evaluation",
+                              "elevation"
+                        ],
+                        "correct": "evacuation",
+                        "hint": "💡 提示：疏散撤離警告是 evacuation warning！",
+                        "explanation": "📝 詳解：evacuation warning (撤離警報)。"
+                  },
+                  {
+                        "formula": "【段考精選】The firefighters showed great courage and ________ in saving the trapped family.",
+                        "options": [
+                              "bravery",
+                              "bakery",
+                              "battery",
+                              "barrier"
+                        ],
+                        "correct": "bravery",
+                        "hint": "💡 提示：展現無比勇氣與英勇是 bravery。",
+                        "explanation": "📝 詳解：bravery = courage (勇氣/英勇)。"
+                  },
+                  {
+                        "formula": "【段考精選】The weather bureau provides accurate meteorological ________.",
+                        "options": [
+                              "forecasts",
+                              "foreheads",
+                              "foreigners",
+                              "footprints"
+                        ],
+                        "correct": "forecasts",
+                        "hint": "💡 提示：氣象預報是 meteorological forecasts / weather forecasts。",
+                        "explanation": "📝 詳解：forecast (預報)。"
+                  },
+                  {
+                        "formula": "【段考精選】Citizens are advised to prepare an emergency ________ with food and water.",
+                        "options": [
+                              "kit",
+                              "kid",
+                              "kiss",
+                              "kick"
+                        ],
+                        "correct": "kit",
+                        "hint": "💡 提示：緊急避難包/工具組是 emergency kit！",
+                        "explanation": "📝 詳解：emergency kit (防災避難包)。"
+                  }
+            ]
+      },
+      {
+            "level": 4,
+            "category": "文法篇",
+            "title": "Level 4: 基礎文法與句型奠基 (7 題)",
+            "monsterName": "文法初階守衛",
+            "monsterEmoji": "📜",
+            "questions": [
+                  {
+                        "formula": "I ________ my homework when the telephone rang.",
+                        "options": [
+                              "was doing",
+                              "did",
+                              "am doing",
+                              "do"
+                        ],
+                        "correct": "was doing",
+                        "hint": "💡 提示：電話響起時，我正在做功課 ➔ was doing。",
+                        "explanation": "📝 詳解：過去進行式 was doing。"
+                  },
+                  {
+                        "formula": "What were you doing at eight o'clock last night?  I ________ TV.",
+                        "options": [
+                              "was watching",
+                              "watched",
+                              "am watching",
+                              "watch"
+                        ],
+                        "correct": "was watching",
+                        "hint": "💡 提示：昨晚八點整特定時間用 was watching。",
+                        "explanation": "📝 詳解：was watching。"
+                  },
+                  {
+                        "formula": "While Mom was cooking dinner, Dad ________ the newspaper.",
+                        "options": [
+                              "was reading",
+                              "read",
+                              "reads",
+                              "is reading"
+                        ],
+                        "correct": "was reading",
+                        "hint": "💡 提示：while 連接兩個過去同時進行的長動作 ➔ was reading。",
+                        "explanation": "📝 詳解：while + 過去進行式。"
+                  },
+                  {
+                        "formula": "They ________ basketball when it started to rain.",
+                        "options": [
+                              "were playing",
+                              "was playing",
+                              "played",
+                              "are playing"
+                        ],
+                        "correct": "were playing",
+                        "hint": "💡 提示：They 複數 ➔ were playing。",
+                        "explanation": "📝 詳解：They were playing..."
+                  },
+                  {
+                        "formula": "The students were ________ noisily when the teacher walked in.",
+                        "options": [
+                              "talking",
+                              "talked",
+                              "talk",
+                              "talks"
+                        ],
+                        "correct": "talking",
+                        "hint": "💡 提示：were talking 過去進行式。",
+                        "explanation": "📝 詳解：were talking。"
+                  },
+                  {
+                        "formula": "A: Were you sleeping when I called?  B: No, ________.",
+                        "options": [
+                              "I wasn't",
+                              "I didn't",
+                              "I am not",
+                              "I weren't"
+                        ],
+                        "correct": "I wasn't",
+                        "hint": "💡 提示：Were you...? 否定簡答 No, I wasn't.",
+                        "explanation": "📝 詳解：No, I wasn't."
+                  },
+                  {
+                        "formula": "Leo hurt his knee while he ________ a tree.",
+                        "options": [
+                              "was climbing",
+                              "climbed",
+                              "is climbing",
+                              "climbs"
+                        ],
+                        "correct": "was climbing",
+                        "hint": "💡 提示：while 引導過去進行式 was climbing。",
+                        "explanation": "📝 詳解：was climbing。"
+                  }
+            ]
+      },
+      {
+            "level": 5,
+            "category": "文法篇",
+            "title": "Level 5: 進階時態與易混淆考點 (7 題)",
+            "monsterName": "文法變化魔像",
+            "monsterEmoji": "⚡",
+            "questions": [
+                  {
+                        "formula": "The accident happened while the driver ________ on his phone.",
+                        "options": [
+                              "was talking",
+                              "talked",
+                              "talks",
+                              "is talking"
+                        ],
+                        "correct": "was talking",
+                        "hint": "💡 提示：開車講手機長動作 was talking。",
+                        "explanation": "📝 詳解：was talking。"
+                  },
+                  {
+                        "formula": "As soon as the bell rang, the students ________ out of the classroom.",
+                        "options": [
+                              "rushed",
+                              "were rushing",
+                              "have rushed",
+                              "rush"
+                        ],
+                        "correct": "rushed",
+                        "hint": "💡 提示：As soon as 連接連續短動作，用過去簡單式 rushed！",
+                        "explanation": "📝 詳解：As soon as... rushed out。"
+                  },
+                  {
+                        "formula": "While I was walking along the river, a bird ________ over my head.",
+                        "options": [
+                              "flew",
+                              "was flying",
+                              "flies",
+                              "fly"
+                        ],
+                        "correct": "flew",
+                        "hint": "💡 提示：長動作中插入的瞬間動作用過去簡單式 flew！",
+                        "explanation": "📝 詳解：flew (過去簡單式)。"
+                  },
+                  {
+                        "formula": "At this time yesterday, we ________ for the final exam.",
+                        "options": [
+                              "were studying",
+                              "studied",
+                              "are studying",
+                              "study"
+                        ],
+                        "correct": "were studying",
+                        "hint": "💡 提示：昨天這時候進行式 ➔ were studying。",
+                        "explanation": "📝 詳解：were studying。"
+                  },
+                  {
+                        "formula": "Who ________ to when you met him on the street?",
+                        "options": [
+                              "was Leo talking",
+                              "did Leo talk",
+                              "Leo was talking",
+                              "was Leo talk"
+                        ],
+                        "correct": "was Leo talking",
+                        "hint": "💡 提示：過去進行式問句倒裝：was Leo talking?",
+                        "explanation": "📝 詳解：was Leo talking?"
+                  },
+                  {
+                        "formula": "The light went out while the doctor ________ an operation.",
+                        "options": [
+                              "was performing",
+                              "performed",
+                              "is performing",
+                              "performs"
+                        ],
+                        "correct": "was performing",
+                        "hint": "💡 提示：while 正在動手術 was performing。",
+                        "explanation": "📝 詳解：was performing。"
+                  },
+                  {
+                        "formula": "Jenny was listening to music while her brother ________ TV.",
+                        "options": [
+                              "was watching",
+                              "watched",
+                              "watches",
+                              "is watching"
+                        ],
+                        "correct": "was watching",
+                        "hint": "💡 提示：同時進行動作皆用過去進行式 was watching。",
+                        "explanation": "📝 詳解：was watching。"
+                  }
+            ]
+      },
+      {
+            "level": 6,
+            "category": "文法篇",
+            "title": "Level 6: 各校段考與會考難題 (6 題)",
+            "monsterName": "會考文法大魔王",
+            "monsterEmoji": "🔥",
+            "questions": [
+                  {
+                        "formula": "【段考精選】What ________ when the fire alarm sounded?",
+                        "options": [
+                              "were you doing",
+                              "did you do",
+                              "you were doing",
+                              "are you doing"
+                        ],
+                        "correct": "were you doing",
+                        "hint": "💡 提示：警報響起時你正在做什麼？➔ were you doing?",
+                        "explanation": "📝 詳解：What were you doing...?"
+                  },
+                  {
+                        "formula": "【段考精選】The thief was trying to break into the house when the police ________.",
+                        "options": [
+                              "arrived",
+                              "was arriving",
+                              "were arriving",
+                              "arrive"
+                        ],
+                        "correct": "arrived",
+                        "hint": "💡 提示：when 後接過去簡單式 arrived！",
+                        "explanation": "📝 詳解：when the police arrived。"
+                  },
+                  {
+                        "formula": "【段考精選】While the kids ________ games, their parents were chatting in the living room.",
+                        "options": [
+                              "were playing",
+                              "played",
+                              "are playing",
+                              "play"
+                        ],
+                        "correct": "were playing",
+                        "hint": "💡 提示：kids 複數 ➔ were playing。",
+                        "explanation": "📝 詳解：were playing。"
+                  },
+                  {
+                        "formula": "【段考精選】It was raining heavily when we ________ the concert hall.",
+                        "options": [
+                              "left",
+                              "were leaving",
+                              "leave",
+                              "have left"
+                        ],
+                        "correct": "left",
+                        "hint": "💡 提示：離開音樂廳瞬間動作 ➔ left。",
+                        "explanation": "📝 詳解：when we left。"
+                  },
+                  {
+                        "formula": "【段考精選】Leo dropped his glass while he ________ the table.",
+                        "options": [
+                              "was cleaning",
+                              "cleaned",
+                              "cleans",
+                              "is cleaning"
+                        ],
+                        "correct": "was cleaning",
+                        "hint": "💡 提示：擦桌子過程中打破杯子 ➔ was cleaning。",
+                        "explanation": "📝 詳解：was cleaning。"
+                  },
+                  {
+                        "formula": "【段考精選】A: Was it snowing when you arrived in Sapporo?  B: Yes, ________.",
+                        "options": [
+                              "it was",
+                              "it did",
+                              "it wasn't",
+                              "it is"
+                        ],
+                        "correct": "it was",
+                        "hint": "💡 提示：Was it snowing? 肯定簡答 Yes, it was.",
+                        "explanation": "📝 詳解：Yes, it was."
+                  }
+            ]
+      }
+];
+
+    class GameManager {
+      constructor() {
+        this.currentLevelIndex = 0;
+        this.currentQuestionIndex = 0;
+        this.playerHp = GAME_BALANCE.playerMaxHp;
+        this.monsterHp = 100;
+        this.score = 0;
+        this.isAnswering = false;
+
+        this.elPlayerHp = document.getElementById('player-hp-bar');
+        this.elPlayerHpText = document.getElementById('player-hp-text');
+        this.elScore = document.getElementById('score-val');
+        this.elStageTitle = document.getElementById('stage-title');
+        this.elMonsterName = document.getElementById('monster-name');
+        this.elMonsterEmoji = document.getElementById('monster-emoji');
+        this.elMonsterHp = document.getElementById('monster-hp-bar');
+        this.elFormula = document.getElementById('formula-text');
+        this.elHint = document.getElementById('formula-hint');
+        this.elOptionsGrid = document.getElementById('options-grid');
+        this.elQuestBadge = document.getElementById('quest-badge');
+        this.elDiffBadge = document.getElementById('diff-badge');
+        this.elPillsContainer = document.getElementById('stage-pills');
+
+        this.modalExplanation = document.getElementById('modal-explanation');
+        this.elModalTitle = document.getElementById('modal-title');
+        this.elModalContent = document.getElementById('modal-content');
+        this.btnModalContinue = document.getElementById('btn-modal-continue');
+
+        this.screenTitle = document.getElementById('screen-title');
+        this.screenVictory = document.getElementById('screen-victory');
+        this.screenGameOver = document.getElementById('screen-gameover');
+
+        this.canvas = document.getElementById('theme-canvas');
+        this.visualizer = new ThemeVisualizer(this.canvas);
+
+        this.bindEvents();
+      }
+
+      bindEvents() {
+        document.getElementById('btn-start-game').addEventListener('click', () => {
+          audio.init();
+          this.startGame();
+        });
+
+        document.getElementById('btn-restart-victory').addEventListener('click', () => this.restartGame());
+        document.getElementById('btn-restart-gameover').addEventListener('click', () => this.restartGame());
+
+        this.btnModalContinue.addEventListener('click', () => {
+          this.closeExplanation();
+          this.nextQuestion();
+        });
+
+        window.addEventListener('keydown', (e) => {
+          if (this.isAnswering) return;
+          if (['1', '2', '3', '4'].includes(e.key)) {
+            const idx = parseInt(e.key, 10) - 1;
+            const btns = this.elOptionsGrid.querySelectorAll('.theme-btn');
+            if (btns[idx]) btns[idx].click();
+          }
+        });
+
+        const btnSound = document.getElementById('btn-sound-toggle');
+        if (btnSound) {
+          btnSound.addEventListener('click', () => {
+            audio.muted = !audio.muted;
+            btnSound.textContent = audio.muted ? '🔇 音效: 關' : '🔊 音效: 開';
+          });
+        }
+
+        window.addEventListener('resize', () => this.updateVisual());
+      }
+
+      startGame() {
+        this.screenTitle.style.display = 'none';
+        this.screenVictory.style.display = 'none';
+        this.screenGameOver.style.display = 'none';
+        this.currentLevelIndex = 0;
+        this.currentQuestionIndex = 0;
+        this.playerHp = GAME_BALANCE.playerMaxHp;
+        this.score = 0;
+        this.loadLevel(0);
+      }
+
+      restartGame() { this.startGame(); }
+
+      loadLevel(levelIndex) {
+        this.currentLevelIndex = levelIndex;
+        this.currentQuestionIndex = 0;
+        this.monsterHp = 100;
+        const stage = CHAPTERS[levelIndex];
+
+        this.elStageTitle.textContent = stage.title;
+        this.elMonsterName.textContent = stage.monsterName;
+        this.elMonsterEmoji.textContent = stage.monsterEmoji;
+
+        if (levelIndex < 3) {
+          this.elDiffBadge.className = "diff-badge diff-vocab";
+          this.elDiffBadge.textContent = "📘 【單字篇】" + stage.title.split(':')[0];
+        } else {
+          this.elDiffBadge.className = "diff-badge diff-grammar";
+          this.elDiffBadge.textContent = "📜 【文法篇】" + stage.title.split(':')[0];
+        }
+
+        this.updateHUD();
+        this.renderStagePills();
+        this.loadQuestion();
+        audio.playLevelUp();
+      }
+
+      renderStagePills() {
+        this.elPillsContainer.innerHTML = '';
+        const stage = CHAPTERS[this.currentLevelIndex];
+        for (let i = 0; i < stage.questions.length; i++) {
+          const dot = document.createElement('div');
+          dot.className = 'progress-dot' + (i === this.currentQuestionIndex ? ' active' : '') + (i < this.currentQuestionIndex ? ' cleared' : '');
+          this.elPillsContainer.appendChild(dot);
+        }
+      }
+
+      loadQuestion() {
+        this.isAnswering = false;
+        const stage = CHAPTERS[this.currentLevelIndex];
+        const q = stage.questions[this.currentQuestionIndex];
+
+        this.elQuestBadge.textContent = `第 ${this.currentLevelIndex + 1} 關 - 題 ${this.currentQuestionIndex + 1}/${stage.questions.length}`;
+        this.elFormula.textContent = q.formula;
+        this.elHint.textContent = `${q.hint}`;
+
+        this.elOptionsGrid.innerHTML = '';
+        q.options.forEach((opt, idx) => {
+          const btn = document.createElement('button');
+          btn.className = 'theme-btn';
+          btn.innerHTML = `<span class="btn-key">${idx + 1}</span> <span>${opt}</span>`;
+          btn.setAttribute('aria-label', `選項 ${idx + 1}: ${opt}`);
+          btn.addEventListener('click', () => this.handleAnswer(opt, btn, q));
+          this.elOptionsGrid.appendChild(btn);
+        });
+
+        this.renderStagePills();
+        this.updateVisual();
+      }
+
+      updateVisual() {
+        this.visualizer.render(this.currentLevelIndex);
+      }
+
+      handleAnswer(selectedOption, btnElement, question) {
+        if (this.isAnswering) return;
+        this.isAnswering = true;
+
+        const isCorrect = selectedOption === question.correct;
+
+        if (isCorrect) {
+          btnElement.classList.add('btn-correct');
+          audio.playCorrect();
+          audio.playAttack();
+          this.score += GAME_BALANCE.scorePerQuestion;
+
+          this.monsterHp = Math.max(0, this.monsterHp - GAME_BALANCE.damageToMonster);
+          this.triggerAttackAnim();
+          this.spawnFloatingText(`+${GAME_BALANCE.scorePerQuestion} 命中!`, this.elMonsterEmoji.parentElement, 'color:var(--color-gold);');
+
+          setTimeout(() => this.nextQuestion(), 750);
+        } else {
+          btnElement.classList.add('btn-wrong');
+          audio.playWrong();
+          this.playerHp = Math.max(0, this.playerHp - GAME_BALANCE.damageToPlayer);
+          this.triggerHurtAnim();
+          this.spawnFloatingText(`-${GAME_BALANCE.damageToPlayer} HP`, document.querySelector('.hero-avatar-box'), 'color:var(--color-danger);');
+
+          const btns = this.elOptionsGrid.querySelectorAll('.theme-btn');
+          btns.forEach(b => {
+            if (b.innerText.includes(question.correct)) b.classList.add('btn-correct');
+          });
+
+          setTimeout(() => {
+            if (this.playerHp <= 0) this.gameOver();
+            else this.showExplanation(selectedOption, question);
+          }, 750);
+        }
+        this.updateHUD();
+      }
+
+      triggerAttackAnim() {
+        const hero = document.querySelector('.hero-avatar-box');
+        const monster = document.querySelector('.monster-avatar-box');
+        if (hero) hero.classList.add('anim-attack');
+        if (monster) monster.classList.add('anim-hurt');
+        setTimeout(() => {
+          if (hero) hero.classList.remove('anim-attack');
+          if (monster) monster.classList.remove('anim-hurt');
+        }, 350);
+      }
+
+      triggerHurtAnim() {
+        const hero = document.querySelector('.hero-avatar-box');
+        if (hero) hero.classList.add('anim-hurt');
+        setTimeout(() => {
+          if (hero) hero.classList.remove('anim-hurt');
+        }, 350);
+      }
+
+      spawnFloatingText(text, container, style) {
+        const fx = document.createElement('div');
+        fx.className = 'floating-fx';
+        fx.style.cssText = style;
+        fx.textContent = text;
+        fx.style.left = '20px'; fx.style.top = '10px';
+        container.parentElement.appendChild(fx);
+        setTimeout(() => fx.remove(), 800);
+      }
+
+      showExplanation(selectedOption, question) {
+        this.elModalTitle.textContent = "💡 翰林英語題型診斷：盲點剖析";
+        
+        let explanationHtml = question.explanation.replace(/\n/g, '<br/>');
+        this.elModalContent.innerHTML = `
+          <div class="step-by-step">
+            <strong>📝 題目與標準答案：</strong><br/>
+            題目：<code>${question.formula}</code><br/>
+            正確答案：<strong style="color:var(--color-success); font-size:16px;">${question.correct}</strong><br/><br/>
+            ${explanationHtml}
+          </div>
+        `;
+        this.modalExplanation.style.display = 'flex';
+      }
+
+      closeExplanation() { this.modalExplanation.style.display = 'none'; }
+
+      nextQuestion() {
+        const stage = CHAPTERS[this.currentLevelIndex];
+        this.currentQuestionIndex++;
+        if (this.currentQuestionIndex >= stage.questions.length) {
+          if (this.currentLevelIndex + 1 < CHAPTERS.length) {
+            this.loadLevel(this.currentLevelIndex + 1);
+          } else {
+            this.victory();
+          }
+        } else {
+          this.loadQuestion();
+        }
+      }
+
+      updateHUD() {
+        const hpPct = Math.max(0, (this.playerHp / GAME_BALANCE.playerMaxHp) * 100);
+        this.elPlayerHp.style.width = `${hpPct}%`;
+        this.elPlayerHpText.textContent = `${this.playerHp}/${GAME_BALANCE.playerMaxHp}`;
+
+        const monsterPct = Math.max(0, this.monsterHp);
+        this.elMonsterHp.style.width = `${monsterPct}%`;
+        this.elScore.textContent = this.score.toString().padStart(5, '0');
+      }
+
+      victory() {
+        audio.playVictory();
+        document.getElementById('final-victory-score').textContent = this.score;
+        this.screenVictory.style.display = 'flex';
+      }
+
+      gameOver() {
+        audio.playWrong();
+        document.getElementById('final-gameover-score').textContent = this.score;
+        this.screenGameOver.style.display = 'flex';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      window.game = new GameManager();
+    });
+  </script>
+</body>
+</html>
