@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>翰林英語七上 Unit 4 雙效特訓 (40題)：What time is it?</title>
+  <meta name="description" content="20 題核心單字(時間/家事/休閒動詞) + 20 題文法(現在進行式/時間問答)">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700;900&family=Orbitron:wght@800;900&family=JetBrains+Mono:wght@700;800&family=Plus+Jakarta+Sans:wght@600;800&display=swap">
+  <style>
+    :root {
+      --bg-theme: #0c1b1c;
+      --bg-card: #132d2e;
+      --bg-surface: #1c4345;
+      --color-primary: #2dd4bf;
+      --color-accent: #5eead4;
+      --color-gold: #facc15;
+      --color-danger: #f43f5e;
+      --color-success: #10b981;
+      --color-text: #f8fafc;
+      --color-border: #0d9488;
+      --btn-hover: #0f766e;
+      --font-mono: 'JetBrains Mono', monospace;
+      --font-orbitron: 'Orbitron', monospace;
+      --font-chinese: 'Noto Sans TC', sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+    html, body {
+      width: 100%; height: 100%; overflow: hidden;
+      background: radial-gradient(circle at 50% 30%, #0f766e 0%, #040e0e 100%);
+      font-family: var(--font-chinese); color: var(--color-text);
+      display: flex; justify-content: center; align-items: center;
+    }
+    #app-container {
+      width: 100vw; height: 100vh; max-width: 1140px; max-height: 820px;
+      background: var(--bg-card); border: 2.5px solid var(--color-primary);
+      border-radius: 20px; box-shadow: 0 0 35px rgba(56, 189, 248, 0.25), inset 0 0 20px rgba(0,0,0,0.8);
+      display: flex; flex-direction: column; overflow: hidden; position: relative;
+    }
+    #hud-bar {
+      height: 72px; background: rgba(10, 14, 23, 0.95);
+      border-bottom: 2px solid var(--color-primary); display: flex;
+      align-items: center; justify-content: space-between; padding: 0 22px; z-index: 10;
+    }
+    .hud-player-info { display: flex; align-items: center; gap: 12px; }
+    .hud-avatar {
+      width: 48px; height: 48px; background: var(--bg-surface);
+      border: 2px solid var(--color-primary); border-radius: 12px; display: flex;
+      align-items: center; justify-content: center; font-size: 24px;
+    }
+    .hud-bars { display: flex; flex-direction: column; gap: 4px; min-width: 150px; }
+    .bar-wrap { display: flex; align-items: center; gap: 6px; font-size: 11px; font-family: var(--font-mono); }
+    .theme-bar { flex: 1; height: 12px; background: #030712; border: 1px solid var(--color-primary); border-radius: 3px; position: relative; overflow: hidden; }
+    .theme-bar-fill { height: 100%; background: linear-gradient(90deg, var(--color-primary), var(--color-accent)); transition: width 0.3s ease; }
+    .hud-center-stage { text-align: center; }
+    .stage-title { font-size: 14px; font-weight: 900; color: var(--color-gold); margin-bottom: 3px; }
+    .stage-progress-pills { display: flex; justify-content: center; gap: 4px; }
+    .progress-dot { width: 10px; height: 8px; background: var(--bg-surface); border: 1px solid var(--color-primary); border-radius: 2px; }
+    .progress-dot.active { background: var(--color-gold); box-shadow: 0 0 8px var(--color-gold); }
+    .progress-dot.cleared { background: var(--color-success); }
+    .hud-stats { display: flex; align-items: center; gap: 12px; }
+    .stat-box { background: var(--bg-surface); border: 1px solid var(--color-primary); border-radius: 8px; padding: 4px 12px; display: flex; align-items: center; gap: 6px; }
+    .stat-label { font-size: 10px; color: #bae6fd; font-family: var(--font-mono); }
+    .stat-value { font-size: 15px; font-weight: 800; font-family: var(--font-mono); color: var(--color-gold); }
+    .btn-theme-icon { background: var(--bg-surface); border: 1px solid var(--color-primary); color: var(--color-primary); border-radius: 8px; padding: 6px 12px; font-size: 12px; font-weight: 700; cursor: pointer; }
+    
+    #main-stage { flex: 1; display: flex; flex-direction: column; padding: 10px 20px; gap: 8px; min-height: 0; }
+    .theme-arena {
+      flex: 1.1; background: linear-gradient(180deg, #020617 0%, var(--bg-card) 100%);
+      border: 1.5px solid var(--color-border); border-radius: 12px; position: relative;
+      overflow: hidden; display: flex; justify-content: space-between; align-items: flex-end; padding: 12px 40px 14px 40px;
+    }
+    .hero-wrapper, .monster-wrapper { display: flex; flex-direction: column; align-items: center; z-index: 2; position: relative; }
+    .hero-avatar-box, .monster-avatar-box {
+      width: 78px; height: 78px; background: var(--bg-surface); border: 2px solid var(--color-primary);
+      border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 40px;
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.25); transition: transform 0.2s ease;
+    }
+    .char-nametag { background: rgba(10, 14, 23, 0.9); border: 1px solid var(--color-primary); border-radius: 6px; padding: 2px 10px; font-size: 11px; font-weight: 700; color: #fff; margin-top: 5px; }
+    .monster-hp-wrap { width: 78px; margin-top: 4px; }
+    .floating-fx { position: absolute; font-size: 18px; font-weight: 900; font-family: var(--font-mono); animation: floatTheme 0.8s ease-out forwards; pointer-events: none; z-index: 20; }
+    
+    .theme-board-container { height: 68px; background: var(--bg-surface); border: 1px solid var(--color-border); border-radius: 10px; padding: 6px 14px; display: flex; flex-direction: column; }
+    .theme-board-header { display: flex; justify-content: space-between; font-size: 11px; font-weight: 700; color: var(--color-primary); margin-bottom: 2px; }
+    .theme-canvas-wrap { flex: 1; position: relative; width: 100%; }
+    #theme-canvas { width: 100%; height: 100%; display: block; }
+    
+    #question-panel { background: var(--bg-surface); border: 1.5px solid var(--color-border); border-radius: 14px; padding: 12px 16px; display: flex; flex-direction: column; gap: 8px; }
+    .question-header { display: flex; align-items: center; justify-content: space-between; }
+    .quest-badge { background: rgba(56, 189, 248, 0.2); color: var(--color-primary); border: 1px solid var(--color-primary); border-radius: 6px; padding: 2px 8px; font-size: 11px; font-weight: 700; }
+    .diff-badge { font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 4px; font-family: var(--font-mono); }
+    .diff-vocab { background: rgba(56, 189, 248, 0.2); color: #7dd3fc; border: 1px solid #38bdf8; }
+    .diff-grammar { background: rgba(245, 158, 11, 0.2); color: #fde047; border: 1px solid #f59e0b; }
+
+    .question-box { background: #0a0e17; border: 1px solid var(--color-border); border-radius: 8px; padding: 10px 16px; text-align: left; }
+    .question-title-text { font-size: 21px; font-weight: 800; line-height: 1.5; color: #fff; font-family: 'Plus Jakarta Sans', var(--font-chinese); }
+    .question-hint-text { margin-top: 6px; font-size: 14.5px; color: var(--color-primary); line-height: 1.4; }
+    .options-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .theme-btn {
+      background: var(--bg-card); color: var(--color-text); border: 1.5px solid var(--color-border); border-radius: 10px;
+      padding: 12px 16px; font-size: 16.5px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 10px;
+      transition: all 0.15s ease; outline: none; text-align: left; font-family: 'Plus Jakarta Sans', var(--font-chinese);
+    }
+    .theme-btn:hover { background: var(--btn-hover); border-color: var(--color-gold); transform: translateY(-1px); }
+    .theme-btn .btn-key { width: 26px; height: 26px; background: #0a0e17; color: var(--color-gold); border: 1px solid var(--color-primary); border-radius: 4px; font-size: 13px; font-family: var(--font-mono); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .theme-btn.btn-correct { background: rgba(16, 185, 129, 0.25) !important; border-color: var(--color-success) !important; color: #86efac !important; }
+    .theme-btn.btn-wrong { background: rgba(244, 63, 94, 0.25) !important; border-color: var(--color-danger) !important; color: #fecdd3 !important; }
+    
+    .modal-backdrop { position: absolute; inset: 0; background: rgba(2, 6, 23, 0.92); display: none; justify-content: center; align-items: center; z-index: 100; backdrop-filter: blur(5px); }
+    .theme-dialog { width: 92%; max-width: 650px; max-height: 90vh; overflow-y: auto; background: var(--bg-card); border: 2px solid var(--color-primary); border-radius: 16px; padding: 22px; display: flex; flex-direction: column; gap: 14px; }
+    .dialog-header { display: flex; align-items: center; gap: 10px; border-bottom: 1px dashed var(--color-primary); padding-bottom: 8px; }
+    .dialog-title { font-size: 17px; font-weight: 800; color: var(--color-gold); }
+    .step-by-step { background: #0a0e17; border: 1px solid var(--color-border); border-radius: 8px; padding: 12px 14px; font-size: 15px; color: #fff; line-height: 1.6; }
+    .dialog-footer { display: flex; justify-content: space-between; align-items: center; }
+    
+    .overlay-screen { position: absolute; inset: 0; background: var(--bg-card); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 80; padding: 24px; text-align: center; }
+    .game-title-main { font-size: 26px; font-weight: 900; color: var(--color-gold); margin-bottom: 4px; }
+    .game-subtitle { font-size: 14px; color: var(--color-primary); font-weight: 700; margin-bottom: 18px; }
+    .instructions-card { background: var(--bg-surface); border: 1.5px solid var(--color-primary); border-radius: 12px; padding: 14px 18px; max-width: 600px; margin-bottom: 20px; font-size: 13.5px; text-align: left; line-height: 1.8; }
+    .instructions-card ul { padding-left: 20px; }
+    .btn-start-theme { background: var(--color-gold); color: #0a0e17; border: none; border-radius: 8px; padding: 12px 36px; font-size: 16px; font-weight: 900; font-family: var(--font-orbitron); cursor: pointer; box-shadow: 0 0 20px rgba(245, 158, 11, 0.4); }
+    
+    .nav-hub-btn { position: absolute; top: 18px; left: 20px; background: rgba(255,255,255,0.08); border: 1px solid var(--color-border); color: #cbd5e1; padding: 6px 14px; border-radius: 999px; text-decoration: none; font-size: 12px; font-weight: 700; z-index: 90; }
+    .nav-hub-btn:hover { background: rgba(255,255,255,0.15); color: #fff; }
+
+    @keyframes floatTheme { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(-30px); opacity: 0; } }
+    @media (max-width: 768px) { #app-container { max-height: 100vh; border: none; border-radius: 0; } .options-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div id="app-container">
+    <a href="index.html" class="nav-hub-btn">⬅️ 翰林英語題庫目錄</a>
+
+    <header id="hud-bar">
+      <div class="hud-player-info">
+        <div class="hud-avatar"><span>⏰</span></div>
+        <div class="hud-bars">
+          <div class="bar-wrap">
+            <span style="color:var(--color-gold); font-size:10px;">HP</span>
+            <div class="theme-bar"><div id="player-hp-bar" class="theme-bar-fill" style="width: 100%;"></div></div>
+            <span id="player-hp-text" style="font-size:10px; color:var(--color-gold);">100/100</span>
+          </div>
+          <div class="bar-wrap">
+            <span style="color:var(--color-primary); font-size:10px;">HANLIN BOOK 1 (七上)</span>
+            <span style="font-size:10px; color:#bae6fd;">UNIT 4: PRESENT CONTINUOUS & TIME (40Q)</span>
+          </div>
+        </div>
+      </div>
+      <div class="hud-center-stage">
+        <div id="stage-title" class="stage-title">關卡載入中...</div>
+        <div id="stage-pills" class="stage-progress-pills"></div>
+      </div>
+      <div class="hud-stats">
+        <div class="stat-box"><span class="stat-label">SCORE</span><span id="score-val" class="stat-value">00000</span></div>
+        <button id="btn-sound-toggle" class="btn-theme-icon">🔊 音效: 開</button>
+      </div>
+    </header>
+
+    <main id="main-stage">
+      <section class="theme-arena">
+        <div class="hero-wrapper">
+          <div class="hero-avatar-box"><span>🛡️</span></div>
+          <div class="char-nametag">特訓勇者</div>
+        </div>
+        <div class="monster-wrapper">
+          <div class="monster-avatar-box"><span id="monster-emoji">👾</span></div>
+          <div id="monster-name" class="char-nametag" style="color:var(--color-accent);">考點守護獸</div>
+          <div class="monster-hp-wrap">
+            <div class="theme-bar" style="height:8px;"><div id="monster-hp-bar" class="theme-bar-fill" style="width: 100%; background:var(--color-danger);"></div></div>
+          </div>
+        </div>
+      </section>
+      <section class="theme-board-container">
+        <div class="theme-board-header">
+          <span>⏰ 翰林七上 U4 雙效 40 題 ｜ 20 題單字 (時間/作息/家務) ＋ 20 題文法 (be+Ving/half past/a quarter to)</span>
+          <span style="color:var(--color-gold); font-size:10px;">★ 40 題全方位雙修 (20 單字 + 20 文法)</span>
+        </div>
+        <div class="theme-canvas-wrap"><canvas id="theme-canvas"></canvas></div>
+      </section>
+    </main>
+
+    <footer id="question-panel">
+      <div class="question-header">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span id="quest-badge" class="quest-badge">關卡載入中...</span>
+          <span id="diff-badge" class="diff-badge diff-vocab">【單字篇】Level 1</span>
+        </div>
+        <span style="font-size:11px; color:#bae6fd;">快捷鍵：鍵盤 [1] - [4] 鍵作答</span>
+      </div>
+      <div class="question-box">
+        <div id="formula-text" class="question-title-text">題目載入中...</div>
+        <div id="formula-hint" class="question-hint-text">💡 提示：正在載入考點提示...</div>
+      </div>
+      <div id="options-grid" class="options-grid"></div>
+    </footer>
+
+    <div id="modal-explanation" class="modal-backdrop">
+      <div class="theme-dialog">
+        <div class="dialog-header">
+          <span style="font-size:24px;">💡</span>
+          <div id="modal-title" class="dialog-title">題型診斷與觀念盲點剖析</div>
+        </div>
+        <div id="modal-content" style="display:flex; flex-direction:column; gap:10px;"></div>
+        <div class="dialog-footer">
+          <span style="font-size:12px; color:#94a3b8;">段考會考重點一把抓</span>
+          <button id="btn-modal-continue" class="btn-start-theme" style="font-size:13px; padding:6px 20px;">掌握觀念，下一題 ➔</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="screen-title" class="overlay-screen">
+      <div style="font-size:55px; margin-bottom:10px;">⏰✨</div>
+      <h1 class="game-title-main">翰林英語七上 Unit 4 雙效特訓 (40題)：What time is it?</h1>
+      <h2 class="game-subtitle">★ 20 題核心單字(時間/家事/休閒動詞) + 20 題文法(現在進行式/時間問答) ★</h2>
+      <div class="instructions-card">
+        <strong style="color:var(--color-gold);">【本課 40 題雙效特訓矩陣】：</strong>
+        <ul>
+          <li>📘 <strong>Part A: 20 題核心單字特訓</strong>（基礎詞義 ➔ 進階搭配 ➔ 段考實戰）</li>
+          <li>📜 <strong>Part B: 20 題核心文法特訓</strong>（基礎句型 ➔ 易混考點 ➔ 會考難題）</li>
+          <li>💡 每題皆配備「思考提示」、「完整詳解」與「易錯盲點剖析」</li>
+        </ul>
+      </div>
+      <button id="btn-start-game" class="btn-start-theme">開始 40 題挑戰 (START) ➔</button>
+    </div>
+
+    <div id="screen-victory" class="overlay-screen" style="display:none;">
+      <div style="font-size:60px; margin-bottom:10px;">🏆👑</div>
+      <h1 class="game-title-main" style="color:var(--color-success);">40-QUESTION COMPLETE!</h1>
+      <h2 class="game-subtitle">恭喜你全數攻克本課 20 題單字 + 20 題文法全套題庫！</h2>
+      <div class="instructions-card" style="text-align:center;">
+        <p style="font-size:16px; margin-bottom:8px;">獲得榮譽：<strong style="color:var(--color-gold);">【翰林英語單元特訓大滿貫】</strong></p>
+        <p>最終得分：<strong id="final-victory-score" style="color:var(--color-success); font-size:24px; font-family:var(--font-mono);">00000</strong></p>
+      </div>
+      <div style="display:flex; gap:12px;">
+        <a href="index.html" class="btn-start-theme" style="background:var(--bg-surface); border:1px solid var(--color-primary); color:#fff; text-decoration:none; display:inline-flex; align-items:center;">回題庫總部</a>
+        <button id="btn-restart-victory" class="btn-start-theme">再次特訓 (RETRY)</button>
+      </div>
+    </div>
+
+    <div id="screen-gameover" class="overlay-screen" style="display:none;">
+      <div style="font-size:60px; margin-bottom:10px;">💥⚠️</div>
+      <h1 class="game-title-main" style="color:var(--color-danger);">特訓中斷！</h1>
+      <h2 class="game-subtitle">遇到盲點陷阱，複習詳解與提示後再戰！</h2>
+      <div class="instructions-card" style="text-align:center;">
+        <p>本次得分：<strong id="final-gameover-score" style="color:#fff; font-size:20px; font-family:var(--font-mono);">00000</strong></p>
+      </div>
+      <button id="btn-restart-gameover" class="btn-start-theme" style="background:var(--color-danger); color:#fff;">重新特訓 (RETRY)</button>
+    </div>
+  </div>
+
+  <script>
+    const GAME_BALANCE = { playerMaxHp: 100, damageToPlayer: 10, damageToMonster: 20, scorePerQuestion: 100 };
+
+    class ThemeAudioEngine {
+      constructor() { this.ctx = null; this.muted = false; }
+      init() {
+        if (!this.ctx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          this.ctx = new AudioContext();
+        }
+        if (this.ctx.state === 'suspended') this.ctx.resume();
+      }
+      playTone(freq, type, duration, startTime = 0) {
+        if (this.muted) return;
+        this.init();
+        const now = this.ctx.currentTime + startTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = type; osc.frequency.setValueAtTime(freq, now);
+        gain.gain.setValueAtTime(0.15, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+        osc.connect(gain); gain.connect(this.ctx.destination);
+        osc.start(now); osc.stop(now + duration);
+      }
+      playCorrect() { this.playTone(523.25, 'triangle', 0.08, 0); this.playTone(659.25, 'triangle', 0.1, 0.06); this.playTone(1046.50, 'triangle', 0.2, 0.12); }
+      playWrong() { this.playTone(220, 'sawtooth', 0.15, 0); this.playTone(146.83, 'sawtooth', 0.25, 0.1); }
+      playAttack() { this.playTone(440, 'square', 0.08, 0); this.playTone(880, 'sine', 0.1, 0.04); }
+      playLevelUp() { [440, 554.37, 659.25, 880].forEach((n, i) => this.playTone(n, 'sine', 0.15, i * 0.08)); }
+      playVictory() { [523.25, 659.25, 783.99, 1046.50, 1318.51].forEach((n, i) => this.playTone(n, 'sine', 0.2, i * 0.1)); }
+    }
+    const audio = new ThemeAudioEngine();
+
+    class ThemeVisualizer {
+      constructor(canvas) { this.canvas = canvas; this.ctx = canvas.getContext('2d'); }
+      render(stageIdx = 0) {
+        const ctx = this.ctx;
+        const w = this.canvas.width = this.canvas.parentElement.clientWidth;
+        const h = this.canvas.height = this.canvas.parentElement.clientHeight;
+        ctx.clearRect(0, 0, w, h);
+        const midX = w / 2;
+        ctx.fillStyle = "#2dd4bf"; ctx.font = "bold 11px monospace"; ctx.textAlign = "center";
+        const cat = stageIdx < 3 ? "📘 單字篇 (Part A: Vocab)" : "📜 文法篇 (Part B: Grammar)";
+        ctx.fillText("⚡ " + cat + " ｜ 關卡 " + (stageIdx + 1) + "/6", midX, h / 2 - 4);
+        ctx.fillStyle = "#facc15";
+        ctx.fillText("40 題全方位雙修 ｜ 掌握字義搭配與核心文法規則", midX, h / 2 + 12);
+      }
+    }
+
+    const CHAPTERS = [
+      {
+            "level": 1,
+            "category": "單字篇",
+            "title": "Level 1: 基礎字彙與詞義理解 (7 題)",
+            "monsterName": "字彙基礎精靈",
+            "monsterEmoji": "🔤",
+            "questions": [
+                  {
+                        "formula": "What ________ is it right now? It's seven thirty.",
+                        "options": [
+                              "time",
+                              "clock",
+                              "hour",
+                              "day"
+                        ],
+                        "correct": "time",
+                        "hint": "💡 提示：問現在幾點用 What time is it?",
+                        "explanation": "📝 詳解：What time is it? (現在幾點？)"
+                  },
+                  {
+                        "formula": "My mother is ________ delicious dinner in the kitchen.",
+                        "options": [
+                              "cooking",
+                              "reading",
+                              "sleeping",
+                              "running"
+                        ],
+                        "correct": "cooking",
+                        "hint": "💡 提示：在廚房做晚餐是 cooking dinner。",
+                        "explanation": "📝 詳解：cook dinner (煮晚餐)。"
+                  },
+                  {
+                        "formula": "Leo is ________ his dirty sneakers in the yard.",
+                        "options": [
+                              "washing",
+                              "watching",
+                              "wishing",
+                              "waiting"
+                        ],
+                        "correct": "washing",
+                        "hint": "💡 提示：清洗骯髒的球鞋是 washing sneakers。",
+                        "explanation": "📝 詳解：wash (清洗)；watch (觀看)。"
+                  },
+                  {
+                        "formula": "Listen! Someone is ________ the guitar in the music classroom.",
+                        "options": [
+                              "playing",
+                              "singing",
+                              "talking",
+                              "drawing"
+                        ],
+                        "correct": "playing",
+                        "hint": "💡 提示：彈吉他是 playing the guitar。",
+                        "explanation": "📝 詳解：play the guitar (彈吉他)。"
+                  },
+                  {
+                        "formula": "Grandpa is taking a ________ on the sofa after lunch.",
+                        "options": [
+                              "nap",
+                              "net",
+                              "nut",
+                              "map"
+                        ],
+                        "correct": "nap",
+                        "hint": "💡 提示：午睡/小憩片語是 take a nap。",
+                        "explanation": "📝 詳解：take a nap (小睡一下)。"
+                  },
+                  {
+                        "formula": "Dad is reading the morning ________ in the living room.",
+                        "options": [
+                              "newspaper",
+                              "notebook",
+                              "notebooks",
+                              "novel"
+                        ],
+                        "correct": "newspaper",
+                        "hint": "💡 提示：早報是 morning newspaper。",
+                        "explanation": "📝 詳解：newspaper (報紙)。"
+                  },
+                  {
+                        "formula": "The baby is ________ soundly in the warm bed.",
+                        "options": [
+                              "sleeping",
+                              "drawing",
+                              "writing",
+                              "running"
+                        ],
+                        "correct": "sleeping",
+                        "hint": "💡 提示：在床上安穩熟睡是 sleeping soundly。",
+                        "explanation": "📝 詳解：sleep soundly (熟睡)。"
+                  }
+            ]
+      },
+      {
+            "level": 2,
+            "category": "單字篇",
+            "title": "Level 2: 進階詞類變化與慣用語 (7 題)",
+            "monsterName": "字彙進階守衛",
+            "monsterEmoji": "📘",
+            "questions": [
+                  {
+                        "formula": "Amy is ________ a letter to her grandmother in the USA.",
+                        "options": [
+                              "writing",
+                              "reading",
+                              "cooking",
+                              "eating"
+                        ],
+                        "correct": "writing",
+                        "hint": "💡 提示：寫信給祖母是 writing a letter。",
+                        "explanation": "📝 詳解：write a letter (寫信)。"
+                  },
+                  {
+                        "formula": "It is eight fifteen now. It is a ________ past eight.",
+                        "options": [
+                              "quarter",
+                              "half",
+                              "thirty",
+                              "minute"
+                        ],
+                        "correct": "quarter",
+                        "hint": "💡 提示：15 分鐘（一刻鐘）是 a quarter。",
+                        "explanation": "📝 詳解：a quarter past eight = 8:15。"
+                  },
+                  {
+                        "formula": "Please wait for a ________. The teacher will be back soon.",
+                        "options": [
+                              "moment",
+                              "minute",
+                              "month",
+                              "morning"
+                        ],
+                        "correct": "moment",
+                        "hint": "💡 提示：稍等片刻片語是 wait for a moment。",
+                        "explanation": "📝 詳解：wait for a moment (稍等片刻)。"
+                  },
+                  {
+                        "formula": "We usually eat ________ together at seven in the evening.",
+                        "options": [
+                              "dinner",
+                              "breakfast",
+                              "lunch",
+                              "snack"
+                        ],
+                        "correct": "dinner",
+                        "hint": "💡 提示：晚上七點吃的正餐是 dinner (晚餐)。",
+                        "explanation": "📝 詳解：dinner (晚餐)。"
+                  },
+                  {
+                        "formula": "The students are ________ for the school bus at the bus stop.",
+                        "options": [
+                              "waiting",
+                              "washing",
+                              "watching",
+                              "waking"
+                        ],
+                        "correct": "waiting",
+                        "hint": "💡 提示：等候公車片語是 wait for the bus。",
+                        "explanation": "📝 詳解：wait for (等待)。"
+                  },
+                  {
+                        "formula": "Let's go jogging together in the early ________.",
+                        "options": [
+                              "morning",
+                              "midnight",
+                              "night",
+                              "month"
+                        ],
+                        "correct": "morning",
+                        "hint": "💡 提示：清晨慢跑是 in the early morning。",
+                        "explanation": "📝 詳解：early morning (清晨)。"
+                  },
+                  {
+                        "formula": "Look! The little girl is ________ a picture with colorful markers.",
+                        "options": [
+                              "drawing",
+                              "drinking",
+                              "driving",
+                              "dropping"
+                        ],
+                        "correct": "drawing",
+                        "hint": "💡 提示：用彩色筆畫畫是 drawing a picture。",
+                        "explanation": "📝 詳解：draw a picture (畫圖)。"
+                  }
+            ]
+      },
+      {
+            "level": 3,
+            "category": "單字篇",
+            "title": "Level 3: 各校段考歷屆單字題 (6 題)",
+            "monsterName": "段考單字大主宰",
+            "monsterEmoji": "👑",
+            "questions": [
+                  {
+                        "formula": "【段考精選】The doctor advised the patient to do regular ________ to keep fit.",
+                        "options": [
+                              "exercise",
+                              "example",
+                              "examination",
+                              "experiment"
+                        ],
+                        "correct": "exercise",
+                        "hint": "💡 提示：規律運動是 regular exercise。",
+                        "explanation": "📝 詳解：regular exercise (規律運動)。"
+                  },
+                  {
+                        "formula": "【段考精選】My sister is brushing her ________ before going to bed.",
+                        "options": [
+                              "teeth",
+                              "tooth",
+                              "tooths",
+                              "teethes"
+                        ],
+                        "correct": "teeth",
+                        "hint": "💡 提示：刷牙用 tooth 的複數形 teeth！",
+                        "explanation": "📝 詳解：brush teeth (刷牙)。"
+                  },
+                  {
+                        "formula": "【段考精選】The bus will arrive at the terminal in ________ twenty minutes.",
+                        "options": [
+                              "approximately",
+                              "angry",
+                              "already",
+                              "almostly"
+                        ],
+                        "correct": "approximately",
+                        "hint": "💡 提示：大約/估計 20 分鐘後是 approximately (約)。",
+                        "explanation": "📝 詳解：approximately = about (大約)。"
+                  },
+                  {
+                        "formula": "【段考精選】Can you give me a ________ with these heavy boxes?",
+                        "options": [
+                              "hand",
+                              "head",
+                              "heart",
+                              "hold"
+                        ],
+                        "correct": "hand",
+                        "hint": "💡 提示：幫某人一把片語是 give someone a hand！",
+                        "explanation": "📝 詳解：give a hand (幫忙/協助)。"
+                  },
+                  {
+                        "formula": "【段考精選】The famous singer is holding a charity ________ this weekend.",
+                        "options": [
+                              "concert",
+                              "contest",
+                              "contract",
+                              "contact"
+                        ],
+                        "correct": "concert",
+                        "hint": "💡 提示：慈善音樂會是 charity concert。",
+                        "explanation": "📝 詳解：charity concert (慈善音樂會)。"
+                  },
+                  {
+                        "formula": "【段考精選】We need to hurry up because time is running ________.",
+                        "options": [
+                              "out",
+                              "in",
+                              "at",
+                              "for"
+                        ],
+                        "correct": "out",
+                        "hint": "💡 提示：時間快用光了片語是 time is running out！",
+                        "explanation": "📝 詳解：run out (耗盡/用光)。"
+                  }
+            ]
+      },
+      {
+            "level": 4,
+            "category": "文法篇",
+            "title": "Level 4: 基礎文法與句型奠基 (7 題)",
+            "monsterName": "文法初階守衛",
+            "monsterEmoji": "📜",
+            "questions": [
+                  {
+                        "formula": "Look! The boys ________ soccer on the field.",
+                        "options": [
+                              "are playing",
+                              "is playing",
+                              "play",
+                              "played"
+                        ],
+                        "correct": "are playing",
+                        "hint": "💡 提示：Look! 提示當下進行式，主詞 boys 複數 ➔ are playing。",
+                        "explanation": "📝 詳解：be + V-ing 現在進行式。"
+                  },
+                  {
+                        "formula": "Listen! Someone ________ on the front door.",
+                        "options": [
+                              "is knocking",
+                              "are knocking",
+                              "knock",
+                              "knocked"
+                        ],
+                        "correct": "is knocking",
+                        "hint": "💡 提示：Someone 視為單數 ➔ is knocking。",
+                        "explanation": "📝 詳解：不定代名詞單數動詞一致。"
+                  },
+                  {
+                        "formula": "My sister is ________ a comic book in her bedroom.",
+                        "options": [
+                              "reading",
+                              "read",
+                              "reads",
+                              "readed"
+                        ],
+                        "correct": "reading",
+                        "hint": "💡 提示：進行式 is + V-ing (reading)。",
+                        "explanation": "📝 詳解：read ➔ reading。"
+                  },
+                  {
+                        "formula": "The old tree in the park is ________ because of the drought.",
+                        "options": [
+                              "dying",
+                              "dieing",
+                              "dyeing",
+                              "dies"
+                        ],
+                        "correct": "dying",
+                        "hint": "💡 提示：die 去 ie 改加 ying ➔ dying！",
+                        "explanation": "📝 詳解：die ➔ dying。"
+                  },
+                  {
+                        "formula": "A: What time is it?  B: It is seven thirty. It is ________.",
+                        "options": [
+                              "half past seven",
+                              "half to seven",
+                              "thirty past seven",
+                              "seven half"
+                        ],
+                        "correct": "half past seven",
+                        "hint": "💡 提示：7:30 即 half past seven。",
+                        "explanation": "📝 詳解：half past seven = 7:30。"
+                  },
+                  {
+                        "formula": "The swimmer is ________ across the river.",
+                        "options": [
+                              "swimming",
+                              "swiming",
+                              "swim",
+                              "swims"
+                        ],
+                        "correct": "swimming",
+                        "hint": "💡 提示：swim 重複 m 加 ing ➔ swimming。",
+                        "explanation": "📝 詳解：swim ➔ swimming。"
+                  },
+                  {
+                        "formula": "A: Is Dad cooking dinner?  B: No, ________. He is fixing the car.",
+                        "options": [
+                              "he isn't",
+                              "he doesn't",
+                              "he not",
+                              "he is"
+                        ],
+                        "correct": "he isn't",
+                        "hint": "💡 提示：be 動詞問句簡答用 isn't。",
+                        "explanation": "📝 詳解：No, he isn't."
+                  }
+            ]
+      },
+      {
+            "level": 5,
+            "category": "文法篇",
+            "title": "Level 5: 進階時態與易混淆考點 (7 題)",
+            "monsterName": "文法變化魔像",
+            "monsterEmoji": "⚡",
+            "questions": [
+                  {
+                        "formula": "The children are ________ in the yard.",
+                        "options": [
+                              "running",
+                              "runing",
+                              "run",
+                              "runs"
+                        ],
+                        "correct": "running",
+                        "hint": "💡 提示：run 重複 n 加 ing ➔ running。",
+                        "explanation": "📝 詳解：run ➔ running。"
+                  },
+                  {
+                        "formula": "It is a quarter to ten. What time is it?",
+                        "options": [
+                              "9:45",
+                              "10:15",
+                              "9:15",
+                              "10:45"
+                        ],
+                        "correct": "9:45",
+                        "hint": "💡 提示：a quarter to ten = 差 15 分鐘 10 點 = 9:45！",
+                        "explanation": "📝 詳解：a quarter to ten = 9:45。"
+                  },
+                  {
+                        "formula": "A: What are you doing?  B: I ________ for my English notebook.",
+                        "options": [
+                              "am looking",
+                              "look",
+                              "looked",
+                              "is looking"
+                        ],
+                        "correct": "am looking",
+                        "hint": "💡 提示：I am + V-ing (looking for)。",
+                        "explanation": "📝 詳解：look for (尋找)。"
+                  },
+                  {
+                        "formula": "The train is ________ into the station right now.",
+                        "options": [
+                              "coming",
+                              "comeing",
+                              "come",
+                              "comes"
+                        ],
+                        "correct": "coming",
+                        "hint": "💡 提示：come 去 e 加 ing ➔ coming。",
+                        "explanation": "📝 詳解：come ➔ coming。"
+                  },
+                  {
+                        "formula": "Be quiet! The baby ________ soundly.",
+                        "options": [
+                              "is sleeping",
+                              "sleeps",
+                              "are sleeping",
+                              "slept"
+                        ],
+                        "correct": "is sleeping",
+                        "hint": "💡 提示：Be quiet! 提示當下進行式 ➔ is sleeping。",
+                        "explanation": "📝 詳解：Be quiet + 進行式。"
+                  },
+                  {
+                        "formula": "下列哪一個動詞通常『不使用進行式』？",
+                        "options": [
+                              "know",
+                              "run",
+                              "eat",
+                              "write"
+                        ],
+                        "correct": "know",
+                        "hint": "💡 提示：know（知道）是狀態動詞，不用進行式。",
+                        "explanation": "📝 詳解：狀態動詞 know, like, want 不用進行式。"
+                  },
+                  {
+                        "formula": "It is twenty past three. That means it is ________.",
+                        "options": [
+                              "3:20",
+                              "3:40",
+                              "2:40",
+                              "3:02"
+                        ],
+                        "correct": "3:20",
+                        "hint": "💡 提示：twenty past three = 超過 3 點 20 分 = 3:20。",
+                        "explanation": "📝 詳解：twenty past three = 3:20。"
+                  }
+            ]
+      },
+      {
+            "level": 6,
+            "category": "文法篇",
+            "title": "Level 6: 各校段考與會考難題 (6 題)",
+            "monsterName": "會考文法大魔王",
+            "monsterEmoji": "🔥",
+            "questions": [
+                  {
+                        "formula": "【段考精選】Look! That girl is ________ her dog along the riverbank.",
+                        "options": [
+                              "walking",
+                              "walk",
+                              "walks",
+                              "walked"
+                        ],
+                        "correct": "walking",
+                        "hint": "💡 提示：walk the dog (溜狗) 進行式 ➔ is walking。",
+                        "explanation": "📝 詳解：walk the dog (溜狗)。"
+                  },
+                  {
+                        "formula": "【段考精選】A: Are they having lunch at the cafeteria?  B: Yes, ________.",
+                        "options": [
+                              "they are",
+                              "they're",
+                              "they do",
+                              "they have"
+                        ],
+                        "correct": "they are",
+                        "hint": "💡 提示：肯定簡答尾端不縮寫 ➔ Yes, they are.",
+                        "explanation": "📝 詳解：Yes, they are."
+                  },
+                  {
+                        "formula": "【段考精選】The chef is ________ onions in the kitchen.",
+                        "options": [
+                              "cutting",
+                              "cuting",
+                              "cut",
+                              "cuts"
+                        ],
+                        "correct": "cutting",
+                        "hint": "💡 提示：cut 重複 t 加 ing ➔ cutting。",
+                        "explanation": "📝 詳解：cut ➔ cutting。"
+                  },
+                  {
+                        "formula": "【段考精選】A: ________ the bus leaving now?  B: Yes, it is.",
+                        "options": [
+                              "Is",
+                              "Are",
+                              "Does",
+                              "Do"
+                        ],
+                        "correct": "Is",
+                        "hint": "💡 提示：the bus 單數，進行式問句用 Is。",
+                        "explanation": "📝 詳解：Is the bus leaving?"
+                  },
+                  {
+                        "formula": "【段考精選】Leo is putting ________ his heavy coat because it is getting cold.",
+                        "options": [
+                              "on",
+                              "in",
+                              "at",
+                              "off"
+                        ],
+                        "correct": "on",
+                        "hint": "💡 提示：put on (穿上)。",
+                        "explanation": "📝 詳解：put on (穿上外套)。"
+                  },
+                  {
+                        "formula": "【段考精選】The sun ________ in the east. It's a natural fact.",
+                        "options": [
+                              "rises",
+                              "is rising",
+                              "rise",
+                              "rose"
+                        ],
+                        "correct": "rises",
+                        "hint": "💡 提示：自然真理客觀事實恆用『現在簡單式 (rises)』，不用進行式！",
+                        "explanation": "📝 詳解：客觀自然真理用現在簡單式 rises。"
+                  }
+            ]
+      }
+];
+
+    class GameManager {
+      constructor() {
+        this.currentLevelIndex = 0;
+        this.currentQuestionIndex = 0;
+        this.playerHp = GAME_BALANCE.playerMaxHp;
+        this.monsterHp = 100;
+        this.score = 0;
+        this.isAnswering = false;
+
+        this.elPlayerHp = document.getElementById('player-hp-bar');
+        this.elPlayerHpText = document.getElementById('player-hp-text');
+        this.elScore = document.getElementById('score-val');
+        this.elStageTitle = document.getElementById('stage-title');
+        this.elMonsterName = document.getElementById('monster-name');
+        this.elMonsterEmoji = document.getElementById('monster-emoji');
+        this.elMonsterHp = document.getElementById('monster-hp-bar');
+        this.elFormula = document.getElementById('formula-text');
+        this.elHint = document.getElementById('formula-hint');
+        this.elOptionsGrid = document.getElementById('options-grid');
+        this.elQuestBadge = document.getElementById('quest-badge');
+        this.elDiffBadge = document.getElementById('diff-badge');
+        this.elPillsContainer = document.getElementById('stage-pills');
+
+        this.modalExplanation = document.getElementById('modal-explanation');
+        this.elModalTitle = document.getElementById('modal-title');
+        this.elModalContent = document.getElementById('modal-content');
+        this.btnModalContinue = document.getElementById('btn-modal-continue');
+
+        this.screenTitle = document.getElementById('screen-title');
+        this.screenVictory = document.getElementById('screen-victory');
+        this.screenGameOver = document.getElementById('screen-gameover');
+
+        this.canvas = document.getElementById('theme-canvas');
+        this.visualizer = new ThemeVisualizer(this.canvas);
+
+        this.bindEvents();
+      }
+
+      bindEvents() {
+        document.getElementById('btn-start-game').addEventListener('click', () => {
+          audio.init();
+          this.startGame();
+        });
+
+        document.getElementById('btn-restart-victory').addEventListener('click', () => this.restartGame());
+        document.getElementById('btn-restart-gameover').addEventListener('click', () => this.restartGame());
+
+        this.btnModalContinue.addEventListener('click', () => {
+          this.closeExplanation();
+          this.nextQuestion();
+        });
+
+        window.addEventListener('keydown', (e) => {
+          if (this.isAnswering) return;
+          if (['1', '2', '3', '4'].includes(e.key)) {
+            const idx = parseInt(e.key, 10) - 1;
+            const btns = this.elOptionsGrid.querySelectorAll('.theme-btn');
+            if (btns[idx]) btns[idx].click();
+          }
+        });
+
+        const btnSound = document.getElementById('btn-sound-toggle');
+        if (btnSound) {
+          btnSound.addEventListener('click', () => {
+            audio.muted = !audio.muted;
+            btnSound.textContent = audio.muted ? '🔇 音效: 關' : '🔊 音效: 開';
+          });
+        }
+
+        window.addEventListener('resize', () => this.updateVisual());
+      }
+
+      startGame() {
+        this.screenTitle.style.display = 'none';
+        this.screenVictory.style.display = 'none';
+        this.screenGameOver.style.display = 'none';
+        this.currentLevelIndex = 0;
+        this.currentQuestionIndex = 0;
+        this.playerHp = GAME_BALANCE.playerMaxHp;
+        this.score = 0;
+        this.loadLevel(0);
+      }
+
+      restartGame() { this.startGame(); }
+
+      loadLevel(levelIndex) {
+        this.currentLevelIndex = levelIndex;
+        this.currentQuestionIndex = 0;
+        this.monsterHp = 100;
+        const stage = CHAPTERS[levelIndex];
+
+        this.elStageTitle.textContent = stage.title;
+        this.elMonsterName.textContent = stage.monsterName;
+        this.elMonsterEmoji.textContent = stage.monsterEmoji;
+
+        if (levelIndex < 3) {
+          this.elDiffBadge.className = "diff-badge diff-vocab";
+          this.elDiffBadge.textContent = "📘 【單字篇】" + stage.title.split(':')[0];
+        } else {
+          this.elDiffBadge.className = "diff-badge diff-grammar";
+          this.elDiffBadge.textContent = "📜 【文法篇】" + stage.title.split(':')[0];
+        }
+
+        this.updateHUD();
+        this.renderStagePills();
+        this.loadQuestion();
+        audio.playLevelUp();
+      }
+
+      renderStagePills() {
+        this.elPillsContainer.innerHTML = '';
+        const stage = CHAPTERS[this.currentLevelIndex];
+        for (let i = 0; i < stage.questions.length; i++) {
+          const dot = document.createElement('div');
+          dot.className = 'progress-dot' + (i === this.currentQuestionIndex ? ' active' : '') + (i < this.currentQuestionIndex ? ' cleared' : '');
+          this.elPillsContainer.appendChild(dot);
+        }
+      }
+
+      loadQuestion() {
+        this.isAnswering = false;
+        const stage = CHAPTERS[this.currentLevelIndex];
+        const q = stage.questions[this.currentQuestionIndex];
+
+        this.elQuestBadge.textContent = `第 ${this.currentLevelIndex + 1} 關 - 題 ${this.currentQuestionIndex + 1}/${stage.questions.length}`;
+        this.elFormula.textContent = q.formula;
+        this.elHint.textContent = `${q.hint}`;
+
+        this.elOptionsGrid.innerHTML = '';
+        q.options.forEach((opt, idx) => {
+          const btn = document.createElement('button');
+          btn.className = 'theme-btn';
+          btn.innerHTML = `<span class="btn-key">${idx + 1}</span> <span>${opt}</span>`;
+          btn.setAttribute('aria-label', `選項 ${idx + 1}: ${opt}`);
+          btn.addEventListener('click', () => this.handleAnswer(opt, btn, q));
+          this.elOptionsGrid.appendChild(btn);
+        });
+
+        this.renderStagePills();
+        this.updateVisual();
+      }
+
+      updateVisual() {
+        this.visualizer.render(this.currentLevelIndex);
+      }
+
+      handleAnswer(selectedOption, btnElement, question) {
+        if (this.isAnswering) return;
+        this.isAnswering = true;
+
+        const isCorrect = selectedOption === question.correct;
+
+        if (isCorrect) {
+          btnElement.classList.add('btn-correct');
+          audio.playCorrect();
+          audio.playAttack();
+          this.score += GAME_BALANCE.scorePerQuestion;
+
+          this.monsterHp = Math.max(0, this.monsterHp - GAME_BALANCE.damageToMonster);
+          this.triggerAttackAnim();
+          this.spawnFloatingText(`+${GAME_BALANCE.scorePerQuestion} 命中!`, this.elMonsterEmoji.parentElement, 'color:var(--color-gold);');
+
+          setTimeout(() => this.nextQuestion(), 750);
+        } else {
+          btnElement.classList.add('btn-wrong');
+          audio.playWrong();
+          this.playerHp = Math.max(0, this.playerHp - GAME_BALANCE.damageToPlayer);
+          this.triggerHurtAnim();
+          this.spawnFloatingText(`-${GAME_BALANCE.damageToPlayer} HP`, document.querySelector('.hero-avatar-box'), 'color:var(--color-danger);');
+
+          const btns = this.elOptionsGrid.querySelectorAll('.theme-btn');
+          btns.forEach(b => {
+            if (b.innerText.includes(question.correct)) b.classList.add('btn-correct');
+          });
+
+          setTimeout(() => {
+            if (this.playerHp <= 0) this.gameOver();
+            else this.showExplanation(selectedOption, question);
+          }, 750);
+        }
+        this.updateHUD();
+      }
+
+      triggerAttackAnim() {
+        const hero = document.querySelector('.hero-avatar-box');
+        const monster = document.querySelector('.monster-avatar-box');
+        if (hero) hero.classList.add('anim-attack');
+        if (monster) monster.classList.add('anim-hurt');
+        setTimeout(() => {
+          if (hero) hero.classList.remove('anim-attack');
+          if (monster) monster.classList.remove('anim-hurt');
+        }, 350);
+      }
+
+      triggerHurtAnim() {
+        const hero = document.querySelector('.hero-avatar-box');
+        if (hero) hero.classList.add('anim-hurt');
+        setTimeout(() => {
+          if (hero) hero.classList.remove('anim-hurt');
+        }, 350);
+      }
+
+      spawnFloatingText(text, container, style) {
+        const fx = document.createElement('div');
+        fx.className = 'floating-fx';
+        fx.style.cssText = style;
+        fx.textContent = text;
+        fx.style.left = '20px'; fx.style.top = '10px';
+        container.parentElement.appendChild(fx);
+        setTimeout(() => fx.remove(), 800);
+      }
+
+      showExplanation(selectedOption, question) {
+        this.elModalTitle.textContent = "💡 翰林英語題型診斷：盲點剖析";
+        
+        let explanationHtml = question.explanation.replace(/\n/g, '<br/>');
+        this.elModalContent.innerHTML = `
+          <div class="step-by-step">
+            <strong>📝 題目與標準答案：</strong><br/>
+            題目：<code>${question.formula}</code><br/>
+            正確答案：<strong style="color:var(--color-success); font-size:16px;">${question.correct}</strong><br/><br/>
+            ${explanationHtml}
+          </div>
+        `;
+        this.modalExplanation.style.display = 'flex';
+      }
+
+      closeExplanation() { this.modalExplanation.style.display = 'none'; }
+
+      nextQuestion() {
+        const stage = CHAPTERS[this.currentLevelIndex];
+        this.currentQuestionIndex++;
+        if (this.currentQuestionIndex >= stage.questions.length) {
+          if (this.currentLevelIndex + 1 < CHAPTERS.length) {
+            this.loadLevel(this.currentLevelIndex + 1);
+          } else {
+            this.victory();
+          }
+        } else {
+          this.loadQuestion();
+        }
+      }
+
+      updateHUD() {
+        const hpPct = Math.max(0, (this.playerHp / GAME_BALANCE.playerMaxHp) * 100);
+        this.elPlayerHp.style.width = `${hpPct}%`;
+        this.elPlayerHpText.textContent = `${this.playerHp}/${GAME_BALANCE.playerMaxHp}`;
+
+        const monsterPct = Math.max(0, this.monsterHp);
+        this.elMonsterHp.style.width = `${monsterPct}%`;
+        this.elScore.textContent = this.score.toString().padStart(5, '0');
+      }
+
+      victory() {
+        audio.playVictory();
+        document.getElementById('final-victory-score').textContent = this.score;
+        this.screenVictory.style.display = 'flex';
+      }
+
+      gameOver() {
+        audio.playWrong();
+        document.getElementById('final-gameover-score').textContent = this.score;
+        this.screenGameOver.style.display = 'flex';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      window.game = new GameManager();
+    });
+  </script>
+</body>
+</html>
