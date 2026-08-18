@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>翰林英語七上 Unit 6 雙效特訓 (40題)：Do you have a pet?</title>
+  <meta name="description" content="20 題核心單字(寵物/作息/生活動詞) + 20 題文法(現在簡單式/do does/第三人稱單數)">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700;900&family=Orbitron:wght@800;900&family=JetBrains+Mono:wght@700;800&family=Plus+Jakarta+Sans:wght@600;800&display=swap">
+  <style>
+    :root {
+      --bg-theme: #1a0f26;
+      --bg-card: #2c1740;
+      --bg-surface: #422360;
+      --color-primary: #a855f7;
+      --color-accent: #c084fc;
+      --color-gold: #facc15;
+      --color-danger: #f43f5e;
+      --color-success: #10b981;
+      --color-text: #f8fafc;
+      --color-border: #7e22ce;
+      --btn-hover: #6b21a8;
+      --font-mono: 'JetBrains Mono', monospace;
+      --font-orbitron: 'Orbitron', monospace;
+      --font-chinese: 'Noto Sans TC', sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+    html, body {
+      width: 100%; height: 100%; overflow: hidden;
+      background: radial-gradient(circle at 50% 30%, #6b21a8 0%, #0a0410 100%);
+      font-family: var(--font-chinese); color: var(--color-text);
+      display: flex; justify-content: center; align-items: center;
+    }
+    #app-container {
+      width: 100vw; height: 100vh; max-width: 1140px; max-height: 820px;
+      background: var(--bg-card); border: 2.5px solid var(--color-primary);
+      border-radius: 20px; box-shadow: 0 0 35px rgba(56, 189, 248, 0.25), inset 0 0 20px rgba(0,0,0,0.8);
+      display: flex; flex-direction: column; overflow: hidden; position: relative;
+    }
+    #hud-bar {
+      height: 72px; background: rgba(10, 14, 23, 0.95);
+      border-bottom: 2px solid var(--color-primary); display: flex;
+      align-items: center; justify-content: space-between; padding: 0 22px; z-index: 10;
+    }
+    .hud-player-info { display: flex; align-items: center; gap: 12px; }
+    .hud-avatar {
+      width: 48px; height: 48px; background: var(--bg-surface);
+      border: 2px solid var(--color-primary); border-radius: 12px; display: flex;
+      align-items: center; justify-content: center; font-size: 24px;
+    }
+    .hud-bars { display: flex; flex-direction: column; gap: 4px; min-width: 150px; }
+    .bar-wrap { display: flex; align-items: center; gap: 6px; font-size: 11px; font-family: var(--font-mono); }
+    .theme-bar { flex: 1; height: 12px; background: #030712; border: 1px solid var(--color-primary); border-radius: 3px; position: relative; overflow: hidden; }
+    .theme-bar-fill { height: 100%; background: linear-gradient(90deg, var(--color-primary), var(--color-accent)); transition: width 0.3s ease; }
+    .hud-center-stage { text-align: center; }
+    .stage-title { font-size: 14px; font-weight: 900; color: var(--color-gold); margin-bottom: 3px; }
+    .stage-progress-pills { display: flex; justify-content: center; gap: 4px; }
+    .progress-dot { width: 10px; height: 8px; background: var(--bg-surface); border: 1px solid var(--color-primary); border-radius: 2px; }
+    .progress-dot.active { background: var(--color-gold); box-shadow: 0 0 8px var(--color-gold); }
+    .progress-dot.cleared { background: var(--color-success); }
+    .hud-stats { display: flex; align-items: center; gap: 12px; }
+    .stat-box { background: var(--bg-surface); border: 1px solid var(--color-primary); border-radius: 8px; padding: 4px 12px; display: flex; align-items: center; gap: 6px; }
+    .stat-label { font-size: 10px; color: #bae6fd; font-family: var(--font-mono); }
+    .stat-value { font-size: 15px; font-weight: 800; font-family: var(--font-mono); color: var(--color-gold); }
+    .btn-theme-icon { background: var(--bg-surface); border: 1px solid var(--color-primary); color: var(--color-primary); border-radius: 8px; padding: 6px 12px; font-size: 12px; font-weight: 700; cursor: pointer; }
+    
+    #main-stage { flex: 1; display: flex; flex-direction: column; padding: 10px 20px; gap: 8px; min-height: 0; }
+    .theme-arena {
+      flex: 1.1; background: linear-gradient(180deg, #020617 0%, var(--bg-card) 100%);
+      border: 1.5px solid var(--color-border); border-radius: 12px; position: relative;
+      overflow: hidden; display: flex; justify-content: space-between; align-items: flex-end; padding: 12px 40px 14px 40px;
+    }
+    .hero-wrapper, .monster-wrapper { display: flex; flex-direction: column; align-items: center; z-index: 2; position: relative; }
+    .hero-avatar-box, .monster-avatar-box {
+      width: 78px; height: 78px; background: var(--bg-surface); border: 2px solid var(--color-primary);
+      border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 40px;
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.25); transition: transform 0.2s ease;
+    }
+    .char-nametag { background: rgba(10, 14, 23, 0.9); border: 1px solid var(--color-primary); border-radius: 6px; padding: 2px 10px; font-size: 11px; font-weight: 700; color: #fff; margin-top: 5px; }
+    .monster-hp-wrap { width: 78px; margin-top: 4px; }
+    .floating-fx { position: absolute; font-size: 18px; font-weight: 900; font-family: var(--font-mono); animation: floatTheme 0.8s ease-out forwards; pointer-events: none; z-index: 20; }
+    
+    .theme-board-container { height: 68px; background: var(--bg-surface); border: 1px solid var(--color-border); border-radius: 10px; padding: 6px 14px; display: flex; flex-direction: column; }
+    .theme-board-header { display: flex; justify-content: space-between; font-size: 11px; font-weight: 700; color: var(--color-primary); margin-bottom: 2px; }
+    .theme-canvas-wrap { flex: 1; position: relative; width: 100%; }
+    #theme-canvas { width: 100%; height: 100%; display: block; }
+    
+    #question-panel { background: var(--bg-surface); border: 1.5px solid var(--color-border); border-radius: 14px; padding: 12px 16px; display: flex; flex-direction: column; gap: 8px; }
+    .question-header { display: flex; align-items: center; justify-content: space-between; }
+    .quest-badge { background: rgba(56, 189, 248, 0.2); color: var(--color-primary); border: 1px solid var(--color-primary); border-radius: 6px; padding: 2px 8px; font-size: 11px; font-weight: 700; }
+    .diff-badge { font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 4px; font-family: var(--font-mono); }
+    .diff-vocab { background: rgba(56, 189, 248, 0.2); color: #7dd3fc; border: 1px solid #38bdf8; }
+    .diff-grammar { background: rgba(245, 158, 11, 0.2); color: #fde047; border: 1px solid #f59e0b; }
+
+    .question-box { background: #0a0e17; border: 1px solid var(--color-border); border-radius: 8px; padding: 10px 16px; text-align: left; }
+    .question-title-text { font-size: 21px; font-weight: 800; line-height: 1.5; color: #fff; font-family: 'Plus Jakarta Sans', var(--font-chinese); }
+    .question-hint-text { margin-top: 6px; font-size: 14.5px; color: var(--color-primary); line-height: 1.4; }
+    .options-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .theme-btn {
+      background: var(--bg-card); color: var(--color-text); border: 1.5px solid var(--color-border); border-radius: 10px;
+      padding: 12px 16px; font-size: 16.5px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 10px;
+      transition: all 0.15s ease; outline: none; text-align: left; font-family: 'Plus Jakarta Sans', var(--font-chinese);
+    }
+    .theme-btn:hover { background: var(--btn-hover); border-color: var(--color-gold); transform: translateY(-1px); }
+    .theme-btn .btn-key { width: 26px; height: 26px; background: #0a0e17; color: var(--color-gold); border: 1px solid var(--color-primary); border-radius: 4px; font-size: 13px; font-family: var(--font-mono); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .theme-btn.btn-correct { background: rgba(16, 185, 129, 0.25) !important; border-color: var(--color-success) !important; color: #86efac !important; }
+    .theme-btn.btn-wrong { background: rgba(244, 63, 94, 0.25) !important; border-color: var(--color-danger) !important; color: #fecdd3 !important; }
+    
+    .modal-backdrop { position: absolute; inset: 0; background: rgba(2, 6, 23, 0.92); display: none; justify-content: center; align-items: center; z-index: 100; backdrop-filter: blur(5px); }
+    .theme-dialog { width: 92%; max-width: 650px; max-height: 90vh; overflow-y: auto; background: var(--bg-card); border: 2px solid var(--color-primary); border-radius: 16px; padding: 22px; display: flex; flex-direction: column; gap: 14px; }
+    .dialog-header { display: flex; align-items: center; gap: 10px; border-bottom: 1px dashed var(--color-primary); padding-bottom: 8px; }
+    .dialog-title { font-size: 17px; font-weight: 800; color: var(--color-gold); }
+    .step-by-step { background: #0a0e17; border: 1px solid var(--color-border); border-radius: 8px; padding: 12px 14px; font-size: 15px; color: #fff; line-height: 1.6; }
+    .dialog-footer { display: flex; justify-content: space-between; align-items: center; }
+    
+    .overlay-screen { position: absolute; inset: 0; background: var(--bg-card); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 80; padding: 24px; text-align: center; }
+    .game-title-main { font-size: 26px; font-weight: 900; color: var(--color-gold); margin-bottom: 4px; }
+    .game-subtitle { font-size: 14px; color: var(--color-primary); font-weight: 700; margin-bottom: 18px; }
+    .instructions-card { background: var(--bg-surface); border: 1.5px solid var(--color-primary); border-radius: 12px; padding: 14px 18px; max-width: 600px; margin-bottom: 20px; font-size: 13.5px; text-align: left; line-height: 1.8; }
+    .instructions-card ul { padding-left: 20px; }
+    .btn-start-theme { background: var(--color-gold); color: #0a0e17; border: none; border-radius: 8px; padding: 12px 36px; font-size: 16px; font-weight: 900; font-family: var(--font-orbitron); cursor: pointer; box-shadow: 0 0 20px rgba(245, 158, 11, 0.4); }
+    
+    .nav-hub-btn { position: absolute; top: 18px; left: 20px; background: rgba(255,255,255,0.08); border: 1px solid var(--color-border); color: #cbd5e1; padding: 6px 14px; border-radius: 999px; text-decoration: none; font-size: 12px; font-weight: 700; z-index: 90; }
+    .nav-hub-btn:hover { background: rgba(255,255,255,0.15); color: #fff; }
+
+    @keyframes floatTheme { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(-30px); opacity: 0; } }
+    @media (max-width: 768px) { #app-container { max-height: 100vh; border: none; border-radius: 0; } .options-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div id="app-container">
+    <a href="index.html" class="nav-hub-btn">⬅️ 翰林英語題庫目錄</a>
+
+    <header id="hud-bar">
+      <div class="hud-player-info">
+        <div class="hud-avatar"><span>🐕</span></div>
+        <div class="hud-bars">
+          <div class="bar-wrap">
+            <span style="color:var(--color-gold); font-size:10px;">HP</span>
+            <div class="theme-bar"><div id="player-hp-bar" class="theme-bar-fill" style="width: 100%;"></div></div>
+            <span id="player-hp-text" style="font-size:10px; color:var(--color-gold);">100/100</span>
+          </div>
+          <div class="bar-wrap">
+            <span style="color:var(--color-primary); font-size:10px;">HANLIN BOOK 1 (七上)</span>
+            <span style="font-size:10px; color:#bae6fd;">UNIT 6: PRESENT SIMPLE & ROUTINES (40Q)</span>
+          </div>
+        </div>
+      </div>
+      <div class="hud-center-stage">
+        <div id="stage-title" class="stage-title">關卡載入中...</div>
+        <div id="stage-pills" class="stage-progress-pills"></div>
+      </div>
+      <div class="hud-stats">
+        <div class="stat-box"><span class="stat-label">SCORE</span><span id="score-val" class="stat-value">00000</span></div>
+        <button id="btn-sound-toggle" class="btn-theme-icon">🔊 音效: 開</button>
+      </div>
+    </header>
+
+    <main id="main-stage">
+      <section class="theme-arena">
+        <div class="hero-wrapper">
+          <div class="hero-avatar-box"><span>🛡️</span></div>
+          <div class="char-nametag">特訓勇者</div>
+        </div>
+        <div class="monster-wrapper">
+          <div class="monster-avatar-box"><span id="monster-emoji">👾</span></div>
+          <div id="monster-name" class="char-nametag" style="color:var(--color-accent);">考點守護獸</div>
+          <div class="monster-hp-wrap">
+            <div class="theme-bar" style="height:8px;"><div id="monster-hp-bar" class="theme-bar-fill" style="width: 100%; background:var(--color-danger);"></div></div>
+          </div>
+        </div>
+      </section>
+      <section class="theme-board-container">
+        <div class="theme-board-header">
+          <span>🐕 翰林七上 U6 雙效 40 題 ｜ 20 題單字 (寵物/生活作息) ＋ 20 題文法 (Do/Does/第三人稱動詞加-s/-es)</span>
+          <span style="color:var(--color-gold); font-size:10px;">★ 40 題全方位雙修 (20 單字 + 20 文法)</span>
+        </div>
+        <div class="theme-canvas-wrap"><canvas id="theme-canvas"></canvas></div>
+      </section>
+    </main>
+
+    <footer id="question-panel">
+      <div class="question-header">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span id="quest-badge" class="quest-badge">關卡載入中...</span>
+          <span id="diff-badge" class="diff-badge diff-vocab">【單字篇】Level 1</span>
+        </div>
+        <span style="font-size:11px; color:#bae6fd;">快捷鍵：鍵盤 [1] - [4] 鍵作答</span>
+      </div>
+      <div class="question-box">
+        <div id="formula-text" class="question-title-text">題目載入中...</div>
+        <div id="formula-hint" class="question-hint-text">💡 提示：正在載入考點提示...</div>
+      </div>
+      <div id="options-grid" class="options-grid"></div>
+    </footer>
+
+    <div id="modal-explanation" class="modal-backdrop">
+      <div class="theme-dialog">
+        <div class="dialog-header">
+          <span style="font-size:24px;">💡</span>
+          <div id="modal-title" class="dialog-title">題型診斷與觀念盲點剖析</div>
+        </div>
+        <div id="modal-content" style="display:flex; flex-direction:column; gap:10px;"></div>
+        <div class="dialog-footer">
+          <span style="font-size:12px; color:#94a3b8;">段考會考重點一把抓</span>
+          <button id="btn-modal-continue" class="btn-start-theme" style="font-size:13px; padding:6px 20px;">掌握觀念，下一題 ➔</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="screen-title" class="overlay-screen">
+      <div style="font-size:55px; margin-bottom:10px;">🐕✨</div>
+      <h1 class="game-title-main">翰林英語七上 Unit 6 雙效特訓 (40題)：Do you have a pet?</h1>
+      <h2 class="game-subtitle">★ 20 題核心單字(寵物/作息/生活動詞) + 20 題文法(現在簡單式/do does/第三人稱單數) ★</h2>
+      <div class="instructions-card">
+        <strong style="color:var(--color-gold);">【本課 40 題雙效特訓矩陣】：</strong>
+        <ul>
+          <li>📘 <strong>Part A: 20 題核心單字特訓</strong>（基礎詞義 ➔ 進階搭配 ➔ 段考實戰）</li>
+          <li>📜 <strong>Part B: 20 題核心文法特訓</strong>（基礎句型 ➔ 易混考點 ➔ 會考難題）</li>
+          <li>💡 每題皆配備「思考提示」、「完整詳解」與「易錯盲點剖析」</li>
+        </ul>
+      </div>
+      <button id="btn-start-game" class="btn-start-theme">開始 40 題挑戰 (START) ➔</button>
+    </div>
+
+    <div id="screen-victory" class="overlay-screen" style="display:none;">
+      <div style="font-size:60px; margin-bottom:10px;">🏆👑</div>
+      <h1 class="game-title-main" style="color:var(--color-success);">40-QUESTION COMPLETE!</h1>
+      <h2 class="game-subtitle">恭喜你全數攻克本課 20 題單字 + 20 題文法全套題庫！</h2>
+      <div class="instructions-card" style="text-align:center;">
+        <p style="font-size:16px; margin-bottom:8px;">獲得榮譽：<strong style="color:var(--color-gold);">【翰林英語單元特訓大滿貫】</strong></p>
+        <p>最終得分：<strong id="final-victory-score" style="color:var(--color-success); font-size:24px; font-family:var(--font-mono);">00000</strong></p>
+      </div>
+      <div style="display:flex; gap:12px;">
+        <a href="index.html" class="btn-start-theme" style="background:var(--bg-surface); border:1px solid var(--color-primary); color:#fff; text-decoration:none; display:inline-flex; align-items:center;">回題庫總部</a>
+        <button id="btn-restart-victory" class="btn-start-theme">再次特訓 (RETRY)</button>
+      </div>
+    </div>
+
+    <div id="screen-gameover" class="overlay-screen" style="display:none;">
+      <div style="font-size:60px; margin-bottom:10px;">💥⚠️</div>
+      <h1 class="game-title-main" style="color:var(--color-danger);">特訓中斷！</h1>
+      <h2 class="game-subtitle">遇到盲點陷阱，複習詳解與提示後再戰！</h2>
+      <div class="instructions-card" style="text-align:center;">
+        <p>本次得分：<strong id="final-gameover-score" style="color:#fff; font-size:20px; font-family:var(--font-mono);">00000</strong></p>
+      </div>
+      <button id="btn-restart-gameover" class="btn-start-theme" style="background:var(--color-danger); color:#fff;">重新特訓 (RETRY)</button>
+    </div>
+  </div>
+
+  <script>
+    const GAME_BALANCE = { playerMaxHp: 100, damageToPlayer: 10, damageToMonster: 20, scorePerQuestion: 100 };
+
+    class ThemeAudioEngine {
+      constructor() { this.ctx = null; this.muted = false; }
+      init() {
+        if (!this.ctx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          this.ctx = new AudioContext();
+        }
+        if (this.ctx.state === 'suspended') this.ctx.resume();
+      }
+      playTone(freq, type, duration, startTime = 0) {
+        if (this.muted) return;
+        this.init();
+        const now = this.ctx.currentTime + startTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = type; osc.frequency.setValueAtTime(freq, now);
+        gain.gain.setValueAtTime(0.15, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+        osc.connect(gain); gain.connect(this.ctx.destination);
+        osc.start(now); osc.stop(now + duration);
+      }
+      playCorrect() { this.playTone(523.25, 'triangle', 0.08, 0); this.playTone(659.25, 'triangle', 0.1, 0.06); this.playTone(1046.50, 'triangle', 0.2, 0.12); }
+      playWrong() { this.playTone(220, 'sawtooth', 0.15, 0); this.playTone(146.83, 'sawtooth', 0.25, 0.1); }
+      playAttack() { this.playTone(440, 'square', 0.08, 0); this.playTone(880, 'sine', 0.1, 0.04); }
+      playLevelUp() { [440, 554.37, 659.25, 880].forEach((n, i) => this.playTone(n, 'sine', 0.15, i * 0.08)); }
+      playVictory() { [523.25, 659.25, 783.99, 1046.50, 1318.51].forEach((n, i) => this.playTone(n, 'sine', 0.2, i * 0.1)); }
+    }
+    const audio = new ThemeAudioEngine();
+
+    class ThemeVisualizer {
+      constructor(canvas) { this.canvas = canvas; this.ctx = canvas.getContext('2d'); }
+      render(stageIdx = 0) {
+        const ctx = this.ctx;
+        const w = this.canvas.width = this.canvas.parentElement.clientWidth;
+        const h = this.canvas.height = this.canvas.parentElement.clientHeight;
+        ctx.clearRect(0, 0, w, h);
+        const midX = w / 2;
+        ctx.fillStyle = "#a855f7"; ctx.font = "bold 11px monospace"; ctx.textAlign = "center";
+        const cat = stageIdx < 3 ? "📘 單字篇 (Part A: Vocab)" : "📜 文法篇 (Part B: Grammar)";
+        ctx.fillText("⚡ " + cat + " ｜ 關卡 " + (stageIdx + 1) + "/6", midX, h / 2 - 4);
+        ctx.fillStyle = "#facc15";
+        ctx.fillText("40 題全方位雙修 ｜ 掌握字義搭配與核心文法規則", midX, h / 2 + 12);
+      }
+    }
+
+    const CHAPTERS = [
+      {
+            "level": 1,
+            "category": "單字篇",
+            "title": "Level 1: 基礎字彙與詞義理解 (7 題)",
+            "monsterName": "字彙基礎精靈",
+            "monsterEmoji": "🔤",
+            "questions": [
+                  {
+                        "formula": "Leo has a cute pet ________ with long white fur.",
+                        "options": [
+                              "dog",
+                              "book",
+                              "desk",
+                              "taxi"
+                        ],
+                        "correct": "dog",
+                        "hint": "💡 提示：可愛的寵物狗是 pet dog。",
+                        "explanation": "📝 詳解：pet dog (寵物狗)。"
+                  },
+                  {
+                        "formula": "My sister feeds the little ________ with fresh fish.",
+                        "options": [
+                              "cat",
+                              "lion",
+                              "tiger",
+                              "bear"
+                        ],
+                        "correct": "cat",
+                        "hint": "💡 提示：喜歡吃魚的家貓是 cat。",
+                        "explanation": "📝 詳解：cat (貓咪)。"
+                  },
+                  {
+                        "formula": "I usually ________ up at six thirty on school days.",
+                        "options": [
+                              "wake",
+                              "walk",
+                              "watch",
+                              "wish"
+                        ],
+                        "correct": "wake",
+                        "hint": "💡 提示：起床/醒來片語是 wake up 或 get up。",
+                        "explanation": "📝 詳解：wake up (醒來)。"
+                  },
+                  {
+                        "formula": "Remember to brush your teeth and wash your ________ before bed.",
+                        "options": [
+                              "face",
+                              "food",
+                              "feet",
+                              "fork"
+                        ],
+                        "correct": "face",
+                        "hint": "💡 提示：洗臉是 wash your face。",
+                        "explanation": "📝 詳解：wash one's face (洗臉)。"
+                  },
+                  {
+                        "formula": "My father always drinks a cup of hot ________ in the morning.",
+                        "options": [
+                              "coffee",
+                              "cola",
+                              "rice",
+                              "bread"
+                        ],
+                        "correct": "coffee",
+                        "hint": "💡 提示：早晨喝的熱咖啡是 coffee。",
+                        "explanation": "📝 詳解：hot coffee (熱咖啡)。"
+                  },
+                  {
+                        "formula": "We have delicious ________ with toast and eggs at seven o'clock.",
+                        "options": [
+                              "breakfast",
+                              "dinner",
+                              "lunch",
+                              "supper"
+                        ],
+                        "correct": "breakfast",
+                        "hint": "💡 提示：早晨吃的早餐是 breakfast。",
+                        "explanation": "📝 詳解：breakfast (早餐)。"
+                  },
+                  {
+                        "formula": "Leo ________ his favorite comic books after finishing homework.",
+                        "options": [
+                              "reads",
+                              "cooks",
+                              "sleeps",
+                              "swims"
+                        ],
+                        "correct": "reads",
+                        "hint": "💡 提示：閱讀漫畫書是 reads comic books。",
+                        "explanation": "📝 詳解：read books (讀書)。"
+                  }
+            ]
+      },
+      {
+            "level": 2,
+            "category": "單字篇",
+            "title": "Level 2: 進階詞類變化與慣用語 (7 題)",
+            "monsterName": "字彙進階守衛",
+            "monsterEmoji": "📘",
+            "questions": [
+                  {
+                        "formula": "My parents go for a walk in the park on ________.",
+                        "options": [
+                              "weekends",
+                              "weekdays",
+                              "weeks",
+                              "weather"
+                        ],
+                        "correct": "weekends",
+                        "hint": "💡 提示：週末 (週六與週日) 是 weekends。",
+                        "explanation": "📝 詳解：on weekends (在週末)。"
+                  },
+                  {
+                        "formula": "The cute ________ is playing with a ball of yarn.",
+                        "options": [
+                              "kitten",
+                              "puppy",
+                              "tiger",
+                              "rabbit"
+                        ],
+                        "correct": "kitten",
+                        "hint": "💡 提示：小幼貓是 kitten。",
+                        "explanation": "📝 詳解：kitten (小貓)。"
+                  },
+                  {
+                        "formula": "Leo feeds his pet golden ________ twice a day.",
+                        "options": [
+                              "fish",
+                              "bird",
+                              "cat",
+                              "hamster"
+                        ],
+                        "correct": "fish",
+                        "hint": "💡 提示：金魚是 goldfish。",
+                        "explanation": "📝 詳解：goldfish (金魚)。"
+                  },
+                  {
+                        "formula": "I love eating fresh ________ and vegetables to stay healthy.",
+                        "options": [
+                              "fruit",
+                              "furniture",
+                              "fridge",
+                              "fork"
+                        ],
+                        "correct": "fruit",
+                        "hint": "💡 提示：新鮮水果是 fresh fruit。",
+                        "explanation": "📝 詳解：fruit (水果)。"
+                  },
+                  {
+                        "formula": "Dad ________ his car in the garage every Sunday.",
+                        "options": [
+                              "washes",
+                              "watches",
+                              "wishes",
+                              "walks"
+                        ],
+                        "correct": "washes",
+                        "hint": "💡 提示：洗車是 washes his car。",
+                        "explanation": "📝 詳解：wash the car (洗車)。"
+                  },
+                  {
+                        "formula": "My brother plays video ________ on his computer.",
+                        "options": [
+                              "games",
+                              "sports",
+                              "balls",
+                              "pens"
+                        ],
+                        "correct": "games",
+                        "hint": "💡 提示：電玩遊戲是 video games。",
+                        "explanation": "📝 詳解：video games (電玩遊戲)。"
+                  },
+                  {
+                        "formula": "Amy usually goes to bed at ten o'clock at ________.",
+                        "options": [
+                              "night",
+                              "noon",
+                              "morning",
+                              "afternoon"
+                        ],
+                        "correct": "night",
+                        "hint": "💡 提示：晚上十點用 at night。",
+                        "explanation": "📝 詳解：at night (在夜間)。"
+                  }
+            ]
+      },
+      {
+            "level": 3,
+            "category": "單字篇",
+            "title": "Level 3: 各校段考歷屆單字題 (6 題)",
+            "monsterName": "段考單字大主宰",
+            "monsterEmoji": "👑",
+            "questions": [
+                  {
+                        "formula": "【段考精選】Owls are nocturnal animals that hunt for food at ________.",
+                        "options": [
+                              "night",
+                              "day",
+                              "noon",
+                              "morning"
+                        ],
+                        "correct": "night",
+                        "hint": "💡 提示：夜行性動物在夜間 (at night) 覓食。",
+                        "explanation": "📝 詳解：nocturnal (夜行性的) ➔ at night。"
+                  },
+                  {
+                        "formula": "【段考精選】To form a good reading ________, Leo reads twenty pages every night.",
+                        "options": [
+                              "habit",
+                              "hobby",
+                              "heart",
+                              "head"
+                        ],
+                        "correct": "habit",
+                        "hint": "💡 提示：良好的閱讀『習慣 (habit)』！",
+                        "explanation": "📝 詳解：reading habit (閱讀習慣)；hobby (嗜好)。"
+                  },
+                  {
+                        "formula": "【段考精選】My mother prepares nutritious ________ for our family every day.",
+                        "options": [
+                              "meals",
+                              "menus",
+                              "metals",
+                              "meters"
+                        ],
+                        "correct": "meals",
+                        "hint": "💡 提示：營養豐富的餐點是 nutritious meals。",
+                        "explanation": "📝 詳解：meals (三餐餐點)。"
+                  },
+                  {
+                        "formula": "【段考精選】Leo takes good care of his pet rabbit by cleaning its ________ regularly.",
+                        "options": [
+                              "cage",
+                              "cave",
+                              "case",
+                              "cart"
+                        ],
+                        "correct": "cage",
+                        "hint": "💡 提示：兔子的籠子是 cage。",
+                        "explanation": "📝 詳解：cage (籠子)。"
+                  },
+                  {
+                        "formula": "【段考精選】The sun provides warmth and ________ for all living things on Earth.",
+                        "options": [
+                              "energy",
+                              "example",
+                              "exercise",
+                              "effort"
+                        ],
+                        "correct": "energy",
+                        "hint": "💡 提示：太陽提供溫暖與『能量 (energy)』。",
+                        "explanation": "📝 詳解：energy (能量/能源)。"
+                  },
+                  {
+                        "formula": "【段考精選】Our daily ________ includes jogging, studying, and helping with chores.",
+                        "options": [
+                              "routine",
+                              "route",
+                              "rhythm",
+                              "rule"
+                        ],
+                        "correct": "routine",
+                        "hint": "💡 提示：日常生活例行作息是 daily routine。",
+                        "explanation": "📝 詳解：daily routine (每日例行作息)。"
+                  }
+            ]
+      },
+      {
+            "level": 4,
+            "category": "文法篇",
+            "title": "Level 4: 基礎文法與句型奠基 (7 題)",
+            "monsterName": "文法初階守衛",
+            "monsterEmoji": "📜",
+            "questions": [
+                  {
+                        "formula": "Leo ________ to English radio programs every morning.",
+                        "options": [
+                              "listens",
+                              "listen",
+                              "listening",
+                              "listened"
+                        ],
+                        "correct": "listens",
+                        "hint": "💡 提示：Leo 是單數第三人稱，現在式動詞加 s ➔ listens。",
+                        "explanation": "📝 詳解：listen to 加 s 變 listens。"
+                  },
+                  {
+                        "formula": "A: ________ your brother like dogs?  B: Yes, he does.",
+                        "options": [
+                              "Does",
+                              "Do",
+                              "Is",
+                              "Are"
+                        ],
+                        "correct": "Does",
+                        "hint": "💡 提示：單數第三人稱一般動詞問句助動詞用 Does。",
+                        "explanation": "📝 詳解：Does your brother like...?"
+                  },
+                  {
+                        "formula": "My parents ________ drink coffee in the evening.",
+                        "options": [
+                              "don't",
+                              "doesn't",
+                              "aren't",
+                              "not"
+                        ],
+                        "correct": "don't",
+                        "hint": "💡 提示：My parents 是複數，否定用 don't。",
+                        "explanation": "📝 詳解：don't + 原形動詞。"
+                  },
+                  {
+                        "formula": "Amy ________ English very hard every day.",
+                        "options": [
+                              "studies",
+                              "studys",
+                              "study",
+                              "studying"
+                        ],
+                        "correct": "studies",
+                        "hint": "💡 提示：study 子音+y，去 y 改加 ies ➔ studies！",
+                        "explanation": "📝 詳解：study ➔ studies。"
+                  },
+                  {
+                        "formula": "He ________ have any classes on Saturday.",
+                        "options": [
+                              "doesn't",
+                              "don't",
+                              "isn't",
+                              "hasn't"
+                        ],
+                        "correct": "doesn't",
+                        "hint": "💡 提示：doesn't + 原形動詞 have。",
+                        "explanation": "📝 詳解：doesn't have。"
+                  },
+                  {
+                        "formula": "Eric likes milk, but his sister ________.",
+                        "options": [
+                              "doesn't",
+                              "don't",
+                              "isn't",
+                              "not"
+                        ],
+                        "correct": "doesn't",
+                        "hint": "💡 提示：動詞 likes 呼應否定簡答 doesn't。",
+                        "explanation": "📝 詳解：his sister doesn't."
+                  },
+                  {
+                        "formula": "What ________ your father do on weekends?",
+                        "options": [
+                              "does",
+                              "do",
+                              "is",
+                              "are"
+                        ],
+                        "correct": "does",
+                        "hint": "💡 提示：What does your father do...?",
+                        "explanation": "📝 詳解：助動詞 does + 原形 do。"
+                  }
+            ]
+      },
+      {
+            "level": 5,
+            "category": "文法篇",
+            "title": "Level 5: 進階時態與易混淆考點 (7 題)",
+            "monsterName": "文法變化魔像",
+            "monsterEmoji": "⚡",
+            "questions": [
+                  {
+                        "formula": "My uncle ________ a big house with a swimming pool.",
+                        "options": [
+                              "has",
+                              "have",
+                              "haves",
+                              "having"
+                        ],
+                        "correct": "has",
+                        "hint": "💡 提示：have 的第三人稱單數為 has。",
+                        "explanation": "📝 詳解：have ➔ has。"
+                  },
+                  {
+                        "formula": "Jack ________ his teeth three times a day.",
+                        "options": [
+                              "brushes",
+                              "brushs",
+                              "brush",
+                              "brushing"
+                        ],
+                        "correct": "brushes",
+                        "hint": "💡 提示：-sh 結尾加 -es ➔ brushes。",
+                        "explanation": "📝 詳解：brush ➔ brushes。"
+                  },
+                  {
+                        "formula": "A: Do you and Tom play tennis?  B: No, ________.",
+                        "options": [
+                              "we don't",
+                              "I don't",
+                              "they don't",
+                              "you don't"
+                        ],
+                        "correct": "we don't",
+                        "hint": "💡 提示：問 you and Tom 回答用 we don't。",
+                        "explanation": "📝 詳解：No, we don't."
+                  },
+                  {
+                        "formula": "Eric doesn't like tea, but his parents ________.",
+                        "options": [
+                              "do",
+                              "does",
+                              "are",
+                              "have"
+                        ],
+                        "correct": "do",
+                        "hint": "💡 提示：his parents 是複數，肯定呼應用 do！",
+                        "explanation": "📝 詳解：his parents do."
+                  },
+                  {
+                        "formula": "The Earth ________ around the Sun.",
+                        "options": [
+                              "goes",
+                              "go",
+                              "going",
+                              "went"
+                        ],
+                        "correct": "goes",
+                        "hint": "💡 提示：客觀自然真理恆用現在簡單式 goes！",
+                        "explanation": "📝 詳解：goes around the Sun。"
+                  },
+                  {
+                        "formula": "Who ________ to the bookstore with you on Saturdays?",
+                        "options": [
+                              "goes",
+                              "go",
+                              "does go",
+                              "going"
+                        ],
+                        "correct": "goes",
+                        "hint": "💡 提示：Who 作主詞接單數動詞 goes。",
+                        "explanation": "📝 詳解：Who goes to...?"
+                  },
+                  {
+                        "formula": "Mr. White seldom ________ breakfast at restaurants.",
+                        "options": [
+                              "eats",
+                              "eat",
+                              "eating",
+                              "is eating"
+                        ],
+                        "correct": "eats",
+                        "hint": "💡 提示：Mr. White 單數 + eats。",
+                        "explanation": "📝 詳解：seldom eats。"
+                  }
+            ]
+      },
+      {
+            "level": 6,
+            "category": "文法篇",
+            "title": "Level 6: 各校段考與會考難題 (6 題)",
+            "monsterName": "會考文法大魔王",
+            "monsterEmoji": "🔥",
+            "questions": [
+                  {
+                        "formula": "A: Does Jenny have a cat?  B: No, but she ________ a puppy.",
+                        "options": [
+                              "has",
+                              "have",
+                              "haves",
+                              "is having"
+                        ],
+                        "correct": "has",
+                        "hint": "💡 提示：後半句肯定直述句用 has！",
+                        "explanation": "📝 詳解：she has a puppy."
+                  },
+                  {
+                        "formula": "【段考精選】Water ________ at 100 degrees Celsius.",
+                        "options": [
+                              "boils",
+                              "boil",
+                              "is boiling",
+                              "boiled"
+                        ],
+                        "correct": "boils",
+                        "hint": "💡 提示：科學常理恆用現在簡單式 boils！",
+                        "explanation": "📝 詳解：Water boils at 100°C。"
+                  },
+                  {
+                        "formula": "【段考精選】Leo and his brother ________ their dog every morning.",
+                        "options": [
+                              "walk",
+                              "walks",
+                              "walking",
+                              "walked"
+                        ],
+                        "correct": "walk",
+                        "hint": "💡 提示：Leo and his brother 是兩個人（複數），動詞用原形 walk！",
+                        "explanation": "📝 詳解：複數主詞用原形 walk。"
+                  },
+                  {
+                        "formula": "【段考精選】A: Does he wash his car every week?  B: Yes, he ________.",
+                        "options": [
+                              "does",
+                              "is",
+                              "washes",
+                              "do"
+                        ],
+                        "correct": "does",
+                        "hint": "💡 提示：Does he...? 肯定簡答用 Yes, he does.",
+                        "explanation": "📝 詳解：Yes, he does."
+                  },
+                  {
+                        "formula": "【段考精選】My mother ________ up before six o'clock every day.",
+                        "options": [
+                              "gets",
+                              "get",
+                              "getting",
+                              "is getting"
+                        ],
+                        "correct": "gets",
+                        "hint": "💡 提示：My mother 單數 ➔ gets up。",
+                        "explanation": "📝 詳解：gets up."
+                  },
+                  {
+                        "formula": "【段考精選】Neither of my sisters ________ spicy food.",
+                        "options": [
+                              "eats",
+                              "eat",
+                              "eating",
+                              "are eat"
+                        ],
+                        "correct": "eats",
+                        "hint": "💡 提示：Neither of + 複數名詞，主詞為單數，動詞加 s ➔ eats！",
+                        "explanation": "📝 詳解：Neither (單數) ➔ eats。"
+                  }
+            ]
+      }
+];
+
+    class GameManager {
+      constructor() {
+        this.currentLevelIndex = 0;
+        this.currentQuestionIndex = 0;
+        this.playerHp = GAME_BALANCE.playerMaxHp;
+        this.monsterHp = 100;
+        this.score = 0;
+        this.isAnswering = false;
+
+        this.elPlayerHp = document.getElementById('player-hp-bar');
+        this.elPlayerHpText = document.getElementById('player-hp-text');
+        this.elScore = document.getElementById('score-val');
+        this.elStageTitle = document.getElementById('stage-title');
+        this.elMonsterName = document.getElementById('monster-name');
+        this.elMonsterEmoji = document.getElementById('monster-emoji');
+        this.elMonsterHp = document.getElementById('monster-hp-bar');
+        this.elFormula = document.getElementById('formula-text');
+        this.elHint = document.getElementById('formula-hint');
+        this.elOptionsGrid = document.getElementById('options-grid');
+        this.elQuestBadge = document.getElementById('quest-badge');
+        this.elDiffBadge = document.getElementById('diff-badge');
+        this.elPillsContainer = document.getElementById('stage-pills');
+
+        this.modalExplanation = document.getElementById('modal-explanation');
+        this.elModalTitle = document.getElementById('modal-title');
+        this.elModalContent = document.getElementById('modal-content');
+        this.btnModalContinue = document.getElementById('btn-modal-continue');
+
+        this.screenTitle = document.getElementById('screen-title');
+        this.screenVictory = document.getElementById('screen-victory');
+        this.screenGameOver = document.getElementById('screen-gameover');
+
+        this.canvas = document.getElementById('theme-canvas');
+        this.visualizer = new ThemeVisualizer(this.canvas);
+
+        this.bindEvents();
+      }
+
+      bindEvents() {
+        document.getElementById('btn-start-game').addEventListener('click', () => {
+          audio.init();
+          this.startGame();
+        });
+
+        document.getElementById('btn-restart-victory').addEventListener('click', () => this.restartGame());
+        document.getElementById('btn-restart-gameover').addEventListener('click', () => this.restartGame());
+
+        this.btnModalContinue.addEventListener('click', () => {
+          this.closeExplanation();
+          this.nextQuestion();
+        });
+
+        window.addEventListener('keydown', (e) => {
+          if (this.isAnswering) return;
+          if (['1', '2', '3', '4'].includes(e.key)) {
+            const idx = parseInt(e.key, 10) - 1;
+            const btns = this.elOptionsGrid.querySelectorAll('.theme-btn');
+            if (btns[idx]) btns[idx].click();
+          }
+        });
+
+        const btnSound = document.getElementById('btn-sound-toggle');
+        if (btnSound) {
+          btnSound.addEventListener('click', () => {
+            audio.muted = !audio.muted;
+            btnSound.textContent = audio.muted ? '🔇 音效: 關' : '🔊 音效: 開';
+          });
+        }
+
+        window.addEventListener('resize', () => this.updateVisual());
+      }
+
+      startGame() {
+        this.screenTitle.style.display = 'none';
+        this.screenVictory.style.display = 'none';
+        this.screenGameOver.style.display = 'none';
+        this.currentLevelIndex = 0;
+        this.currentQuestionIndex = 0;
+        this.playerHp = GAME_BALANCE.playerMaxHp;
+        this.score = 0;
+        this.loadLevel(0);
+      }
+
+      restartGame() { this.startGame(); }
+
+      loadLevel(levelIndex) {
+        this.currentLevelIndex = levelIndex;
+        this.currentQuestionIndex = 0;
+        this.monsterHp = 100;
+        const stage = CHAPTERS[levelIndex];
+
+        this.elStageTitle.textContent = stage.title;
+        this.elMonsterName.textContent = stage.monsterName;
+        this.elMonsterEmoji.textContent = stage.monsterEmoji;
+
+        if (levelIndex < 3) {
+          this.elDiffBadge.className = "diff-badge diff-vocab";
+          this.elDiffBadge.textContent = "📘 【單字篇】" + stage.title.split(':')[0];
+        } else {
+          this.elDiffBadge.className = "diff-badge diff-grammar";
+          this.elDiffBadge.textContent = "📜 【文法篇】" + stage.title.split(':')[0];
+        }
+
+        this.updateHUD();
+        this.renderStagePills();
+        this.loadQuestion();
+        audio.playLevelUp();
+      }
+
+      renderStagePills() {
+        this.elPillsContainer.innerHTML = '';
+        const stage = CHAPTERS[this.currentLevelIndex];
+        for (let i = 0; i < stage.questions.length; i++) {
+          const dot = document.createElement('div');
+          dot.className = 'progress-dot' + (i === this.currentQuestionIndex ? ' active' : '') + (i < this.currentQuestionIndex ? ' cleared' : '');
+          this.elPillsContainer.appendChild(dot);
+        }
+      }
+
+      loadQuestion() {
+        this.isAnswering = false;
+        const stage = CHAPTERS[this.currentLevelIndex];
+        const q = stage.questions[this.currentQuestionIndex];
+
+        this.elQuestBadge.textContent = `第 ${this.currentLevelIndex + 1} 關 - 題 ${this.currentQuestionIndex + 1}/${stage.questions.length}`;
+        this.elFormula.textContent = q.formula;
+        this.elHint.textContent = `${q.hint}`;
+
+        this.elOptionsGrid.innerHTML = '';
+        q.options.forEach((opt, idx) => {
+          const btn = document.createElement('button');
+          btn.className = 'theme-btn';
+          btn.innerHTML = `<span class="btn-key">${idx + 1}</span> <span>${opt}</span>`;
+          btn.setAttribute('aria-label', `選項 ${idx + 1}: ${opt}`);
+          btn.addEventListener('click', () => this.handleAnswer(opt, btn, q));
+          this.elOptionsGrid.appendChild(btn);
+        });
+
+        this.renderStagePills();
+        this.updateVisual();
+      }
+
+      updateVisual() {
+        this.visualizer.render(this.currentLevelIndex);
+      }
+
+      handleAnswer(selectedOption, btnElement, question) {
+        if (this.isAnswering) return;
+        this.isAnswering = true;
+
+        const isCorrect = selectedOption === question.correct;
+
+        if (isCorrect) {
+          btnElement.classList.add('btn-correct');
+          audio.playCorrect();
+          audio.playAttack();
+          this.score += GAME_BALANCE.scorePerQuestion;
+
+          this.monsterHp = Math.max(0, this.monsterHp - GAME_BALANCE.damageToMonster);
+          this.triggerAttackAnim();
+          this.spawnFloatingText(`+${GAME_BALANCE.scorePerQuestion} 命中!`, this.elMonsterEmoji.parentElement, 'color:var(--color-gold);');
+
+          setTimeout(() => this.nextQuestion(), 750);
+        } else {
+          btnElement.classList.add('btn-wrong');
+          audio.playWrong();
+          this.playerHp = Math.max(0, this.playerHp - GAME_BALANCE.damageToPlayer);
+          this.triggerHurtAnim();
+          this.spawnFloatingText(`-${GAME_BALANCE.damageToPlayer} HP`, document.querySelector('.hero-avatar-box'), 'color:var(--color-danger);');
+
+          const btns = this.elOptionsGrid.querySelectorAll('.theme-btn');
+          btns.forEach(b => {
+            if (b.innerText.includes(question.correct)) b.classList.add('btn-correct');
+          });
+
+          setTimeout(() => {
+            if (this.playerHp <= 0) this.gameOver();
+            else this.showExplanation(selectedOption, question);
+          }, 750);
+        }
+        this.updateHUD();
+      }
+
+      triggerAttackAnim() {
+        const hero = document.querySelector('.hero-avatar-box');
+        const monster = document.querySelector('.monster-avatar-box');
+        if (hero) hero.classList.add('anim-attack');
+        if (monster) monster.classList.add('anim-hurt');
+        setTimeout(() => {
+          if (hero) hero.classList.remove('anim-attack');
+          if (monster) monster.classList.remove('anim-hurt');
+        }, 350);
+      }
+
+      triggerHurtAnim() {
+        const hero = document.querySelector('.hero-avatar-box');
+        if (hero) hero.classList.add('anim-hurt');
+        setTimeout(() => {
+          if (hero) hero.classList.remove('anim-hurt');
+        }, 350);
+      }
+
+      spawnFloatingText(text, container, style) {
+        const fx = document.createElement('div');
+        fx.className = 'floating-fx';
+        fx.style.cssText = style;
+        fx.textContent = text;
+        fx.style.left = '20px'; fx.style.top = '10px';
+        container.parentElement.appendChild(fx);
+        setTimeout(() => fx.remove(), 800);
+      }
+
+      showExplanation(selectedOption, question) {
+        this.elModalTitle.textContent = "💡 翰林英語題型診斷：盲點剖析";
+        
+        let explanationHtml = question.explanation.replace(/\n/g, '<br/>');
+        this.elModalContent.innerHTML = `
+          <div class="step-by-step">
+            <strong>📝 題目與標準答案：</strong><br/>
+            題目：<code>${question.formula}</code><br/>
+            正確答案：<strong style="color:var(--color-success); font-size:16px;">${question.correct}</strong><br/><br/>
+            ${explanationHtml}
+          </div>
+        `;
+        this.modalExplanation.style.display = 'flex';
+      }
+
+      closeExplanation() { this.modalExplanation.style.display = 'none'; }
+
+      nextQuestion() {
+        const stage = CHAPTERS[this.currentLevelIndex];
+        this.currentQuestionIndex++;
+        if (this.currentQuestionIndex >= stage.questions.length) {
+          if (this.currentLevelIndex + 1 < CHAPTERS.length) {
+            this.loadLevel(this.currentLevelIndex + 1);
+          } else {
+            this.victory();
+          }
+        } else {
+          this.loadQuestion();
+        }
+      }
+
+      updateHUD() {
+        const hpPct = Math.max(0, (this.playerHp / GAME_BALANCE.playerMaxHp) * 100);
+        this.elPlayerHp.style.width = `${hpPct}%`;
+        this.elPlayerHpText.textContent = `${this.playerHp}/${GAME_BALANCE.playerMaxHp}`;
+
+        const monsterPct = Math.max(0, this.monsterHp);
+        this.elMonsterHp.style.width = `${monsterPct}%`;
+        this.elScore.textContent = this.score.toString().padStart(5, '0');
+      }
+
+      victory() {
+        audio.playVictory();
+        document.getElementById('final-victory-score').textContent = this.score;
+        this.screenVictory.style.display = 'flex';
+      }
+
+      gameOver() {
+        audio.playWrong();
+        document.getElementById('final-gameover-score').textContent = this.score;
+        this.screenGameOver.style.display = 'flex';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      window.game = new GameManager();
+    });
+  </script>
+</body>
+</html>
