@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>翰林英語九上 Unit 1 雙效特訓 (40題)：Have you ever been to Japan?</title>
+  <meta name="description" content="20 題核心單字(國際旅遊/世界文化) + 20 題文法(現在完成式/for vs since/been to vs gone to)">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@500;700;900&family=Orbitron:wght@800;900&family=JetBrains+Mono:wght@700;800&family=Plus+Jakarta+Sans:wght@600;800&display=swap">
+  <style>
+    :root {
+      --bg-theme: #0c172b;
+      --bg-card: #152647;
+      --bg-surface: #1e3766;
+      --color-primary: #38bdf8;
+      --color-accent: #60a5fa;
+      --color-gold: #facc15;
+      --color-danger: #f43f5e;
+      --color-success: #10b981;
+      --color-text: #f8fafc;
+      --color-border: #1d4ed8;
+      --btn-hover: #1e40af;
+      --font-mono: 'JetBrains Mono', monospace;
+      --font-orbitron: 'Orbitron', monospace;
+      --font-chinese: 'Noto Sans TC', sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+    html, body {
+      width: 100%; height: 100%; overflow: hidden;
+      background: radial-gradient(circle at 50% 30%, #1d4ed8 0%, #03060f 100%);
+      font-family: var(--font-chinese); color: var(--color-text);
+      display: flex; justify-content: center; align-items: center;
+    }
+    #app-container {
+      width: 100vw; height: 100vh; max-width: 1140px; max-height: 820px;
+      background: var(--bg-card); border: 2.5px solid var(--color-primary);
+      border-radius: 20px; box-shadow: 0 0 35px rgba(56, 189, 248, 0.25), inset 0 0 20px rgba(0,0,0,0.8);
+      display: flex; flex-direction: column; overflow: hidden; position: relative;
+    }
+    #hud-bar {
+      height: 72px; background: rgba(10, 14, 23, 0.95);
+      border-bottom: 2px solid var(--color-primary); display: flex;
+      align-items: center; justify-content: space-between; padding: 0 22px; z-index: 10;
+    }
+    .hud-player-info { display: flex; align-items: center; gap: 12px; }
+    .hud-avatar {
+      width: 48px; height: 48px; background: var(--bg-surface);
+      border: 2px solid var(--color-primary); border-radius: 12px; display: flex;
+      align-items: center; justify-content: center; font-size: 24px;
+    }
+    .hud-bars { display: flex; flex-direction: column; gap: 4px; min-width: 150px; }
+    .bar-wrap { display: flex; align-items: center; gap: 6px; font-size: 11px; font-family: var(--font-mono); }
+    .theme-bar { flex: 1; height: 12px; background: #030712; border: 1px solid var(--color-primary); border-radius: 3px; position: relative; overflow: hidden; }
+    .theme-bar-fill { height: 100%; background: linear-gradient(90deg, var(--color-primary), var(--color-accent)); transition: width 0.3s ease; }
+    .hud-center-stage { text-align: center; }
+    .stage-title { font-size: 14px; font-weight: 900; color: var(--color-gold); margin-bottom: 3px; }
+    .stage-progress-pills { display: flex; justify-content: center; gap: 4px; }
+    .progress-dot { width: 10px; height: 8px; background: var(--bg-surface); border: 1px solid var(--color-primary); border-radius: 2px; }
+    .progress-dot.active { background: var(--color-gold); box-shadow: 0 0 8px var(--color-gold); }
+    .progress-dot.cleared { background: var(--color-success); }
+    .hud-stats { display: flex; align-items: center; gap: 12px; }
+    .stat-box { background: var(--bg-surface); border: 1px solid var(--color-primary); border-radius: 8px; padding: 4px 12px; display: flex; align-items: center; gap: 6px; }
+    .stat-label { font-size: 10px; color: #bae6fd; font-family: var(--font-mono); }
+    .stat-value { font-size: 15px; font-weight: 800; font-family: var(--font-mono); color: var(--color-gold); }
+    .btn-theme-icon { background: var(--bg-surface); border: 1px solid var(--color-primary); color: var(--color-primary); border-radius: 8px; padding: 6px 12px; font-size: 12px; font-weight: 700; cursor: pointer; }
+    
+    #main-stage { flex: 1; display: flex; flex-direction: column; padding: 10px 20px; gap: 8px; min-height: 0; }
+    .theme-arena {
+      flex: 1.1; background: linear-gradient(180deg, #020617 0%, var(--bg-card) 100%);
+      border: 1.5px solid var(--color-border); border-radius: 12px; position: relative;
+      overflow: hidden; display: flex; justify-content: space-between; align-items: flex-end; padding: 12px 40px 14px 40px;
+    }
+    .hero-wrapper, .monster-wrapper { display: flex; flex-direction: column; align-items: center; z-index: 2; position: relative; }
+    .hero-avatar-box, .monster-avatar-box {
+      width: 78px; height: 78px; background: var(--bg-surface); border: 2px solid var(--color-primary);
+      border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 40px;
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.25); transition: transform 0.2s ease;
+    }
+    .char-nametag { background: rgba(10, 14, 23, 0.9); border: 1px solid var(--color-primary); border-radius: 6px; padding: 2px 10px; font-size: 11px; font-weight: 700; color: #fff; margin-top: 5px; }
+    .monster-hp-wrap { width: 78px; margin-top: 4px; }
+    .floating-fx { position: absolute; font-size: 18px; font-weight: 900; font-family: var(--font-mono); animation: floatTheme 0.8s ease-out forwards; pointer-events: none; z-index: 20; }
+    
+    .theme-board-container { height: 68px; background: var(--bg-surface); border: 1px solid var(--color-border); border-radius: 10px; padding: 6px 14px; display: flex; flex-direction: column; }
+    .theme-board-header { display: flex; justify-content: space-between; font-size: 11px; font-weight: 700; color: var(--color-primary); margin-bottom: 2px; }
+    .theme-canvas-wrap { flex: 1; position: relative; width: 100%; }
+    #theme-canvas { width: 100%; height: 100%; display: block; }
+    
+    #question-panel { background: var(--bg-surface); border: 1.5px solid var(--color-border); border-radius: 14px; padding: 12px 16px; display: flex; flex-direction: column; gap: 8px; }
+    .question-header { display: flex; align-items: center; justify-content: space-between; }
+    .quest-badge { background: rgba(56, 189, 248, 0.2); color: var(--color-primary); border: 1px solid var(--color-primary); border-radius: 6px; padding: 2px 8px; font-size: 11px; font-weight: 700; }
+    .diff-badge { font-size: 11px; font-weight: 800; padding: 2px 8px; border-radius: 4px; font-family: var(--font-mono); }
+    .diff-vocab { background: rgba(56, 189, 248, 0.2); color: #7dd3fc; border: 1px solid #38bdf8; }
+    .diff-grammar { background: rgba(245, 158, 11, 0.2); color: #fde047; border: 1px solid #f59e0b; }
+
+    .question-box { background: #0a0e17; border: 1px solid var(--color-border); border-radius: 8px; padding: 10px 16px; text-align: left; }
+    .question-title-text { font-size: 21px; font-weight: 800; line-height: 1.5; color: #fff; font-family: 'Plus Jakarta Sans', var(--font-chinese); }
+    .question-hint-text { margin-top: 6px; font-size: 14.5px; color: var(--color-primary); line-height: 1.4; }
+    .options-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    .theme-btn {
+      background: var(--bg-card); color: var(--color-text); border: 1.5px solid var(--color-border); border-radius: 10px;
+      padding: 12px 16px; font-size: 16.5px; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 10px;
+      transition: all 0.15s ease; outline: none; text-align: left; font-family: 'Plus Jakarta Sans', var(--font-chinese);
+    }
+    .theme-btn:hover { background: var(--btn-hover); border-color: var(--color-gold); transform: translateY(-1px); }
+    .theme-btn .btn-key { width: 26px; height: 26px; background: #0a0e17; color: var(--color-gold); border: 1px solid var(--color-primary); border-radius: 4px; font-size: 13px; font-family: var(--font-mono); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .theme-btn.btn-correct { background: rgba(16, 185, 129, 0.25) !important; border-color: var(--color-success) !important; color: #86efac !important; }
+    .theme-btn.btn-wrong { background: rgba(244, 63, 94, 0.25) !important; border-color: var(--color-danger) !important; color: #fecdd3 !important; }
+    
+    .modal-backdrop { position: absolute; inset: 0; background: rgba(2, 6, 23, 0.92); display: none; justify-content: center; align-items: center; z-index: 100; backdrop-filter: blur(5px); }
+    .theme-dialog { width: 92%; max-width: 650px; max-height: 90vh; overflow-y: auto; background: var(--bg-card); border: 2px solid var(--color-primary); border-radius: 16px; padding: 22px; display: flex; flex-direction: column; gap: 14px; }
+    .dialog-header { display: flex; align-items: center; gap: 10px; border-bottom: 1px dashed var(--color-primary); padding-bottom: 8px; }
+    .dialog-title { font-size: 17px; font-weight: 800; color: var(--color-gold); }
+    .step-by-step { background: #0a0e17; border: 1px solid var(--color-border); border-radius: 8px; padding: 12px 14px; font-size: 15px; color: #fff; line-height: 1.6; }
+    .dialog-footer { display: flex; justify-content: space-between; align-items: center; }
+    
+    .overlay-screen { position: absolute; inset: 0; background: var(--bg-card); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 80; padding: 24px; text-align: center; }
+    .game-title-main { font-size: 26px; font-weight: 900; color: var(--color-gold); margin-bottom: 4px; }
+    .game-subtitle { font-size: 14px; color: var(--color-primary); font-weight: 700; margin-bottom: 18px; }
+    .instructions-card { background: var(--bg-surface); border: 1.5px solid var(--color-primary); border-radius: 12px; padding: 14px 18px; max-width: 600px; margin-bottom: 20px; font-size: 13.5px; text-align: left; line-height: 1.8; }
+    .instructions-card ul { padding-left: 20px; }
+    .btn-start-theme { background: var(--color-gold); color: #0a0e17; border: none; border-radius: 8px; padding: 12px 36px; font-size: 16px; font-weight: 900; font-family: var(--font-orbitron); cursor: pointer; box-shadow: 0 0 20px rgba(245, 158, 11, 0.4); }
+    
+    .nav-hub-btn { position: absolute; top: 18px; left: 20px; background: rgba(255,255,255,0.08); border: 1px solid var(--color-border); color: #cbd5e1; padding: 6px 14px; border-radius: 999px; text-decoration: none; font-size: 12px; font-weight: 700; z-index: 90; }
+    .nav-hub-btn:hover { background: rgba(255,255,255,0.15); color: #fff; }
+
+    @keyframes floatTheme { 0% { transform: translateY(0); opacity: 1; } 100% { transform: translateY(-30px); opacity: 0; } }
+    @media (max-width: 768px) { #app-container { max-height: 100vh; border: none; border-radius: 0; } .options-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <div id="app-container">
+    <a href="index.html" class="nav-hub-btn">⬅️ 翰林英語題庫目錄</a>
+
+    <header id="hud-bar">
+      <div class="hud-player-info">
+        <div class="hud-avatar"><span>✈️</span></div>
+        <div class="hud-bars">
+          <div class="bar-wrap">
+            <span style="color:var(--color-gold); font-size:10px;">HP</span>
+            <div class="theme-bar"><div id="player-hp-bar" class="theme-bar-fill" style="width: 100%;"></div></div>
+            <span id="player-hp-text" style="font-size:10px; color:var(--color-gold);">100/100</span>
+          </div>
+          <div class="bar-wrap">
+            <span style="color:var(--color-primary); font-size:10px;">HANLIN BOOK 5 (九上)</span>
+            <span style="font-size:10px; color:#bae6fd;">UNIT 1: PRESENT PERFECT TENSE (40Q)</span>
+          </div>
+        </div>
+      </div>
+      <div class="hud-center-stage">
+        <div id="stage-title" class="stage-title">關卡載入中...</div>
+        <div id="stage-pills" class="stage-progress-pills"></div>
+      </div>
+      <div class="hud-stats">
+        <div class="stat-box"><span class="stat-label">SCORE</span><span id="score-val" class="stat-value">00000</span></div>
+        <button id="btn-sound-toggle" class="btn-theme-icon">🔊 音效: 開</button>
+      </div>
+    </header>
+
+    <main id="main-stage">
+      <section class="theme-arena">
+        <div class="hero-wrapper">
+          <div class="hero-avatar-box"><span>🛡️</span></div>
+          <div class="char-nametag">特訓勇者</div>
+        </div>
+        <div class="monster-wrapper">
+          <div class="monster-avatar-box"><span id="monster-emoji">👾</span></div>
+          <div id="monster-name" class="char-nametag" style="color:var(--color-accent);">考點守護獸</div>
+          <div class="monster-hp-wrap">
+            <div class="theme-bar" style="height:8px;"><div id="monster-hp-bar" class="theme-bar-fill" style="width: 100%; background:var(--color-danger);"></div></div>
+          </div>
+        </div>
+      </section>
+      <section class="theme-board-container">
+        <div class="theme-board-header">
+          <span>✈️ 翰林九上 U1 雙效 40 題 ｜ 20 題單字 (旅遊/景點/文化) ＋ 20 題文法 (have/has+pp/for/since/already/yet)</span>
+          <span style="color:var(--color-gold); font-size:10px;">★ 40 題全方位雙修 (20 單字 + 20 文法)</span>
+        </div>
+        <div class="theme-canvas-wrap"><canvas id="theme-canvas"></canvas></div>
+      </section>
+    </main>
+
+    <footer id="question-panel">
+      <div class="question-header">
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span id="quest-badge" class="quest-badge">關卡載入中...</span>
+          <span id="diff-badge" class="diff-badge diff-vocab">【單字篇】Level 1</span>
+        </div>
+        <span style="font-size:11px; color:#bae6fd;">快捷鍵：鍵盤 [1] - [4] 鍵作答</span>
+      </div>
+      <div class="question-box">
+        <div id="formula-text" class="question-title-text">題目載入中...</div>
+        <div id="formula-hint" class="question-hint-text">💡 提示：正在載入考點提示...</div>
+      </div>
+      <div id="options-grid" class="options-grid"></div>
+    </footer>
+
+    <div id="modal-explanation" class="modal-backdrop">
+      <div class="theme-dialog">
+        <div class="dialog-header">
+          <span style="font-size:24px;">💡</span>
+          <div id="modal-title" class="dialog-title">題型診斷與觀念盲點剖析</div>
+        </div>
+        <div id="modal-content" style="display:flex; flex-direction:column; gap:10px;"></div>
+        <div class="dialog-footer">
+          <span style="font-size:12px; color:#94a3b8;">段考會考重點一把抓</span>
+          <button id="btn-modal-continue" class="btn-start-theme" style="font-size:13px; padding:6px 20px;">掌握觀念，下一題 ➔</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="screen-title" class="overlay-screen">
+      <div style="font-size:55px; margin-bottom:10px;">✈️✨</div>
+      <h1 class="game-title-main">翰林英語九上 Unit 1 雙效特訓 (40題)：Have you ever been to Japan?</h1>
+      <h2 class="game-subtitle">★ 20 題核心單字(國際旅遊/世界文化) + 20 題文法(現在完成式/for vs since/been to vs gone to) ★</h2>
+      <div class="instructions-card">
+        <strong style="color:var(--color-gold);">【本課 40 題雙效特訓矩陣】：</strong>
+        <ul>
+          <li>📘 <strong>Part A: 20 題核心單字特訓</strong>（基礎詞義 ➔ 進階搭配 ➔ 段考實戰）</li>
+          <li>📜 <strong>Part B: 20 題核心文法特訓</strong>（基礎句型 ➔ 易混考點 ➔ 會考難題）</li>
+          <li>💡 每題皆配備「思考提示」、「完整詳解」與「易錯盲點剖析」</li>
+        </ul>
+      </div>
+      <button id="btn-start-game" class="btn-start-theme">開始 40 題挑戰 (START) ➔</button>
+    </div>
+
+    <div id="screen-victory" class="overlay-screen" style="display:none;">
+      <div style="font-size:60px; margin-bottom:10px;">🏆👑</div>
+      <h1 class="game-title-main" style="color:var(--color-success);">40-QUESTION COMPLETE!</h1>
+      <h2 class="game-subtitle">恭喜你全數攻克本課 20 題單字 + 20 題文法全套題庫！</h2>
+      <div class="instructions-card" style="text-align:center;">
+        <p style="font-size:16px; margin-bottom:8px;">獲得榮譽：<strong style="color:var(--color-gold);">【翰林英語單元特訓大滿貫】</strong></p>
+        <p>最終得分：<strong id="final-victory-score" style="color:var(--color-success); font-size:24px; font-family:var(--font-mono);">00000</strong></p>
+      </div>
+      <div style="display:flex; gap:12px;">
+        <a href="index.html" class="btn-start-theme" style="background:var(--bg-surface); border:1px solid var(--color-primary); color:#fff; text-decoration:none; display:inline-flex; align-items:center;">回題庫總部</a>
+        <button id="btn-restart-victory" class="btn-start-theme">再次特訓 (RETRY)</button>
+      </div>
+    </div>
+
+    <div id="screen-gameover" class="overlay-screen" style="display:none;">
+      <div style="font-size:60px; margin-bottom:10px;">💥⚠️</div>
+      <h1 class="game-title-main" style="color:var(--color-danger);">特訓中斷！</h1>
+      <h2 class="game-subtitle">遇到盲點陷阱，複習詳解與提示後再戰！</h2>
+      <div class="instructions-card" style="text-align:center;">
+        <p>本次得分：<strong id="final-gameover-score" style="color:#fff; font-size:20px; font-family:var(--font-mono);">00000</strong></p>
+      </div>
+      <button id="btn-restart-gameover" class="btn-start-theme" style="background:var(--color-danger); color:#fff;">重新特訓 (RETRY)</button>
+    </div>
+  </div>
+
+  <script>
+    const GAME_BALANCE = { playerMaxHp: 100, damageToPlayer: 10, damageToMonster: 20, scorePerQuestion: 100 };
+
+    class ThemeAudioEngine {
+      constructor() { this.ctx = null; this.muted = false; }
+      init() {
+        if (!this.ctx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          this.ctx = new AudioContext();
+        }
+        if (this.ctx.state === 'suspended') this.ctx.resume();
+      }
+      playTone(freq, type, duration, startTime = 0) {
+        if (this.muted) return;
+        this.init();
+        const now = this.ctx.currentTime + startTime;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = type; osc.frequency.setValueAtTime(freq, now);
+        gain.gain.setValueAtTime(0.15, now);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+        osc.connect(gain); gain.connect(this.ctx.destination);
+        osc.start(now); osc.stop(now + duration);
+      }
+      playCorrect() { this.playTone(523.25, 'triangle', 0.08, 0); this.playTone(659.25, 'triangle', 0.1, 0.06); this.playTone(1046.50, 'triangle', 0.2, 0.12); }
+      playWrong() { this.playTone(220, 'sawtooth', 0.15, 0); this.playTone(146.83, 'sawtooth', 0.25, 0.1); }
+      playAttack() { this.playTone(440, 'square', 0.08, 0); this.playTone(880, 'sine', 0.1, 0.04); }
+      playLevelUp() { [440, 554.37, 659.25, 880].forEach((n, i) => this.playTone(n, 'sine', 0.15, i * 0.08)); }
+      playVictory() { [523.25, 659.25, 783.99, 1046.50, 1318.51].forEach((n, i) => this.playTone(n, 'sine', 0.2, i * 0.1)); }
+    }
+    const audio = new ThemeAudioEngine();
+
+    class ThemeVisualizer {
+      constructor(canvas) { this.canvas = canvas; this.ctx = canvas.getContext('2d'); }
+      render(stageIdx = 0) {
+        const ctx = this.ctx;
+        const w = this.canvas.width = this.canvas.parentElement.clientWidth;
+        const h = this.canvas.height = this.canvas.parentElement.clientHeight;
+        ctx.clearRect(0, 0, w, h);
+        const midX = w / 2;
+        ctx.fillStyle = "#38bdf8"; ctx.font = "bold 11px monospace"; ctx.textAlign = "center";
+        const cat = stageIdx < 3 ? "📘 單字篇 (Part A: Vocab)" : "📜 文法篇 (Part B: Grammar)";
+        ctx.fillText("⚡ " + cat + " ｜ 關卡 " + (stageIdx + 1) + "/6", midX, h / 2 - 4);
+        ctx.fillStyle = "#facc15";
+        ctx.fillText("40 題全方位雙修 ｜ 掌握字義搭配與核心文法規則", midX, h / 2 + 12);
+      }
+    }
+
+    const CHAPTERS = [
+      {
+            "level": 1,
+            "category": "單字篇",
+            "title": "Level 1: 基礎字彙與詞義理解 (7 題)",
+            "monsterName": "字彙基礎精靈",
+            "monsterEmoji": "🔤",
+            "questions": [
+                  {
+                        "formula": "Have you ever traveled ________ by plane? Yes, I went to Japan last year.",
+                        "options": [
+                              "abroad",
+                              "aboard",
+                              "above",
+                              "across"
+                        ],
+                        "correct": "abroad",
+                        "hint": "💡 提示：出國/到國外是 travel abroad！",
+                        "explanation": "📝 詳解：abroad (在國外/出國)；aboard (在船/機上)。"
+                  },
+                  {
+                        "formula": "Remember to bring your ________ and boarding pass to the airport.",
+                        "options": [
+                              "passport",
+                              "postcard",
+                              "password",
+                              "package"
+                        ],
+                        "correct": "passport",
+                        "hint": "💡 提示：出國必備的護照是 passport。",
+                        "explanation": "📝 詳解：passport (護照)。"
+                  },
+                  {
+                        "formula": "The Eiffel Tower is a world-famous ________ in Paris.",
+                        "options": [
+                              "landmark",
+                              "landslide",
+                              "landlord",
+                              "landscape"
+                        ],
+                        "correct": "landmark",
+                        "hint": "💡 提示：世界著名的地標是 landmark。",
+                        "explanation": "📝 詳解：landmark (地標)。"
+                  },
+                  {
+                        "formula": "Learning about different ________ can help us respect other people.",
+                        "options": [
+                              "cultures",
+                              "customs",
+                              "countries",
+                              "climates"
+                        ],
+                        "correct": "cultures",
+                        "hint": "💡 提示：不同國家的文化是 cultures。",
+                        "explanation": "📝 詳解：culture (文化)。"
+                  },
+                  {
+                        "formula": "Leo bought some local ________ for his family during his trip to Rome.",
+                        "options": [
+                              "souvenirs",
+                              "stamps",
+                              "stations",
+                              "signals"
+                        ],
+                        "correct": "souvenirs",
+                        "hint": "💡 提示：旅遊紀念品是 souvenirs。",
+                        "explanation": "📝 詳解：souvenir (紀念品)。"
+                  },
+                  {
+                        "formula": "The museum exhibits many precious ancient ________.",
+                        "options": [
+                              "treasures",
+                              "tickets",
+                              "trains",
+                              "traffic"
+                        ],
+                        "correct": "treasures",
+                        "hint": "💡 提示：博物館展示的珍貴寶藏/文物是 treasures。",
+                        "explanation": "📝 詳解：ancient treasures (古代珍寶)。"
+                  },
+                  {
+                        "formula": "The flight was delayed due to bad ________ conditions.",
+                        "options": [
+                              "weather",
+                              "whether",
+                              "water",
+                              "winter"
+                        ],
+                        "correct": "weather",
+                        "hint": "💡 提示：惡劣天氣狀況是 bad weather conditions。",
+                        "explanation": "📝 詳解：weather (天氣)。"
+                  }
+            ]
+      },
+      {
+            "level": 2,
+            "category": "單字篇",
+            "title": "Level 2: 進階詞類變化與慣用語 (7 題)",
+            "monsterName": "字彙進階守衛",
+            "monsterEmoji": "📘",
+            "questions": [
+                  {
+                        "formula": "We hired an experienced tour ________ to show us around the historic city.",
+                        "options": [
+                              "guide",
+                              "guard",
+                              "guest",
+                              "giant"
+                        ],
+                        "correct": "guide",
+                        "hint": "💡 提示：帶領遊覽的導遊是 tour guide。",
+                        "explanation": "📝 詳解：tour guide (導遊)。"
+                  },
+                  {
+                        "formula": "Exploring the Amazon rainforest was an unforgettable ________.",
+                        "options": [
+                              "adventure",
+                              "accident",
+                              "advertisement",
+                              "advantage"
+                        ],
+                        "correct": "adventure",
+                        "hint": "💡 提示：難忘的冒險旅程是 unforgettable adventure。",
+                        "explanation": "📝 詳解：adventure (冒險)。"
+                  },
+                  {
+                        "formula": "The hotel staff provided excellent ________ to all the guests.",
+                        "options": [
+                              "service",
+                              "sentence",
+                              "science",
+                              "station"
+                        ],
+                        "correct": "service",
+                        "hint": "💡 提示：飯店提供優質服務是 service。",
+                        "explanation": "📝 詳解：service (服務)。"
+                  },
+                  {
+                        "formula": "Please fasten your seatbelt before the airplane takes ________.",
+                        "options": [
+                              "off",
+                              "up",
+                              "on",
+                              "in"
+                        ],
+                        "correct": "off",
+                        "hint": "💡 提示：飛機起飛片語是 take off。",
+                        "explanation": "📝 詳解：take off (起飛/脫掉)。"
+                  },
+                  {
+                        "formula": "We booked a comfortable double room at a boutique ________.",
+                        "options": [
+                              "hotel",
+                              "hospital",
+                              "hostel",
+                              "hall"
+                        ],
+                        "correct": "hotel",
+                        "hint": "💡 提示：精品飯店是 boutique hotel。",
+                        "explanation": "📝 詳解：hotel (飯店)。"
+                  },
+                  {
+                        "formula": "The Grand Canyon is known for its breathtaking natural ________.",
+                        "options": [
+                              "scenery",
+                              "scene",
+                              "sight",
+                              "sign"
+                        ],
+                        "correct": "scenery",
+                        "hint": "💡 提示：令人屏息的自然風景是 natural scenery (不可數名詞)。",
+                        "explanation": "📝 詳解：scenery (風景，不可數)。"
+                  },
+                  {
+                        "formula": "You should pack your ________ carefully before the long journey.",
+                        "options": [
+                              "luggage",
+                              "letter",
+                              "locker",
+                              "lesson"
+                        ],
+                        "correct": "luggage",
+                        "hint": "💡 提示：行李是 luggage / baggage (不可數名詞)。",
+                        "explanation": "📝 詳解：luggage (行李，不可數)。"
+                  }
+            ]
+      },
+      {
+            "level": 3,
+            "category": "單字篇",
+            "title": "Level 3: 各校段考歷屆單字題 (6 題)",
+            "monsterName": "段考單字大主宰",
+            "monsterEmoji": "👑",
+            "questions": [
+                  {
+                        "formula": "【段考精選】The Taj Mahal is an architectural ________ of ancient India.",
+                        "options": [
+                              "masterpiece",
+                              "monster",
+                              "marker",
+                              "mirror"
+                        ],
+                        "correct": "masterpiece",
+                        "hint": "💡 提示：泰姬瑪哈陵是建築的『傑作/代表作 (masterpiece)』！",
+                        "explanation": "📝 詳解：architectural masterpiece (建築傑作)。"
+                  },
+                  {
+                        "formula": "【段考精選】To experience local customs, tourists often stay in traditional ________.",
+                        "options": [
+                              "homestays",
+                              "highways",
+                              "hallways",
+                              "hospitals"
+                        ],
+                        "correct": "homestays",
+                        "hint": "💡 提示：體驗在地風土民情的傳統民宿是 homestays (民宿)。",
+                        "explanation": "📝 詳解：homestay (寄宿家庭/民宿)。"
+                  },
+                  {
+                        "formula": "【段考精選】The travel agency customized an exciting travel ________ for our group.",
+                        "options": [
+                              "itinerary",
+                              "instrument",
+                              "instruction",
+                              "invitation"
+                        ],
+                        "correct": "itinerary",
+                        "hint": "💡 提示：客製化的旅遊行程表是 travel itinerary！",
+                        "explanation": "📝 詳解：itinerary (旅遊行程/路線)。"
+                  },
+                  {
+                        "formula": "【段考精選】The United Nations designated this historic town as a World ________ Site.",
+                        "options": [
+                              "Heritage",
+                              "Hospital",
+                              "Highway",
+                              "Horizon"
+                        ],
+                        "correct": "Heritage",
+                        "hint": "💡 提示：聯合國教科文組織認定的世界遺產是 World Heritage Site！",
+                        "explanation": "📝 詳解：World Heritage Site (世界文化遺產)。"
+                  },
+                  {
+                        "formula": "【段考精選】The flight attendant demonstrated the safety ________ before takeoff.",
+                        "options": [
+                              "procedures",
+                              "problems",
+                              "pencils",
+                              "pictures"
+                        ],
+                        "correct": "procedures",
+                        "hint": "💡 提示：示範機上安全應變程序是 safety procedures。",
+                        "explanation": "📝 詳解：safety procedures (安全程序)。"
+                  },
+                  {
+                        "formula": "【段考精選】The island is famous for its crystal-clear water and diverse marine ________.",
+                        "options": [
+                              "ecosystem",
+                              "economics",
+                              "education",
+                              "elevator"
+                        ],
+                        "correct": "ecosystem",
+                        "hint": "💡 提示：豐富多元的海洋生態系統是 marine ecosystem。",
+                        "explanation": "📝 詳解：marine ecosystem (海洋生態系)。"
+                  }
+            ]
+      },
+      {
+            "level": 4,
+            "category": "文法篇",
+            "title": "Level 4: 基礎文法與句型奠基 (7 題)",
+            "monsterName": "文法初階守衛",
+            "monsterEmoji": "📜",
+            "questions": [
+                  {
+                        "formula": "Leo ________ in Taipei for ten years.",
+                        "options": [
+                              "has lived",
+                              "lives",
+                              "lived",
+                              "is living"
+                        ],
+                        "correct": "has lived",
+                        "hint": "💡 提示：for ten years (長達十年) ➔ 現在完成式 has lived。",
+                        "explanation": "📝 詳解：have/has + p.p.。"
+                  },
+                  {
+                        "formula": "A: ________ you ever visited the British Museum?  B: Yes, I have.",
+                        "options": [
+                              "Have",
+                              "Did",
+                              "Do",
+                              "Are"
+                        ],
+                        "correct": "Have",
+                        "hint": "💡 提示：問人生經驗用 Have you ever + p.p.?",
+                        "explanation": "📝 詳解：Have you ever visited...?"
+                  },
+                  {
+                        "formula": "I have not finished my English assignment ________.",
+                        "options": [
+                              "yet",
+                              "already",
+                              "ever",
+                              "never"
+                        ],
+                        "correct": "yet",
+                        "hint": "💡 提示：not... yet (尚未) 放在否定句尾。",
+                        "explanation": "📝 詳解：yet 用於否定句尾。"
+                  },
+                  {
+                        "formula": "She has taught English in this school ________ 2018.",
+                        "options": [
+                              "since",
+                              "for",
+                              "in",
+                              "at"
+                        ],
+                        "correct": "since",
+                        "hint": "💡 提示：since + 時間起點 (since 2018)。",
+                        "explanation": "📝 詳解：since 2018。"
+                  },
+                  {
+                        "formula": "Leo has ________ eaten French food before. This is his first time.",
+                        "options": [
+                              "never",
+                              "ever",
+                              "already",
+                              "yet"
+                        ],
+                        "correct": "never",
+                        "hint": "💡 提示：第一次吃表示以前從未 (never) 吃過。",
+                        "explanation": "📝 詳解：has never eaten。"
+                  },
+                  {
+                        "formula": "A: Where is Amy?  B: She ________ to London. She will return next week.",
+                        "options": [
+                              "has gone",
+                              "has been",
+                              "went",
+                              "is going to"
+                        ],
+                        "correct": "has gone",
+                        "hint": "💡 提示：人去了還沒回來用 has gone to！",
+                        "explanation": "📝 詳解：has gone to (去了還沒回來)。"
+                  },
+                  {
+                        "formula": "Mr. Lin has taught here since he ________ to this city.",
+                        "options": [
+                              "moved",
+                              "has moved",
+                              "moves",
+                              "was moving"
+                        ],
+                        "correct": "moved",
+                        "hint": "💡 提示：since 子句動詞用過去簡單式 moved！",
+                        "explanation": "📝 詳解：since + 過去簡單式子句。"
+                  }
+            ]
+      },
+      {
+            "level": 5,
+            "category": "文法篇",
+            "title": "Level 5: 進階時態與易混淆考點 (7 題)",
+            "monsterName": "文法變化魔像",
+            "monsterEmoji": "⚡",
+            "questions": [
+                  {
+                        "formula": "I have ________ eaten lunch, so I am not hungry now.",
+                        "options": [
+                              "already",
+                              "yet",
+                              "ever",
+                              "still"
+                        ],
+                        "correct": "already",
+                        "hint": "💡 提示：肯定句表示已經完成用 already。",
+                        "explanation": "📝 詳解：have already eaten。"
+                  },
+                  {
+                        "formula": "How long ________ you ________ your English teacher?",
+                        "options": [
+                              "have; known",
+                              "did; know",
+                              "do; know",
+                              "are; knowing"
+                        ],
+                        "correct": "have; known",
+                        "hint": "💡 提示：How long have you known...? 認識多久完成式。",
+                        "explanation": "📝 詳解：have you known。"
+                  },
+                  {
+                        "formula": "Amy has been to Japan ________.",
+                        "options": [
+                              "three times",
+                              "three time",
+                              "third times",
+                              "for three times"
+                        ],
+                        "correct": "three times",
+                        "hint": "💡 提示：次數直接寫 three times，不加 for！",
+                        "explanation": "📝 詳解：three times (三次)。"
+                  },
+                  {
+                        "formula": "It ________ heavily since yesterday evening.",
+                        "options": [
+                              "has rained",
+                              "rained",
+                              "is raining",
+                              "rains"
+                        ],
+                        "correct": "has rained",
+                        "hint": "💡 提示：since + 過去時間點 ➔ 現在完成式 has rained。",
+                        "explanation": "📝 詳解：has rained since..."
+                  },
+                  {
+                        "formula": "Leo bought the bike three days ago. That means he ________ it for three days.",
+                        "options": [
+                              "has had",
+                              "has bought",
+                              "bought",
+                              "had"
+                        ],
+                        "correct": "has had",
+                        "hint": "💡 提示：持續擁有三天用 has had，不用 has bought！",
+                        "explanation": "📝 詳解：has had for three days。"
+                  },
+                  {
+                        "formula": "Neither of my parents ________ to Europe before.",
+                        "options": [
+                              "has been",
+                              "have been",
+                              "has gone",
+                              "have gone"
+                        ],
+                        "correct": "has been",
+                        "hint": "💡 提示：Neither of 單數主詞 ➔ has been to Europe。",
+                        "explanation": "📝 詳解：Neither (單數) ➔ has been。"
+                  },
+                  {
+                        "formula": "Ten years ________ since we graduated from junior high.",
+                        "options": [
+                              "have passed",
+                              "passed",
+                              "has passed",
+                              "was passed"
+                        ],
+                        "correct": "have passed",
+                        "hint": "💡 提示：時間流逝用 have passed since...",
+                        "explanation": "📝 詳解：Ten years have passed。"
+                  }
+            ]
+      },
+      {
+            "level": 6,
+            "category": "文法篇",
+            "title": "Level 6: 各校段考與會考難題 (6 題)",
+            "monsterName": "會考文法大魔王",
+            "monsterEmoji": "🔥",
+            "questions": [
+                  {
+                        "formula": "A: Have you seen my keys?  B: Yes, I ________ them on the desk five minutes ago.",
+                        "options": [
+                              "saw",
+                              "have seen",
+                              "had seen",
+                              "see"
+                        ],
+                        "correct": "saw",
+                        "hint": "💡 提示：有明確過去時間 (five minutes ago) 必須用過去式 saw！",
+                        "explanation": "📝 詳解：five minutes ago ➔ 過去式 saw。"
+                  },
+                  {
+                        "formula": "【段考精選】How many times ________ you ________ abroad?",
+                        "options": [
+                              "have; traveled",
+                              "did; travel",
+                              "do; travel",
+                              "are; traveling"
+                        ],
+                        "correct": "have; traveled",
+                        "hint": "💡 提示：How many times have you traveled abroad?",
+                        "explanation": "📝 詳解：問經驗次數用完成式。"
+                  },
+                  {
+                        "formula": "【段考精選】We ________ each other since we were in kindergarten.",
+                        "options": [
+                              "have known",
+                              "knew",
+                              "know",
+                              "are knowing"
+                        ],
+                        "correct": "have known",
+                        "hint": "💡 提示：since + 過去式 ➔ 主句完成式 have known。",
+                        "explanation": "📝 詳解：have known since..."
+                  },
+                  {
+                        "formula": "【段考精選】A: Is Peter at home?  B: No, he ________ to the supermarket.",
+                        "options": [
+                              "has gone",
+                              "has been",
+                              "went",
+                              "is going"
+                        ],
+                        "correct": "has gone",
+                        "hint": "💡 提示：人不在家（去了超市還沒回來）➔ has gone to！",
+                        "explanation": "📝 詳解：has gone to (去超市了)。"
+                  },
+                  {
+                        "formula": "【段考精選】I haven't heard from my pen pal ________ several months.",
+                        "options": [
+                              "for",
+                              "since",
+                              "in",
+                              "during"
+                        ],
+                        "correct": "for",
+                        "hint": "💡 提示：several months 是一段時間，介系詞用 for！",
+                        "explanation": "📝 詳解：for + 一段時間。"
+                  },
+                  {
+                        "formula": "【段考精選】Great changes ________ in our hometown over the past decade.",
+                        "options": [
+                              "have taken place",
+                              "took place",
+                              "take place",
+                              "are taking place"
+                        ],
+                        "correct": "have taken place",
+                        "hint": "💡 提示：over the past decade (過去十年來) 搭配現在完成式 have taken place！",
+                        "explanation": "📝 詳解：over the past decade + 現在完成式。"
+                  }
+            ]
+      }
+];
+
+    class GameManager {
+      constructor() {
+        this.currentLevelIndex = 0;
+        this.currentQuestionIndex = 0;
+        this.playerHp = GAME_BALANCE.playerMaxHp;
+        this.monsterHp = 100;
+        this.score = 0;
+        this.isAnswering = false;
+
+        this.elPlayerHp = document.getElementById('player-hp-bar');
+        this.elPlayerHpText = document.getElementById('player-hp-text');
+        this.elScore = document.getElementById('score-val');
+        this.elStageTitle = document.getElementById('stage-title');
+        this.elMonsterName = document.getElementById('monster-name');
+        this.elMonsterEmoji = document.getElementById('monster-emoji');
+        this.elMonsterHp = document.getElementById('monster-hp-bar');
+        this.elFormula = document.getElementById('formula-text');
+        this.elHint = document.getElementById('formula-hint');
+        this.elOptionsGrid = document.getElementById('options-grid');
+        this.elQuestBadge = document.getElementById('quest-badge');
+        this.elDiffBadge = document.getElementById('diff-badge');
+        this.elPillsContainer = document.getElementById('stage-pills');
+
+        this.modalExplanation = document.getElementById('modal-explanation');
+        this.elModalTitle = document.getElementById('modal-title');
+        this.elModalContent = document.getElementById('modal-content');
+        this.btnModalContinue = document.getElementById('btn-modal-continue');
+
+        this.screenTitle = document.getElementById('screen-title');
+        this.screenVictory = document.getElementById('screen-victory');
+        this.screenGameOver = document.getElementById('screen-gameover');
+
+        this.canvas = document.getElementById('theme-canvas');
+        this.visualizer = new ThemeVisualizer(this.canvas);
+
+        this.bindEvents();
+      }
+
+      bindEvents() {
+        document.getElementById('btn-start-game').addEventListener('click', () => {
+          audio.init();
+          this.startGame();
+        });
+
+        document.getElementById('btn-restart-victory').addEventListener('click', () => this.restartGame());
+        document.getElementById('btn-restart-gameover').addEventListener('click', () => this.restartGame());
+
+        this.btnModalContinue.addEventListener('click', () => {
+          this.closeExplanation();
+          this.nextQuestion();
+        });
+
+        window.addEventListener('keydown', (e) => {
+          if (this.isAnswering) return;
+          if (['1', '2', '3', '4'].includes(e.key)) {
+            const idx = parseInt(e.key, 10) - 1;
+            const btns = this.elOptionsGrid.querySelectorAll('.theme-btn');
+            if (btns[idx]) btns[idx].click();
+          }
+        });
+
+        const btnSound = document.getElementById('btn-sound-toggle');
+        if (btnSound) {
+          btnSound.addEventListener('click', () => {
+            audio.muted = !audio.muted;
+            btnSound.textContent = audio.muted ? '🔇 音效: 關' : '🔊 音效: 開';
+          });
+        }
+
+        window.addEventListener('resize', () => this.updateVisual());
+      }
+
+      startGame() {
+        this.screenTitle.style.display = 'none';
+        this.screenVictory.style.display = 'none';
+        this.screenGameOver.style.display = 'none';
+        this.currentLevelIndex = 0;
+        this.currentQuestionIndex = 0;
+        this.playerHp = GAME_BALANCE.playerMaxHp;
+        this.score = 0;
+        this.loadLevel(0);
+      }
+
+      restartGame() { this.startGame(); }
+
+      loadLevel(levelIndex) {
+        this.currentLevelIndex = levelIndex;
+        this.currentQuestionIndex = 0;
+        this.monsterHp = 100;
+        const stage = CHAPTERS[levelIndex];
+
+        this.elStageTitle.textContent = stage.title;
+        this.elMonsterName.textContent = stage.monsterName;
+        this.elMonsterEmoji.textContent = stage.monsterEmoji;
+
+        if (levelIndex < 3) {
+          this.elDiffBadge.className = "diff-badge diff-vocab";
+          this.elDiffBadge.textContent = "📘 【單字篇】" + stage.title.split(':')[0];
+        } else {
+          this.elDiffBadge.className = "diff-badge diff-grammar";
+          this.elDiffBadge.textContent = "📜 【文法篇】" + stage.title.split(':')[0];
+        }
+
+        this.updateHUD();
+        this.renderStagePills();
+        this.loadQuestion();
+        audio.playLevelUp();
+      }
+
+      renderStagePills() {
+        this.elPillsContainer.innerHTML = '';
+        const stage = CHAPTERS[this.currentLevelIndex];
+        for (let i = 0; i < stage.questions.length; i++) {
+          const dot = document.createElement('div');
+          dot.className = 'progress-dot' + (i === this.currentQuestionIndex ? ' active' : '') + (i < this.currentQuestionIndex ? ' cleared' : '');
+          this.elPillsContainer.appendChild(dot);
+        }
+      }
+
+      loadQuestion() {
+        this.isAnswering = false;
+        const stage = CHAPTERS[this.currentLevelIndex];
+        const q = stage.questions[this.currentQuestionIndex];
+
+        this.elQuestBadge.textContent = `第 ${this.currentLevelIndex + 1} 關 - 題 ${this.currentQuestionIndex + 1}/${stage.questions.length}`;
+        this.elFormula.textContent = q.formula;
+        this.elHint.textContent = `${q.hint}`;
+
+        this.elOptionsGrid.innerHTML = '';
+        q.options.forEach((opt, idx) => {
+          const btn = document.createElement('button');
+          btn.className = 'theme-btn';
+          btn.innerHTML = `<span class="btn-key">${idx + 1}</span> <span>${opt}</span>`;
+          btn.setAttribute('aria-label', `選項 ${idx + 1}: ${opt}`);
+          btn.addEventListener('click', () => this.handleAnswer(opt, btn, q));
+          this.elOptionsGrid.appendChild(btn);
+        });
+
+        this.renderStagePills();
+        this.updateVisual();
+      }
+
+      updateVisual() {
+        this.visualizer.render(this.currentLevelIndex);
+      }
+
+      handleAnswer(selectedOption, btnElement, question) {
+        if (this.isAnswering) return;
+        this.isAnswering = true;
+
+        const isCorrect = selectedOption === question.correct;
+
+        if (isCorrect) {
+          btnElement.classList.add('btn-correct');
+          audio.playCorrect();
+          audio.playAttack();
+          this.score += GAME_BALANCE.scorePerQuestion;
+
+          this.monsterHp = Math.max(0, this.monsterHp - GAME_BALANCE.damageToMonster);
+          this.triggerAttackAnim();
+          this.spawnFloatingText(`+${GAME_BALANCE.scorePerQuestion} 命中!`, this.elMonsterEmoji.parentElement, 'color:var(--color-gold);');
+
+          setTimeout(() => this.nextQuestion(), 750);
+        } else {
+          btnElement.classList.add('btn-wrong');
+          audio.playWrong();
+          this.playerHp = Math.max(0, this.playerHp - GAME_BALANCE.damageToPlayer);
+          this.triggerHurtAnim();
+          this.spawnFloatingText(`-${GAME_BALANCE.damageToPlayer} HP`, document.querySelector('.hero-avatar-box'), 'color:var(--color-danger);');
+
+          const btns = this.elOptionsGrid.querySelectorAll('.theme-btn');
+          btns.forEach(b => {
+            if (b.innerText.includes(question.correct)) b.classList.add('btn-correct');
+          });
+
+          setTimeout(() => {
+            if (this.playerHp <= 0) this.gameOver();
+            else this.showExplanation(selectedOption, question);
+          }, 750);
+        }
+        this.updateHUD();
+      }
+
+      triggerAttackAnim() {
+        const hero = document.querySelector('.hero-avatar-box');
+        const monster = document.querySelector('.monster-avatar-box');
+        if (hero) hero.classList.add('anim-attack');
+        if (monster) monster.classList.add('anim-hurt');
+        setTimeout(() => {
+          if (hero) hero.classList.remove('anim-attack');
+          if (monster) monster.classList.remove('anim-hurt');
+        }, 350);
+      }
+
+      triggerHurtAnim() {
+        const hero = document.querySelector('.hero-avatar-box');
+        if (hero) hero.classList.add('anim-hurt');
+        setTimeout(() => {
+          if (hero) hero.classList.remove('anim-hurt');
+        }, 350);
+      }
+
+      spawnFloatingText(text, container, style) {
+        const fx = document.createElement('div');
+        fx.className = 'floating-fx';
+        fx.style.cssText = style;
+        fx.textContent = text;
+        fx.style.left = '20px'; fx.style.top = '10px';
+        container.parentElement.appendChild(fx);
+        setTimeout(() => fx.remove(), 800);
+      }
+
+      showExplanation(selectedOption, question) {
+        this.elModalTitle.textContent = "💡 翰林英語題型診斷：盲點剖析";
+        
+        let explanationHtml = question.explanation.replace(/\n/g, '<br/>');
+        this.elModalContent.innerHTML = `
+          <div class="step-by-step">
+            <strong>📝 題目與標準答案：</strong><br/>
+            題目：<code>${question.formula}</code><br/>
+            正確答案：<strong style="color:var(--color-success); font-size:16px;">${question.correct}</strong><br/><br/>
+            ${explanationHtml}
+          </div>
+        `;
+        this.modalExplanation.style.display = 'flex';
+      }
+
+      closeExplanation() { this.modalExplanation.style.display = 'none'; }
+
+      nextQuestion() {
+        const stage = CHAPTERS[this.currentLevelIndex];
+        this.currentQuestionIndex++;
+        if (this.currentQuestionIndex >= stage.questions.length) {
+          if (this.currentLevelIndex + 1 < CHAPTERS.length) {
+            this.loadLevel(this.currentLevelIndex + 1);
+          } else {
+            this.victory();
+          }
+        } else {
+          this.loadQuestion();
+        }
+      }
+
+      updateHUD() {
+        const hpPct = Math.max(0, (this.playerHp / GAME_BALANCE.playerMaxHp) * 100);
+        this.elPlayerHp.style.width = `${hpPct}%`;
+        this.elPlayerHpText.textContent = `${this.playerHp}/${GAME_BALANCE.playerMaxHp}`;
+
+        const monsterPct = Math.max(0, this.monsterHp);
+        this.elMonsterHp.style.width = `${monsterPct}%`;
+        this.elScore.textContent = this.score.toString().padStart(5, '0');
+      }
+
+      victory() {
+        audio.playVictory();
+        document.getElementById('final-victory-score').textContent = this.score;
+        this.screenVictory.style.display = 'flex';
+      }
+
+      gameOver() {
+        audio.playWrong();
+        document.getElementById('final-gameover-score').textContent = this.score;
+        this.screenGameOver.style.display = 'flex';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      window.game = new GameManager();
+    });
+  </script>
+</body>
+</html>
